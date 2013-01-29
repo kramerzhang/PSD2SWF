@@ -244,7 +244,7 @@ package game.skin
 									}
 								]
 							},
-							{name:"prevBtn1",type:"Button",x:24,y:1,width:24,height:23,
+							{name:"prevBtn",type:"Button",x:24,y:1,width:24,height:23,
 								children:
 								[
 									{name:"myImage",type:"Image",x:0,y:0,width:24,height:23,

@@ -14,7 +14,7 @@ package
 		public function ComponentDemo()
 		{
 			Component.domain = ApplicationDomain.currentDomain;
-			this.skin = CompoundSkin.skin;
+			this.skin = FriendPanelSkin.skin;
 		}
 	}
 }

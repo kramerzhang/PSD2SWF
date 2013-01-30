@@ -75,7 +75,7 @@ function main()
     }
     catch (e)
     {
-        feedbackContent = psdName + ".psd--" + e.message;
+        feedbackContent = psdName + ".psd|" + e.message;
     }
     return feedbackContent;
 }
@@ -172,13 +172,7 @@ function parseTopContainer(element)
     result.width = doc.width;
     result.height = doc.height;
     result.children = parseElementList(element.elems);
-    var rectArr = new Array();
-    var len = result.children.length;
-    for (var i = 0; i < len; i++)
-    {
-        rectArr.push(result.children[i].bound);
-    }
-    result.bound = unionRectangle(rectArr);
+    result.bound = calculateContainerBound(result.children);
     return result;
 }
 
@@ -189,13 +183,7 @@ function parseContainer(element)
     result.name = obj.name;
     result.type = obj.type;
     var children = parseElementList(element.elems);
-    var rectArr = new Array();
-    var len = children.length;
-    for (var i = 0; i < len; i++)
-    {
-        rectArr.push(children[i].bound);
-    }
-    result.bound = unionRectangle(rectArr);
+    result.bound = calculateContainerBound(children);
     adjustContainerBound(result);
     adjustChildBound(children, result.bound);
     result.children = children;
@@ -283,12 +271,7 @@ function parseDragBar(element)
             result.y = 0;
             result.width = paramArr[0];
             result.height = paramArr[1];
-            result.bound = {
-                x: result.x,
-                y: result.y,
-                width: result.width,
-                height: result.height
-            };
+            result.bound = {x: result.x, y: result.y, width: result.width, height: result.height};
         }
     }
     if (element.elems.length > 0)
@@ -298,12 +281,7 @@ function parseDragBar(element)
         result.y = firstChild.y;
         result.width = firstChild.width;
         result.height = firstChild.height;
-        result.bound = {
-            x: result.x,
-            y: result.y,
-            width: result.width,
-            height: result.height
-        };
+        result.bound = {x: result.x, y: result.y, width: result.width, height: result.height};
     }
     result.name = "dragBar";
     return result;
@@ -352,7 +330,6 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
         logError(typeName + " " + result.name + " 格式错误！文件夹内容为空。");
         return result;
     }
-    var rectArr = new Array();
     var children = new Array();
     for (var i = 0; i < len; i++)
     {
@@ -370,9 +347,8 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
         }
         result[subElementName] = atomParser(subElement.elems[0]);
         children.push(result[subElementName]);
-        rectArr.push(result[subElementName].bound);
     }
-    result.bound = unionRectangle(rectArr);
+    result.bound = calculateContainerBound(children);
     adjustContainerBound(result);
     adjustChildBound(children, result.bound);
     return result;
@@ -427,41 +403,27 @@ function validateComponent(obj)
     {
         return;
     }
-    var requiredHitNum = 0;
-    var requiredTotalNum = 0;
     requiredTotalNum = validator.required.length;
-    var childrenValidateResult = [];
-    var children = obj.children;
+	var children = obj.children;
     var len = children.length;
-    for (var i = 0; i < len; i++)
-    {
-        var child = children[i];
-        validateComponentNameFirstToken(child.type, child.name);
-        var candidate = child.type + "_" + child.name;
-        for (var j = 0; j < requiredTotalNum; j++)
-        {
-            if (candidate.match(validator.required[j]) != null)
-            {
-                childrenValidateResult[j] = 1;
-                requiredHitNum++;
-                break;
-            }
-        }
-    }
-    if (requiredHitNum < requiredTotalNum)
-    {
-        var content = obj.type + " 组件 " + obj.name + " 格式错误！";
-        for (var i = 0; i < requiredTotalNum; i++)
-        {
-            if (childrenValidateResult[i] == undefined)
-            {
-                var dummy = validator.required[i];
-                dummy = dummy.replace("$", "");
-                content += "子元素 " + dummy + " 未找到 ";
-            }
-        }
+	outer:
+	for(var i = 0; i < requiredTotalNum; i++)
+	{
+		var required = validator.required[i];
+		for(var j = 0; j < len; j++)
+		{
+			var child = children[j];
+			validateComponentNameFirstToken(child.type, child.name);
+			var candidate = child.type + "_" + child.name;
+			if(candidate.match(required) != null)
+			{
+				continue outer;
+			}
+		}
+		var content = obj.type + " 组件 " + obj.name + " 格式错误！";
+        content += "子元素 " + required.replace("$", "") + " 未找到 ";
         logError(content);
-    }
+	}
 }
 
 function validateComponentNameFirstToken(type, name)
@@ -531,12 +493,7 @@ function generateChildrenStr(children, indent)
 function generateContainerStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
     result += "\n";
     result += indent + "\t" + "children:\n";
     result += generateChildrenStr(obj.children, indent + "\t");
@@ -547,12 +504,7 @@ function generateContainerStr(obj, indent)
 function generateListStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
     result += "\n";
     result += indent + "\t" + "item:\n";
     var generator = getTypeGenerator(obj.item.type);
@@ -567,12 +519,7 @@ function generateListStr(obj, indent)
 function generateDragBarStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0);
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]);
     result += "}";
     return result;
 }
@@ -580,115 +527,72 @@ function generateDragBarStr(obj, indent)
 function generateImageStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
     if (obj.normal != null)
     {
-        result += "\n";
-        result += indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
+        result += "\n" + indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
     }
     if (obj.over != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
+        result += ",\n" + indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
     }
     if (obj.down != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
+        result += ",\n" + indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
     }
     if (obj.disable != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
+        result += ",\n" + indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
     }
-    result += "\n";
-    result += indent + "}"
+    result += "\n" + indent + "}"
     return result;
 }
 
 function generateScaleImageStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "top", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "right", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "bottom", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "left", 0) + ",";
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height", "top", "right", "bottom", "left"], [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]) + ",";
     if (obj.normal != null)
     {
-        result += "\n";
-        result += indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
+        result += "\n" + indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
     }
     if (obj.over != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
+        result += ",\n" + indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
     }
     if (obj.down != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
+        result += ",\n" + indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
     }
     if (obj.disable != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
+        result += ",\n" + indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
     }
-    result += "\n";
-    result += indent + "}"
+    result += "\n" + indent + "}"
     return result;
 }
 
 function generateLabelStr(obj, indent)
 {
     var result = indent + "{";
-    result += atomGenerateObjPropertyStr(obj, "name", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "type", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
+	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
     if (obj.normal != null)
     {
-        result += "\n";
-        result += indent + "\t" + "normal:" + atomGenerateTextObjStr(obj.normal);
+        result += "\n" + indent + "\t" + "normal:" + atomGenerateTextObjStr(obj.normal);
     }
     if (obj.over != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "over:" + atomGenerateTextObjStr(obj.over);
+        result += ",\n" + indent + "\t" + "over:" + atomGenerateTextObjStr(obj.over);
     }
     if (obj.down != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "down:" + atomGenerateTextObjStr(obj.down);
+        result += ",\n" + indent + "\t" + "down:" + atomGenerateTextObjStr(obj.down);
     }
     if (obj.disable != null)
     {
-        result += ",";
-        result += "\n";
-        result += indent + "\t" + "disable:" + atomGenerateTextObjStr(obj.disable);
+        result += ",\n" + indent + "\t" + "disable:" + atomGenerateTextObjStr(obj.disable);
     }
-    result += "\n";
-    result += indent + "}";
+    result += "\n" + indent + "}";
     return result;
 }
 
@@ -727,12 +631,7 @@ function atomParseTextElement(element)
         content = "<font color='" + obj.fillColor + "'>" + content + "</font>";
         result.content += content;
     }
-    result.bound = {
-        x: element.left,
-        y: element.top + 1,
-        width: element.width,
-        height: element.height + 1
-    };
+    result.bound = {x: element.left, y: element.top + 1, width: element.width, height: element.height + 1};
     return result;
 }
 
@@ -779,51 +678,34 @@ function atomParseImageElement(element)
     result.y = rect.top;
     result.width = rect.right - rect.left;
     result.height = rect.bottom - rect.top;
-    result.bound = {
-        x: element.left,
-        y: element.top,
-        width: element.width,
-        height: element.height
-    };
+    result.bound = {x: element.left, y: element.top, width: element.width, height: element.height};
     return result;
 }
 
 function atomGenerateTextObjStr(obj)
 {
     var result = "{";
-    result += atomGenerateObjPropertyStr(obj, "x", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "y", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "width", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "height", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj, "content", 1) + ",";
+	result += atomGeneratePropertyListStr(obj, ["x", "y", "width", "height", "content"], [0, 0, 0, 0, 1]) + ",";
     result += "format:{";
-    result += atomGenerateObjPropertyStr(obj.format, "align", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "bold", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "color", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "font", 1) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "italic", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "leading", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "letterSpacing", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "size", 0) + ",";
-    result += atomGenerateObjPropertyStr(obj.format, "underline", 0);
+	result += atomGeneratePropertyListStr(obj.format, ["align", "bold", "color", "font", "italic", "leading", "letterSpacing", "size", "underline"], [1, 0, 0, 1, 0, 0, 0, 0, 0]);
     result += "}}";
     return result;
 }
 
 function atomGenerateImageObjStr(obj)
 {
-    return atomGenerateObjStr(obj, ["link", "x", "y", "width", "height"], [1, 0, 0, 0, 0]);
+    return "{" + atomGeneratePropertyListStr(obj, ["link", "x", "y", "width", "height"], [1, 0, 0, 0, 0]) + "}";
 }
 
 //0为数字，1为字符串
-function atomGenerateObjStr(obj, propertyList, typeList)
+function atomGeneratePropertyListStr(obj, propertyList, typeList)
 {
     if (propertyList.length != typeList.length)
     {
         logError("属性长度和属性类型长度不符");
         return "";
     }
-    var result = "{";
+    var result = "";
     var len = propertyList.length;
     for (var i = 0; i < len; i++)
     {
@@ -833,7 +715,6 @@ function atomGenerateObjStr(obj, propertyList, typeList)
             result += ",";
         }
     }
-    result += "}";
     return result;
 }
 
@@ -982,6 +863,17 @@ function unionRectangle(rectArr)
     result.width = right - left;
     result.height = bottom - top;
     return result;
+}
+
+function calculateContainerBound(children)
+{
+	var rectArr = new Array();
+    var len = children.length;
+    for (var i = 0; i < len; i++)
+    {
+        rectArr.push(children[i].bound);
+    }
+    return unionRectangle(rectArr);
 }
 
 function adjustContainerBound(obj)

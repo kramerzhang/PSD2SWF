@@ -42,14 +42,17 @@ var dummyTokenList = [/ /g, /副本\d*/g, /copy\d*/g];
 var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
 var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 
-//默认Skin模板,模板可根据项目需要调整
-var template = "package game.skin\n{\n${assetImport}\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
+//默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
+var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
 var outputFile = null;
 var assetXML = "";
 var assetImportCode = "";
 var assetImportMap = {};
-//---------------------------------
-var CODE_FOLDER = "0_code";
+//Skin文件默认保存目录为Psd文件目录下的0_code文件夹
+var skinCodeFolderPath = "0_code";
+var SETTING_FILE_NAME = "PSD2SWF.ini";
+var SETTING_SKIN_CODE_FOLDER_TOKEN = "SKIN_CODE_FOLDER=";
+var SETTING_SKIN_TEMPLATE_TOKEN = "SKIN_TEMPLATE=";
 var SHARED = "shared";
 //公共资源列表，从PSD文件所在目录下的shared.xml中读取,shared.xml记录了模块间公共资源信息
 var sharedResourceMap = {};
@@ -63,9 +66,10 @@ function main()
 {
     try
     {
+		extractFileInfo();
+		loadSetting();
+		loadSharedXml(psdFolder);
         resizeDocumentCanvas();
-        extractFileInfo();
-        loadSharedXml(psdFolder);
         var result = parseDocument();
         validateParseResult(result);
         var skinContent = generateContainerStr(result, "\t\t\t");
@@ -83,17 +87,14 @@ function main()
 function resizeDocumentCanvas()
 {
     doc.setDocumentCanvasSizeToDocumentExtents(true);
-    doc.selectNone();
 }
 
 function extractFileInfo()
 {
     psdPath = doc.filePathForRevert;
-    var lastSlashIndex = psdPath.lastIndexOf("/");
-    var psdFullName = psdPath.substring(lastSlashIndex + 1, psdPath.length);
-    var dotIndex = psdFullName.indexOf(".");
-    psdName = psdFullName.substring(0, dotIndex);
-    psdFolder = psdPath.substring(0, lastSlashIndex);
+	psdFolder = Files.getDirectory(psdPath);
+    psdName = Files.getFilename(psdPath).replace(/\.(psd|PSD|png|PNG)/, "");
+	skinCodeFolderPath = psdFolder + "/" + skinCodeFolderPath;
 }
 
 function loadSharedXml(psdFolder)
@@ -118,21 +119,62 @@ function loadSharedXml(psdFolder)
     }
 }
 
+function loadSetting()
+{
+	var settingFilePath = psdFolder + "/" + SETTING_FILE_NAME;
+	if(Files.exists(settingFilePath) == false)
+	{
+		logError("在PSD文件所在目录下未找到配置文件" + SETTING_FILE_NAME);
+		return;
+	}
+	var file = Files.open(settingFilePath, "unicode", false);
+	var line = "";
+	do {
+		if(line.match(/^[^\#\s]+?$/igm) != null)
+		{
+			readSkinTemplateSetting(line);
+			readSkinCodeFolderSetting(line);
+		}
+		line = file.readlineUTF8();
+	} while (line != null);
+	file.close();
+}
+
+function readSkinTemplateSetting(line)
+{
+	var index = line.indexOf(SETTING_SKIN_TEMPLATE_TOKEN);
+	if(index != -1)
+	{
+		skinCodeTemplate = line.substring(SETTING_SKIN_TEMPLATE_TOKEN.length + 1);
+	}
+}
+
+function readSkinCodeFolderSetting(line)
+{
+	var index = line.indexOf(SETTING_SKIN_CODE_FOLDER_TOKEN);
+	if(index != -1)
+	{
+		skinCodeFolderPath = line.substring(SETTING_SKIN_CODE_FOLDER_TOKEN.length);
+		skinCodeFolderPath = convertPathToUrl(skinCodeFolderPath);
+	}
+}
+
 function writeSkinFile(content, assetImport)
 {
     var skinClassName = psdName + "Skin";
-    var skinFolder = psdFolder + "/" + CODE_FOLDER;
-    createInexistentFolder(skinFolder);
-    skinFolder = skinFolder + "/game";
-    createInexistentFolder(skinFolder);
-    skinFolder = skinFolder + "/skin";
-    createInexistentFolder(skinFolder);
-    var skinPath = skinFolder + "/" + skinClassName + ".as";
-    Files.deleteFileIfExisting(skinPath);
-    var file = Files.open(skinPath, true, "unicode");
-    var str = template.replace("${assetImport}", assetImport);
+	createInexistentFolder(skinCodeFolderPath);
+    skinCodeFolderPath = skinCodeFolderPath + "/game";
+    createInexistentFolder(skinCodeFolderPath);
+    skinCodeFolderPath = skinCodeFolderPath + "/skin";
+    createInexistentFolder(skinCodeFolderPath);
+    var skinFilePath = skinCodeFolderPath + "/" + skinClassName + ".as";
+    Files.deleteFileIfExisting(skinFilePath);
+    var file = Files.open(skinFilePath, true, "unicode");
+    var str = skinCodeTemplate.replace("${assetImport}", assetImport);
     str = str.replace("${className}", skinClassName);
     str = str.replace("${placeholder}", content);
+	str = str.replace(/\\n/g, "\n");
+	str = str.replace(/\\t/g, "\t");
     file.writeUTF8(str);
     file.close();
 }
@@ -1035,6 +1077,16 @@ function createInexistentFolder(path)
 {
     if (Files.exists(path) == false)
     {
-        Files.createDirectory(path);
+        if(Files.createDirectory(path) == false)
+		{
+			logError("创建路径" + path + "失败! 请检查路径是否存在。");
+		}
     }
+}
+
+function convertPathToUrl(path)
+{
+	var result = path.replace(/\\/g, "/");
+	result = result.replace(/([cdefg])\:/ig, "file:///$1|"); 
+	return result;
 }

@@ -39,7 +39,7 @@ package game.skin
 						]
 					},
 					{name:"dragBar",type:"DragBar",x:0,y:0,width:295,height:45},
-					{name:"txtCopperBind",type:"Label",x:198,y:405,width:67,height:17,
+					{name:"txtCopperBind",type:"Label",x:198,y:405,width:67,height:18,
 						normal:{x:0,y:0,width:67,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
 					},
 					{name:"txtBindMoney",type:"Label",x:198,y:382,width:67,height:17,

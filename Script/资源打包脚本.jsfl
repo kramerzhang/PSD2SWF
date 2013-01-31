@@ -17,9 +17,14 @@ var xmlMask = "*.xml";
 var logStr = "";
 var folderPath = "";
 var SHARED = "shared";
+//打包生成文件缺省为PSD文件目录下的子目录
 var FLA_FOLDER = "1_fla";
 var SWF_FOLDER = "2_swf";
 var SWC_FOLDER = "3_swc";
+var SETTING_FILE_NAME = "PSD2SWF.ini";
+var FLA_FOLDER_TOKEN = "FLA_FOLDER=";
+var SWF_FOLDER_TOKEN = "SWF_FOLDER=";
+var SWC_FOLDER_TOKEN = "SWC_FOLDER=";
 
 main();
 
@@ -46,21 +51,21 @@ function packSingle()
 
 function packBatch()
 {
-	var folder = fl.browseForFolderURL("请选择xml目录");
-	var xmlList = FLfile.listFolder(folder + "/" + xmlMask, "files");
+	folderPath = fl.browseForFolderURL("请选择xml目录");
+	folderPath = folderPath + "/";
+	readSetting();
+	var xmlList = FLfile.listFolder(folderPath + xmlMask, "files");
 	var len = xmlList.length;
 	for(var i = 0; i < len; i++)
 	{
 		if(xmlList[i] == "shared.xml")continue;
-		xmlPath = folder + "/" + xmlList[i];
-		var index = xmlPath.lastIndexOf("/");
-		folderPath = xmlPath.substr(0, index + 1);
+		xmlPath = folderPath + xmlList[i];
 		xml = XML(FLfile.read(xmlPath));
 		imageMap={};
 		parseXml();
 		createDoc();
 	}
-	writeLog(folder);
+	writeLog(folderPath);
 }
 
 function readXml()
@@ -69,7 +74,75 @@ function readXml()
 	xml = XML(FLfile.read(xmlPath));
 	var index = xmlPath.lastIndexOf("/");
 	folderPath = xmlPath.substr(0, index + 1);
+	readSetting();
 	parseXml();
+}
+
+function initFolderDefaultSetting()
+{
+	FLA_FOLDER = FLfile.uriToPlatformPath(folderPath + FLA_FOLDER);
+	FLA_FOLDER = FLA_FOLDER.replace(/\\/g, "/");
+	SWF_FOLDER = FLfile.uriToPlatformPath(folderPath + SWF_FOLDER);
+	SWF_FOLDER = SWF_FOLDER.replace(/\\/g, "/");
+	SWC_FOLDER = FLfile.uriToPlatformPath(folderPath + SWC_FOLDER);
+	SWC_FOLDER = SWC_FOLDER.replace(/\\/g, "/");
+}
+
+function readSetting()
+{
+	initFolderDefaultSetting();
+	var path = folderPath + SETTING_FILE_NAME;
+	var setting = FLfile.read(path);
+	var matchResult = setting.match(/^[^\#\s]+?$/igm);
+	if(matchResult != null)
+	{
+		for(var i = 0; i < matchResult.length; i++)
+		{
+			var line = matchResult[i];
+			readFlaFolderSetting(line);
+			readSwfFolderSetting(line);
+			readSwcFolderSetting(line);
+		}
+	}
+}
+
+function readFlaFolderSetting(line)
+{
+	var folder = readFolderSetting(line, FLA_FOLDER_TOKEN);
+	if(folder != null)
+	{
+		FLA_FOLDER = folder;
+	}
+}
+
+function readSwfFolderSetting(line)
+{
+	var folder = readFolderSetting(line, SWF_FOLDER_TOKEN);
+	if(folder != null)
+	{
+		SWF_FOLDER = folder;
+	}
+}
+
+function readSwcFolderSetting(line)
+{
+	var folder = readFolderSetting(line, SWC_FOLDER_TOKEN);
+	if(folder != null)
+	{
+		SWC_FOLDER = folder;
+	}
+}
+
+function readFolderSetting(line, token)
+{
+	var result = null;
+	var index = line.indexOf(token);
+	if(index != -1)
+	{
+		result = line.substring(token.length); 
+		result = result.replace(/\\/g, "/");
+	}
+	return result;
 }
 
 function parseXml()
@@ -97,9 +170,9 @@ function createDoc()
 	doc = fl.createDocument();
 	importImage();
 	addLinkageName();
-	var flaFolder = folderPath + FLA_FOLDER + "/";
-	var swfFolder = folderPath + SWF_FOLDER + "/";
-	var swcFolder = folderPath + SWC_FOLDER + "/";
+	var flaFolder = FLfile.platformPathToURI(FLA_FOLDER + "/");
+	var swfFolder = FLfile.platformPathToURI(SWF_FOLDER + "/");
+	var swcFolder = FLfile.platformPathToURI(SWC_FOLDER + "/");
 	createInexistentFolder(flaFolder);
 	createInexistentFolder(swfFolder);
 	createInexistentFolder(swcFolder)
@@ -124,8 +197,8 @@ function createPublishSWCProfile()
 		profileXML.PublishFlashProperties.ExportSwc = 1;
 		profileXML.PublishFlashProperties.IncludeXMP = 0;
 	}
-	profileXML.PublishFormatProperties.swcFileName = "../" + SWC_FOLDER + "/" + moduleName + ".swc";
-	profileXML.PublishFormatProperties.flashFileName = "../" + SWF_FOLDER + "/" + moduleName + ".swf";
+	profileXML.PublishFormatProperties.swcFileName = SWC_FOLDER + "/" + moduleName + ".swc";
+	profileXML.PublishFormatProperties.flashFileName = SWF_FOLDER + "/" + moduleName + ".swf";
 	doc.importPublishProfileString(profileXML);
 }
 
@@ -140,8 +213,7 @@ function importImage()
 {
 	for(var str in imageMap)
 	{
-		var imageName = convertToUrl(str);
-		var imagePath = folderPath + moduleName + "/" + imageName;
+		var imagePath = folderPath + str;
 		if(FLfile.exists(imagePath) == true)
 		{
 			doc.importFile(imagePath, true);
@@ -155,17 +227,8 @@ function importImage()
 
 function convertToUrl(pathStr)
 {
-	var result = pathStr.replace(/\\/g, "/");
-	result = result.replace(":", "|");
-	result = "file:///" + result;
-	return eliminateDir(result);
-}
-
-function eliminateDir(pathStr)
-{
-	var index = pathStr.lastIndexOf("/");
-	var lastIndex = pathStr.length;
-	var result = pathStr.substr((index + 1), lastIndex);
+	result = FLfile.platformPathToURI(pathStr);
+	result = result.replace(folderPath, "");
 	return result;
 }
 
@@ -190,7 +253,7 @@ function addLinkageName()
 	}
 }
 
-function writeLog(folder)
+function writeLog(folderPath)
 {
 	if(logStr == "")
 	{
@@ -198,7 +261,7 @@ function writeLog(folder)
 	}
 	var date = new Date();
 	var logName = "log_" + date.getFullYear() + "_" + (date.getMonth() + 1) + "_" + date.getDate() + "_" + date.getHours() + "_" + date.getMinutes() + ".txt" 
-	var logPath = folder + "/" + logName;
+	var logPath = folderPath + logName;
 	FLfile.write(logPath, logStr);
 }
 

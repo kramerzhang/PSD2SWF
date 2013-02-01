@@ -15,7 +15,7 @@ var psdFolder = "";
 
 var typeList = 		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper"];
 var parserList = 	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
-var generatorList = [generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarStr, generateListStr, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
+var generatorList = [generateImageStr, generateScaleImageStr, generateLabelStr, generateContainerStr, generateContainerStr, generateContainerStr, generateDragBarStr, generateListStr, generateContainerStr, generateContainerStr, generateContainerStr, generateContainerStr, generateContainerStr];
 var validatorList = [imageValidator, scaleImageValidator, labelValidator, buttonValidator, comboBoxValidator, containerValidator, dragBarValidator, listValidator, radioButtonValidator, radioButtonGroupValidator, scrollBarValidator, sliderValidator, stepperValidator];
 
 //Component validator, 使用正则表达式对组件名称进行验证，$表示名称结尾
@@ -43,7 +43,7 @@ var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
 var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 
 //默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
-var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
+var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
 var outputFile = null;
 var assetXML = "";
 var assetImportCode = "";
@@ -72,17 +72,15 @@ function main()
         resizeDocumentCanvas();
         var result = parseDocument();
         validateParseResult(result);
-        var skin = generateContainerSkin(result, "\t\t\t");
-		var hint = generateHint(result, "\t")
+        var skinContent = generateContainerStr(result, "\t\t\t");
         exportAllElementsToPNG();
-        writeSkinFile(skin, assetImportCode, hint);
+        writeSkinFile(skinContent, assetImportCode);
         writeAssetXMLFile(assetXML);
     }
     catch (e)
     {
         feedbackContent = psdName + ".psd|" + e.message;
     }
-	//alert(feedbackContent);
     return feedbackContent;
 }
 
@@ -161,7 +159,7 @@ function readSkinCodeFolderSetting(line)
 	}
 }
 
-function writeSkinFile(content, assetImport, hint)
+function writeSkinFile(content, assetImport)
 {
     var skinClassName = psdName + "Skin";
 	createInexistentFolder(skinCodeFolderPath);
@@ -173,7 +171,6 @@ function writeSkinFile(content, assetImport, hint)
     Files.deleteFileIfExisting(skinFilePath);
     var file = Files.open(skinFilePath, true, "unicode");
     var str = skinCodeTemplate.replace("${assetImport}", assetImport);
-	str = str.replace("${hint}", hint);
     str = str.replace("${className}", skinClassName);
     str = str.replace("${placeholder}", content);
 	str = str.replace(/\\n/g, "\n");
@@ -535,7 +532,7 @@ function generateChildrenStr(children, indent)
     return result;
 }
 
-function generateContainerSkin(obj, indent)
+function generateContainerStr(obj, indent)
 {
     var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
@@ -569,7 +566,7 @@ function generateDragBarStr(obj, indent)
     return result;
 }
 
-function generateImageSkin(obj, indent)
+function generateImageStr(obj, indent)
 {
     var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
@@ -593,7 +590,7 @@ function generateImageSkin(obj, indent)
     return result;
 }
 
-function generateScaleImageSkin(obj, indent)
+function generateScaleImageStr(obj, indent)
 {
     var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height", "top", "right", "bottom", "left"], [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]) + ",";
@@ -617,7 +614,7 @@ function generateScaleImageSkin(obj, indent)
     return result;
 }
 
-function generateLabelSkin(obj, indent)
+function generateLabelStr(obj, indent)
 {
     var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
@@ -639,37 +636,6 @@ function generateLabelSkin(obj, indent)
     }
     result += "\n" + indent + "}";
     return result;
-}
-
-/*
-function validateParseResult(result)
-{
-    validateComponent(result);
-    var len = result.children != null ? result.children.length : 0;
-    for (var i = 0; i < len; i++)
-    {
-        var child = result.children[i];
-        validateParseResult(child);
-    }
-}
-*/
-//---------------------------------------------------------------------------------
-//generate panel components skin hint
-//---------------------------------------------------------------------------------
-function generateHint(obj, indent)
-{
-	result = indent + obj.name + ":" + obj.type;
-	if(obj.type != "Container")
-	{
-		return result;
-	}
-    var len = obj.children != null ? obj.children.length : 0;
-	for (var i = 0; i < len; i++)
-    {
-        var child = obj.children[i];
-		result += "\n" + generateHint(child, indent + "\t")
-    }
-	return result;
 }
 
 //---------------------------------------------------------------------------------

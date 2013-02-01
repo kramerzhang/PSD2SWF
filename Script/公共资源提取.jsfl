@@ -11,7 +11,6 @@ var sharedXml = null;
 var INDEX_THRESHOLD = 3;
 var folderPath = "";
 var SHARED = "shared";
-var cdataContent = "";
 
 main();
 
@@ -78,12 +77,9 @@ function generateSharedXml()
 		var imagePath = recordObj.imagePath
 		var sharedPath = imagePath.replace(recordObj.moduleName, SHARED);
 		copyImageToSharedFolder(recordObj);
-		//addToCdataContent(recordObj.imageName);
 		var nodeStr = "\t<node heat=\"" + recordObj.heat + "\" quality=\"" + recordObj.quality + "\">" + sharedPath + "</node>";
 		fl.outputPanel.trace(nodeStr);
 	}
-	//removeCdataTail();
-	//fl.outputPanel.trace("\t<![CDATA[/*注意：以下的文本复制到PsdParser.jsx作为公共资源表内容*/" + cdataContent + "\n\t]]>");
 	fl.outputPanel.trace("</data>");
 	var xmlName = "shared.xml";
 	var xmlPath = folderPath + "/" + xmlName;
@@ -111,16 +107,6 @@ function copyImageToSharedFolder(recordObj)
 	}
 	var targetPath = sharedFolderPath + "/" + recordObj.imageName;
 	FLfile.copy(sourcePath, targetPath);
-}
-
-function addToCdataContent(imageName)
-{
-	cdataContent += "\n\t\t" + imageName.replace(".png", "") + ":1,";
-}
-
-function removeCdataTail()
-{
-	cdataContent = cdataContent.substring(0, cdataContent.length - 1);
 }
 
 function eliminateDir(pathStr)

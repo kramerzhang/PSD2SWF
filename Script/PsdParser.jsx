@@ -641,18 +641,6 @@ function generateLabelSkin(obj, indent)
     return result;
 }
 
-/*
-function validateParseResult(result)
-{
-    validateComponent(result);
-    var len = result.children != null ? result.children.length : 0;
-    for (var i = 0; i < len; i++)
-    {
-        var child = result.children[i];
-        validateParseResult(child);
-    }
-}
-*/
 //---------------------------------------------------------------------------------
 //generate panel components skin hint
 //---------------------------------------------------------------------------------

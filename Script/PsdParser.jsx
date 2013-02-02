@@ -673,6 +673,7 @@ function atomParseTextElement(element)
     result.width = element.width;
     result.height = element.height;
     result.content = "";
+	result.rawContent = "";
     var textRunsArr = element.textRuns.textRuns;
     result.format = parseTextDefaultTextFormat(element.textRuns.initialAttrs);
     var len = textRunsArr.length;
@@ -681,8 +682,9 @@ function atomParseTextElement(element)
         var content = textRunsArr[i].characters;
         if (typeof (content) == "string")
         {
-            content = content.replace(/\r/g, "\\n");
+            content = content.replace(/\r/g, "\\r");
         }
+		result.rawContent += content;
         var obj = textRunsArr[i].changedAttrs;
         if (obj.underline == true)
         {
@@ -695,8 +697,31 @@ function atomParseTextElement(element)
         content = "<font color='" + obj.fillColor + "'>" + content + "</font>";
         result.content += content;
     }
+	result.width = refineTextElementWidth(result, element.textRuns.initialAttrs);
     result.bound = {x: element.left, y: element.top + 1, width: element.width, height: element.height + 1};
     return result;
+}
+
+function refineTextElementWidth(textObj, textAttrs)
+{
+	var result = textObj.width;
+	var rawContent = textObj.rawContent;
+	var kerning = textAttrs.rangeKerning;
+	var refinedKerning = Math.round(kerning);
+	var lineList = rawContent.split("\\r");
+	var len = lineList != null ? lineList.length : 0;
+	var maxCharNum = 0;
+	for(var i = 0; i < len; i++)
+	{
+		var line = lineList[i];
+		if(line.length > maxCharNum)
+		{
+			maxCharNum = line.length;
+		}
+	}
+	result += (refinedKerning - kerning) * maxCharNum;
+	result = Math.ceil(result);
+	return result;
 }
 
 function parseTextDefaultTextFormat(textAttrs)
@@ -708,12 +733,17 @@ function parseTextDefaultTextFormat(textAttrs)
     result.font = textAttrs.face;
     result.italic = textAttrs.italic;
     result.size = parseFontSize(textAttrs.size);
-    result.letterSpacing = Math.round(textAttrs.rangeKerning * result.size * 0.1 * 100) * 0.01;
-    var leading = Math.round(result.size * (textAttrs.leading - 1));
-    if (leading < 0)
-    {
-        leading = 0;
-    }
+    result.letterSpacing = Math.round(textAttrs.rangeKerning);
+	var leading = 0;
+	if(textAttrs.leadingMode == "percentage")
+	{
+		leading = result.size * (textAttrs.leading - 1) ;
+	}
+	else
+	{
+		leading = textAttrs.leading - result.size;
+	}
+	leading = leading > 0 ? leading : 0;
     result.leading = leading;
     result.underline = textAttrs.underline;
     return result;

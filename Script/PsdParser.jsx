@@ -733,7 +733,7 @@ function parseTextDefaultTextFormat(textAttrs)
     result.font = textAttrs.face;
     result.italic = textAttrs.italic;
     result.size = parseFontSize(textAttrs.size);
-    result.letterSpacing = Math.round(textAttrs.rangeKerning);
+    result.letterSpacing = textAttrs.rangeKerning;
 	var leading = 0;
 	if(textAttrs.leadingMode == "percentage")
 	{

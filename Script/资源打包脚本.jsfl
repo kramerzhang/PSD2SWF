@@ -237,7 +237,7 @@ function addLinkageName()
 		lib.setItemProperty('linkageExportForAS', true);
 		lib.setItemProperty('linkageExportForRS', false);
 		lib.setItemProperty('linkageExportInFirstFrame', true);
-		if(qualityMap[item.name] == 100)
+		if(qualityMap[moduleName + "/" + item.name] == 100)
 		{
 			lib.setItemProperty('compressionType', 'lossless');
 		}

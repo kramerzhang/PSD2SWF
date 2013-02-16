@@ -48,6 +48,27 @@ package game.skin
 	import FriendPanel.guanbi2;guanbi2;
 	import FriendPanel.guanbi1;guanbi1;
 
+	/*
+	FriendPanel:Container
+		guanbi:Button
+		dragBar:DragBar
+		myImage:Image
+		haoyou:Container
+			haoyou:Image
+		fenshenicon:Image
+		wanjiamingzi:Label
+		shousuohaoyou:Button
+		search:Label
+		name:ScaleImage
+		haoyoutuijian:Button
+		tianjaihaoyou:Button
+		haoyouliebiao:List
+		neidiban2:ScaleImage
+		page:Stepper
+		neidiban:ScaleImage
+		haoyou:RadioButtonGroup
+		diban:ScaleImage
+	*/
 	public class FriendPanelSkin
 	{
 		public static var skin:Object=
@@ -86,7 +107,7 @@ package game.skin
 						children:
 						[
 							{name:"shousuohaoyou",type:"Label",x:11,y:7,width:52,height:17,
-								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>搜索好友</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>搜索好友</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myImage",type:"Image",x:0,y:0,width:71,height:31,
 								normal:{link:"FriendPanel.daanniu1",x:0,y:0,width:71,height:31},
@@ -97,7 +118,7 @@ package game.skin
 						]
 					},
 					{name:"search",type:"Label",x:16,y:104,width:172,height:17,
-						normal:{x:0,y:0,width:172,height:17,content:"<font color='#fefcfc'>搜索人物名字xxxxxxxxxxxxxxxx</font>",format:{align:"left",bold:false,color:0xfefcfc,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+						normal:{x:0,y:0,width:172,height:17,content:"<font color='#fefcfc'>搜索人物名字xxxxxxxxxxxxxxxx</font>",format:{align:"left",bold:false,color:0xfefcfc,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 					},
 					{name:"name",type:"ScaleImage",x:13,y:100,width:180,height:24,top:6,right:6,bottom:6,left:6,
 						normal:{link:"FriendPanel.shurukuangdiban",x:0,y:0,width:180,height:24}
@@ -106,7 +127,7 @@ package game.skin
 						children:
 						[
 							{name:"haoyoutuijian",type:"Label",x:11,y:7,width:52,height:17,
-								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>好友推荐</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>好友推荐</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myImage",type:"Image",x:0,y:0,width:71,height:31,
 								normal:{link:"FriendPanel.daanniu1",x:0,y:0,width:71,height:31},
@@ -120,7 +141,7 @@ package game.skin
 						children:
 						[
 							{name:"tianjiahaoyou",type:"Label",x:11,y:7,width:52,height:17,
-								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>添加好友</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+								normal:{x:0,y:0,width:52,height:17,content:"<font color='#fffefe'>添加好友</font>",format:{align:"left",bold:false,color:0xfffefe,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myImage",type:"Image",x:0,y:0,width:71,height:31,
 								normal:{link:"FriendPanel.daanniu1",x:0,y:0,width:71,height:31},
@@ -223,8 +244,8 @@ package game.skin
 					{name:"page",type:"Stepper",x:69,y:476,width:157,height:24,
 						children:
 						[
-							{name:"txt",type:"Label",x:59,y:3,width:39,height:17,
-								normal:{x:0,y:0,width:39,height:17,content:"<font color='#ffffff'>10/20</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0.96,size:12,underline:false}}
+							{name:"txt",type:"Label",x:59,y:3,width:40,height:17,
+								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>10/20</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0.8,size:12,underline:false}}
 							},
 							{name:"firstBtn",type:"Button",x:0,y:1,width:24,height:23,
 								children:
@@ -277,9 +298,9 @@ package game.skin
 								children:
 								[
 									{name:"myLabel",type:"Label",x:17,y:4,width:28,height:18,
-										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>好友</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}},
-										over:{x:0,y:0,width:28,height:17,content:"<font color='#fcf901'>好友</font>",format:{align:"left",bold:false,color:0xfcf901,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}},
-										down:{x:0,y:0,width:28,height:17,content:"<font color='#fe011f'>好友</font>",format:{align:"left",bold:false,color:0xfe011f,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>好友</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}},
+										over:{x:0,y:0,width:28,height:17,content:"<font color='#fcf901'>好友</font>",format:{align:"left",bold:false,color:0xfcf901,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}},
+										down:{x:0,y:0,width:28,height:17,content:"<font color='#fe011f'>好友</font>",format:{align:"left",bold:false,color:0xfe011f,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"biaoqian",type:"ScaleImage",x:0,y:0,width:59,height:28,top:10,right:15,bottom:10,left:15,
 										normal:{link:"FriendPanel.biaoqian1",x:0,y:0,width:59,height:28},
@@ -293,8 +314,8 @@ package game.skin
 								children:
 								[
 									{name:"myLabel",type:"Label",x:11,y:5,width:40,height:18,
-										normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>黑名单</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}},
-										down:{x:0,y:0,width:40,height:17,content:"<font color='#fd0000'>黑名单</font>",format:{align:"left",bold:false,color:0xfd0000,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+										normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>黑名单</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}},
+										down:{x:0,y:0,width:40,height:17,content:"<font color='#fd0000'>黑名单</font>",format:{align:"left",bold:false,color:0xfd0000,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"biaoqian",type:"ScaleImage",x:0,y:0,width:59,height:28,top:10,right:15,bottom:10,left:15,
 										normal:{link:"FriendPanel.biaoqian1",x:0,y:0,width:59,height:28},
@@ -308,7 +329,7 @@ package game.skin
 								children:
 								[
 									{name:"heimingdan",type:"Label",x:16,y:6,width:28,height:17,
-										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>最近</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>最近</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"biaoqian",type:"ScaleImage",x:0,y:0,width:59,height:28,top:10,right:15,bottom:10,left:15,
 										normal:{link:"FriendPanel.biaoqian1",x:0,y:0,width:59,height:28},
@@ -322,7 +343,7 @@ package game.skin
 								children:
 								[
 									{name:"heimingdan",type:"Label",x:16,y:6,width:28,height:17,
-										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>分身</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13,letterSpacing:0,size:12,underline:false}}
+										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>分身</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:13.000000000000002,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"biaoqian",type:"ScaleImage",x:0,y:0,width:59,height:28,top:10,right:15,bottom:10,left:15,
 										normal:{link:"FriendPanel.biaoqian1",x:0,y:0,width:59,height:28},

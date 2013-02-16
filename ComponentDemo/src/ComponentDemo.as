@@ -1,15 +1,14 @@
 package
 {
-	import flash.display.Sprite;
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	import flash.system.ApplicationDomain;
 	
 	import game.component.Component;
 	import game.component.List;
 	import game.component.ListItemBase;
 	import game.component.Panel;
-	import game.skin.CompoundSkin;
-	import game.skin.FriendPanelSkin;
-	import game.skin.VIP2Skin;
+	import game.skin.NearSkin;
 	
 	[SWF(width="800", height="600")]
 	public class ComponentDemo extends Panel
@@ -18,20 +17,14 @@ package
 		
 		public function ComponentDemo()
 		{
+			MonsterDebugger.initialize(this);
 			Component.domain = ApplicationDomain.currentDomain;
-			this.skin = VIP2Skin.skin;
+			this.skin = NearSkin.skin;
 		}
 		
 		protected override function configChildren():void
 		{
-			_awardList = getDescendant("shangbu/jiangpin") as List;
-			_awardList.orientation = List.ORIENTATION_ROW;
-			_awardList.columnCount = 3;
-			for(var i:int = 0; i < 3; i++)
-			{
-				
-				_awardList.addChild(new ListItemBase());
-			}
+			
 		}
 	}
 }

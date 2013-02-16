@@ -22,6 +22,47 @@ package game.skin
 	import BagPanel.close2;close2;
 	import BagPanel.close1;close1;
 
+	/*
+	BagPanel:Container
+		close:Button
+		dragBar:DragBar
+		txtCopperBind:Label
+		txtBindMoney:Label
+		txtCopper:Label
+		txtMoney:Label
+		绑定铜币:Label
+		绑定元宝:Label
+		铜币:Label
+		元宝:Label
+		shurukuang3:ScaleImage
+		shurukuang1:ScaleImage
+		shurukuang2:ScaleImage
+		shurukuang0:ScaleImage
+		txtBeibaorongliangshuzi:Label
+		背包容量:Label
+		VIPguaji:Button
+		ptgj:Button
+		divide:Button
+		sale:Button
+		sort:Button
+		pageList:RadioButtonGroup
+		tabs:RadioButtonGroup
+		beibaotxtbiaoti:Image
+		biaoti:Image
+		huawen1:Image
+		huawen2:Image
+		myvipanniuContainer:Container
+			yaunchengck:Button
+			yuancgy:Button
+			huicheng:Button
+			vip:Button
+			xuanguakuang:Image
+		neidiban:Container
+			mynormal:Container
+				neidiban:Image
+		diban:ScaleImage
+		底板墨迹:ScaleImage
+	*/
 	public class BagPanelSkin
 	{
 		public static var skin:Object=
@@ -40,28 +81,28 @@ package game.skin
 					},
 					{name:"dragBar",type:"DragBar",x:0,y:0,width:295,height:45},
 					{name:"txtCopperBind",type:"Label",x:198,y:405,width:67,height:18,
-						normal:{x:0,y:0,width:67,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 					},
-					{name:"txtBindMoney",type:"Label",x:198,y:382,width:67,height:17,
-						normal:{x:0,y:0,width:67,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+					{name:"txtBindMoney",type:"Label",x:198,y:382,width:69,height:17,
+						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 					},
-					{name:"txtCopper",type:"Label",x:60,y:405,width:67,height:17,
-						normal:{x:0,y:0,width:67,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+					{name:"txtCopper",type:"Label",x:60,y:405,width:69,height:17,
+						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 					},
-					{name:"txtMoney",type:"Label",x:60,y:382,width:67,height:17,
-						normal:{x:0,y:0,width:67,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+					{name:"txtMoney",type:"Label",x:60,y:382,width:69,height:17,
+						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 					},
-					{name:"绑定铜币",type:"Label",x:137,y:404,width:55,height:17,
-						normal:{x:0,y:0,width:55,height:17,content:"<font color='#ac8123'>绑定铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+					{name:"绑定铜币",type:"Label",x:137,y:404,width:57,height:17,
+						normal:{x:0,y:0,width:57,height:17,content:"<font color='#ac8123'>绑定铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 					},
-					{name:"绑定元宝",type:"Label",x:137,y:381,width:55,height:17,
-						normal:{x:0,y:0,width:55,height:17,content:"<font color='#ac8123'>绑定元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+					{name:"绑定元宝",type:"Label",x:137,y:381,width:57,height:17,
+						normal:{x:0,y:0,width:57,height:17,content:"<font color='#ac8123'>绑定元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 					},
-					{name:"铜币",type:"Label",x:24,y:404,width:30,height:17,
-						normal:{x:0,y:0,width:30,height:17,content:"<font color='#ac8123'>铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+					{name:"铜币",type:"Label",x:24,y:404,width:31,height:17,
+						normal:{x:0,y:0,width:31,height:17,content:"<font color='#ac8123'>铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 					},
-					{name:"元宝",type:"Label",x:24,y:382,width:30,height:17,
-						normal:{x:0,y:0,width:30,height:17,content:"<font color='#ac8123'>元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+					{name:"元宝",type:"Label",x:24,y:382,width:31,height:17,
+						normal:{x:0,y:0,width:31,height:17,content:"<font color='#ac8123'>元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 					},
 					{name:"shurukuang3",type:"ScaleImage",x:190,y:403,width:81,height:20,top:4,right:4,bottom:4,left:4,
 						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
@@ -75,11 +116,11 @@ package game.skin
 					{name:"shurukuang0",type:"ScaleImage",x:52,y:380,width:81,height:20,top:4,right:4,bottom:4,left:4,
 						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
 					},
-					{name:"txtBeibaorongliangshuzi",type:"Label",x:225,y:329,width:52,height:17,
-						normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>000/000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.72,size:12,underline:false}}
+					{name:"txtBeibaorongliangshuzi",type:"Label",x:225,y:329,width:55,height:17,
+						normal:{x:0,y:0,width:55,height:17,content:"<font color='#ffffff'>000/000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
 					},
-					{name:"背包容量",type:"Label",x:194,y:328,width:43,height:17,
-						normal:{x:0,y:0,width:43,height:17,content:"<font color='#ac8123'>容量：</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+					{name:"背包容量",type:"Label",x:194,y:328,width:45,height:17,
+						normal:{x:0,y:0,width:45,height:17,content:"<font color='#ac8123'>容量：</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 					},
 					{name:"VIPguaji",type:"Button",x:212,y:353,width:60,height:22,
 						children:
@@ -185,8 +226,8 @@ package game.skin
 							{name:"page3",type:"RadioButton",x:66,y:0,width:32,height:22,
 								children:
 								[
-									{name:"txt3",type:"Label",x:11,y:3,width:11,height:17,
-										normal:{x:0,y:0,width:11,height:17,content:"<font color='#ffffff'>3</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.72,size:12,underline:false}}
+									{name:"txt3",type:"Label",x:11,y:3,width:12,height:17,
+										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>3</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
@@ -199,8 +240,8 @@ package game.skin
 							{name:"page2",type:"RadioButton",x:33,y:0,width:32,height:22,
 								children:
 								[
-									{name:"txt2",type:"Label",x:11,y:3,width:11,height:17,
-										normal:{x:0,y:0,width:11,height:17,content:"<font color='#ffffff'>2</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+									{name:"txt2",type:"Label",x:11,y:3,width:12,height:17,
+										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>2</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
@@ -232,8 +273,8 @@ package game.skin
 							{name:"other",type:"RadioButton",x:192,y:0,width:51,height:22,
 								children:
 								[
-									{name:"other",type:"Label",x:12,y:5,width:32,height:17,
-										normal:{x:0,y:0,width:32,height:17,content:"<font color='#ffffff'>其他</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:1.92,size:12,underline:false}}
+									{name:"other",type:"Label",x:12,y:5,width:33,height:17,
+										normal:{x:0,y:0,width:33,height:17,content:"<font color='#ffffff'>其他</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:1.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
@@ -246,8 +287,8 @@ package game.skin
 							{name:"gem",type:"RadioButton",x:144,y:0,width:51,height:22,
 								children:
 								[
-									{name:"gem",type:"Label",x:12,y:5,width:30,height:17,
-										normal:{x:0,y:0,width:30,height:17,content:"<font color='#ffffff'>宝石</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.72,size:12,underline:false}}
+									{name:"gem",type:"Label",x:12,y:5,width:31,height:17,
+										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>宝石</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
@@ -260,8 +301,8 @@ package game.skin
 							{name:"drug",type:"RadioButton",x:96,y:0,width:51,height:22,
 								children:
 								[
-									{name:"drug",type:"Label",x:13,y:5,width:30,height:17,
-										normal:{x:0,y:0,width:30,height:17,content:"<font color='#ffffff'>药品</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+									{name:"drug",type:"Label",x:13,y:5,width:31,height:17,
+										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>药品</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
@@ -274,8 +315,8 @@ package game.skin
 							{name:"equip",type:"RadioButton",x:48,y:0,width:51,height:22,
 								children:
 								[
-									{name:"equip",type:"Label",x:13,y:5,width:30,height:17,
-										normal:{x:0,y:0,width:30,height:17,content:"<font color='#ffffff'>装备</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5,letterSpacing:0.96,size:12,underline:false}}
+									{name:"equip",type:"Label",x:13,y:5,width:31,height:17,
+										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>装备</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.499999999999999,letterSpacing:0.8,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
 										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},

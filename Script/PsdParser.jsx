@@ -45,17 +45,18 @@ var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 //默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
 var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
 var outputFile = null;
-var assetXML = "";
 var assetImportCode = "";
 var assetImportMap = {};
+var assetMap = {};
 //Skin文件默认保存目录为Psd文件目录下的0_code文件夹
 var skinCodeFolderPath = "0_code";
 var SETTING_FILE_NAME = "PSD2SWF.ini";
 var SETTING_SKIN_CODE_FOLDER_TOKEN = "SKIN_CODE_FOLDER=";
 var SETTING_SKIN_TEMPLATE_TOKEN = "SKIN_TEMPLATE=";
 var SHARED = "shared";
+var DEFAULT_IMAGE_QUALITY = 80;
 //公共资源列表，从PSD文件所在目录下的shared.xml中读取,shared.xml记录了模块间公共资源信息
-var sharedResourceMap = {};
+var sharedAssetMap = {};
 //将运行结果回报给Photoshop
 var feedbackContent = "";
 //---------------------------------
@@ -76,7 +77,7 @@ function main()
 		var hint = generateHint(result, "\t")
         exportAllElementsToPNG();
         writeSkinFile(skin, assetImportCode, hint);
-        writeAssetXMLFile(assetXML);
+        writeAssetXMLFile();
     }
     catch (e)
     {
@@ -102,7 +103,7 @@ function extractFileInfo()
 function loadSharedXml(psdFolder)
 {
     var sharedXmlPath = psdFolder + "/shared.xml";
-    sharedResourceMap = {};
+    sharedAssetMap = {};
     if (Files.exists(sharedXmlPath) == true)
     {
         var file = Files.open(sharedXmlPath, "unicode", false);
@@ -113,7 +114,7 @@ function loadSharedXml(psdFolder)
             {
                 var slashIndex = line.lastIndexOf("\\", pngIndex);
                 var sharedResourceKey = line.substring(slashIndex + 1, pngIndex);
-                sharedResourceMap[sharedResourceKey] = 1;
+                sharedAssetMap[sharedResourceKey] = 1;
             }
             line = file.readlineUTF8();
         } while (line != null);
@@ -182,12 +183,18 @@ function writeSkinFile(content, assetImport, hint)
     file.close();
 }
 
-function writeAssetXMLFile(content)
+function writeAssetXMLFile()
 {
+	var assetXML = "<data name=\"" + psdName + "\">\n";
+	for(var key in assetMap)
+	{
+		assetXML += "\t<node quality='" + assetMap[key] + "'>" + key + "</node>\n";
+	}
+	assetXML += "</data>";
     var xmlPath = psdPath.replace(/\.(psd|PSD|png)/g, ".xml");
     Files.deleteFileIfExisting(xmlPath);
     var file = Files.open(xmlPath, true, "unicode");
-    file.writeUTF8(content);
+    file.writeUTF8(assetXML);
     file.close();
 }
 
@@ -762,7 +769,7 @@ function atomParseImageElement(element)
     var prefix = psdName;
     validateComponentNameFirstToken("Image", obj.name);
     validateImageName(obj.name);
-    if (sharedResourceMap[obj.name] != null)
+    if (sharedAssetMap[obj.name] != null)
     {
         prefix = SHARED;
     }
@@ -835,7 +842,7 @@ function parseImageName(element)
     var obj = new Object();
     var arr = str.split("_");
     obj.name = arr[0];
-    obj.quality = arr[1] == undefined ? 80 : arr[1];
+    obj.quality = arr[1] == undefined ? DEFAULT_IMAGE_QUALITY : arr[1];
     return obj;
 }
 
@@ -1057,8 +1064,7 @@ function exportAllElementsToPNG()
     }
 
     var rect, name, filename, counter = 1;
-    var quality = 80;
-    assetXML = "<data name=\"" + psdName + "\">\n";
+    var quality = DEFAULT_IMAGE_QUALITY;
     for (i = 0; i < n; i++)
     {
         if (dom.layers[i].layerType == "web" || dom.layers[i].frames[f].visible == false) continue;
@@ -1073,28 +1079,31 @@ function exportAllElementsToPNG()
             var obj = parseImageName(elem);
             name = obj.name;
             if (name == null) name = defaultname + (counter++);
-            var folder = "";
+            var folderPath = "";
             var tempAssetImportCode = "";
-            if (sharedResourceMap[name] != null)
+			var folderName = "";
+            if (sharedAssetMap[name] != null)
             {
-                folder = filepath + "/" + SHARED;
-                createInexistentFolder(folder);
-                filename = folder + "/" + name + ".png";
-                tempAssetImportCode = "\timport " + SHARED + "." + name + ";" + name + ";\n";
+				folderName = SHARED;
             }
             else
             {
-                folder = filepath + "/" + psdName;
-                createInexistentFolder(folder);
-                filename = folder + "/" + name + ".png";
-                tempAssetImportCode = "\timport " + psdName + "." + name + ";" + name + ";\n";
+				folderName = psdName;
             }
+			folderPath = filepath + "/" + folderName;
+            createInexistentFolder(folderPath);
+            filename = folderPath + "/" + name + ".png";
+            tempAssetImportCode = "\timport " + folderName + "." + name + ";" + name + ";\n";
             if (assetImportMap[tempAssetImportCode] == null)
             {
                 assetImportCode += tempAssetImportCode;
                 assetImportMap[tempAssetImportCode] = 1;
             }
-            assetXML += "\t<node quality='" + obj.quality + "'>" + convertFileName(filename) + "</node>\n";
+			var assetName = convertFileName(filename);
+			if((assetMap[assetName] == undefined) || (obj.quality > parseInt(assetMap[assetName])))
+			{
+				assetMap[assetName] = obj.quality;
+			}
             sXO.cropLeft = rect.left;
             sXO.cropRight = rect.right;
             sXO.cropTop = rect.top;
@@ -1103,7 +1112,6 @@ function exportAllElementsToPNG()
             elem.visible = false;
         }
     }
-    assetXML += "</data>";
     i = visArr.length;
     while (i--) visArr[i].visible = true;
     sXO.crop = oldcrop;

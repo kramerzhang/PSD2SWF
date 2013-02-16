@@ -8,7 +8,7 @@ package
 	import game.component.List;
 	import game.component.ListItemBase;
 	import game.component.Panel;
-	import game.skin.NearSkin;
+	import game.skin.BagPanelSkin;
 	
 	[SWF(width="800", height="600")]
 	public class ComponentDemo extends Panel
@@ -19,7 +19,7 @@ package
 		{
 			MonsterDebugger.initialize(this);
 			Component.domain = ApplicationDomain.currentDomain;
-			this.skin = NearSkin.skin;
+			this.skin = BagPanelSkin.skin;
 		}
 		
 		protected override function configChildren():void

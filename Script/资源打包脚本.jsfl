@@ -202,13 +202,6 @@ function createPublishSWCProfile()
 	doc.importPublishProfileString(profileXML);
 }
 
-function getXmlFileName()
-{
-	var lastSlashIndex = xmlPath.lastIndexOf("/");
-	var lastDotIndex = xmlPath.lastIndexOf(".");
-	xmlFileName = xmlPath.substring(lastSlashIndex + 1, lastDotIndex);
-}
-
 function importImage()
 {
 	for(var str in imageMap)

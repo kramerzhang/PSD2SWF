@@ -18,18 +18,18 @@ var feedbackContent = "";
 
 var typeList =		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper"];
 var parserList =	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
-var generatorList = [generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarSkin, generateListSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
-var validatorList = [validateImage, validateImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
+var generatorList =	[generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarSkin, generateListSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
+var validatorList =	[validateImage, validateImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
 var regExpList =	[null, null, null, buttonRegExp, comboBoxRegExp, null, null, null, radioButtonRegExp, radioButtonGroupRegExp, scrollBarRegExp, sliderRegExp, stepperRegExp];
 
 //使用正则表达式对组件名称进行验证，$表示名称结尾
-var buttonRegExp =			{required: ["(Image|ScaleImage)_.*"]};
-var comboBoxRegExp =		{required: ["Label_label$", "List_list$", "Button_btn$"], optional: ["ScrollBar_scrollBar$"]};
-var radioButtonRegExp =		{required: ["(Image|ScaleImage)_.*"]};
-var radioButtonGroupRegExp ={required: ["RadioButton_.*"]};
-var scrollBarRegExp =		{required: ["Button_arrowDown$", "Button_arrowUp$", "Button_thumb$", ".*_track$"], optional: ["Image_thumbIcon$"]};
-var sliderRegExp =			{required: ["Button_btn$", ".*_track$"]};
-var stepperRegExp =			{required: ["Label_txt$", "Button_nextBtn$", "Button_prevBtn$"], optional: ["Button_lastBtn$", "Button_firstBtn$"]};
+var buttonRegExp =				{required: ["(Image|ScaleImage)_.*"]};
+var comboBoxRegExp =			{required: ["Label_label$", "List_list$", "Button_btn$"], optional: ["ScrollBar_scrollBar$"]};
+var radioButtonRegExp =			{required: ["(Image|ScaleImage)_.*"]};
+var radioButtonGroupRegExp =	{required: ["RadioButton_.*"]};
+var scrollBarRegExp =			{required: ["Button_arrowDown$", "Button_arrowUp$", "Button_thumb$", ".*_track$"], optional: ["Image_thumbIcon$"]};
+var sliderRegExp =				{required: ["Button_btn$", ".*_track$"]};
+var stepperRegExp =				{required: ["Label_txt$", "Button_nextBtn$", "Button_prevBtn$"], optional: ["Button_lastBtn$", "Button_firstBtn$"]};
 
 //资源名称命名验证正则表达式，1.不允许数字和特殊符号作为命名开始，2.图像图层命名中不能包含中文字符
 var firstTokenRegExp = /^([0-9]|\~|\!|\@|\#|\^|\*)/;

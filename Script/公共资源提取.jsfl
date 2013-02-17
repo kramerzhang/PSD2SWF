@@ -8,7 +8,7 @@ var xmlMask = "*.xml";
 var pngMask = "*.png";
 var imageMap = {};
 var sharedXml = null;
-var INDEX_THRESHOLD = 3;
+var INDEX_THRESHOLD = 1;
 var folderPath = "";
 var SHARED = "shared";
 

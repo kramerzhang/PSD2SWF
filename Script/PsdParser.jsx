@@ -558,28 +558,12 @@ function validateComponentNameFirstToken(obj)
 
 function getComponentRegExp(type)
 {
-	var len = typeList.length;
-	for (var i = 0; i < len; i++)
-	{
-		if (type == typeList[i])
-		{
-			return regExpList[i];
-		}
-	}
-	return null;
+	return regExpList[findTypeIndex(type)];
 }
 
 function getComponentValidator(type)
 {
-	var len = typeList.length;
-	for (var i = 0; i < len; i++)
-	{
-		if (type == typeList[i])
-		{
-			return validatorList[i];
-		}
-	}
-	return null;
+	return validatorList[findTypeIndex(type)];
 }
 
 //--------------------------------------------------------------------------
@@ -587,15 +571,7 @@ function getComponentValidator(type)
 //--------------------------------------------------------------------------
 function getTypeGenerator(type)
 {
-	var len = typeList.length;
-	for (var i = 0; i < len; i++)
-	{
-		if (type == typeList[i])
-		{
-			return generatorList[i];
-		}
-	}
-	return null;
+	return generatorList[findTypeIndex(type)];
 }
 
 function generateChildrenStr(children, indent)

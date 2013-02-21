@@ -30,7 +30,7 @@ package game.component
 		private static var _rect:Rectangle;
 		private static var _dstPoint:Point;
 		private static var _transformMatrix:Matrix;
-		
+				
 		initialize();
 		
 		private static function initialize():void
@@ -175,6 +175,15 @@ package game.component
 		private static function generateGridListKey(link:String, top:int, right:int, bottom:int, left:int):String
 		{
 			return link + "_" + top + "_"+ right + "_" + bottom + "_" + left;
+		}
+		
+		//仅用于预览模式
+		public static function mergeBitmapDataMap(map:Dictionary):void
+		{
+			for(var key:String in map)
+			{
+				_bitmapDataMap[key] = map[key];
+			}
 		}
 		
 	}

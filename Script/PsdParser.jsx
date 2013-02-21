@@ -13,8 +13,8 @@ var parseResult = null;
 //公共图片资源，从PSD文件所在目录下的shared.xml中读取,shared.xml记录了模块间公共资源信息
 var sharedAssetMap = null;
 var assetMap = {};
-//将运行结果回报给Photoshop
-var feedbackContent = "";
+//生成Skin文件路径
+var skinFilePath = "";
 
 var typeList =		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper"];
 var parserList =	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
@@ -69,10 +69,9 @@ function main()
 	}
 	catch (e)
 	{
-		feedbackContent = psdName + ".psd|" + e.message;
+		return "Error: " + psdName + ".psd(" + e.message + ")";
 	}
-	//alert(feedbackContent);
-	return feedbackContent;
+	return "Success$" + parseResult.width + "$" + parseResult.height + "$" + skinFilePath;
 }
 
 function resizeDocumentCanvas()
@@ -161,7 +160,7 @@ function writeSkinFile()
 	createInexistentFolder(skinCodeFolderPath);
 	skinCodeFolderPath = skinCodeFolderPath + "/skin";
 	createInexistentFolder(skinCodeFolderPath);
-	var skinFilePath = skinCodeFolderPath + "/" + skinClassName + ".as";
+	skinFilePath = skinCodeFolderPath + "/" + skinClassName + ".as";
 	Files.deleteFileIfExisting(skinFilePath);
 	var file = Files.open(skinFilePath, true, "unicode");
 	var str = skinCodeTemplate.replace("${assetImport}", assetImport);

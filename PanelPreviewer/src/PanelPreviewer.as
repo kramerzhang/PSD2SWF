@@ -22,8 +22,10 @@ package
 	public class PanelPreviewer extends Sprite
 	{
 		//PSD文件所在目录路径
+		//测试值，在PS中由预览FlashPlayer传入实际值
 		private var _psdUrl:String = "file:///C|/Users/Administrator/Documents/GitHub/PSD2SWF/ComponentDemo/assets/BagPanel.psd";
-		//Skin文件Url
+		//Skin文件路径
+		//测试值，在PS中由预览FlashPlayer传入实际值
 		private var _skinUrl:String = "file:///C|/Users/Administrator/Documents/GitHub/PSD2SWF/ComponentDemo/assets/0_code/game/skin/BagPanelSkin.as";
 		private var _skinObj:Object;
 		private var _assetUrlList:Array;
@@ -71,19 +73,18 @@ package
 		private function onAssetXmlLoaded(evt:ResourceEvent):void
 		{
 			var assetXml:XML = evt.content as XML;
-			var moduleName:String = assetXml.@name;
 			_assetUrlList = new Array();
 			var nodeList:XMLList = assetXml.node;
 			var len:int = nodeList.length();
 			for(var i:int = 0; i < len; i++)
 			{
 				var node:XML = nodeList[i];
-				_assetUrlList.push(generateAssetUrl(moduleName, node));
+				_assetUrlList.push(generateAssetUrl(node));
 			}
 			loadAssetList();
 		}
 		
-		private function generateAssetUrl(moduleName:String, assetPath:String):String
+		private function generateAssetUrl(assetPath:String):String
 		{
 			var assetIdentifier:Object = getAssetIdentifier(assetPath);
 			return _psdUrl.substring(0, _psdUrl.lastIndexOf("/")) + "/" + assetIdentifier.moduleName + "/" + assetIdentifier.assetName + ".png";

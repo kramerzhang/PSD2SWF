@@ -10,7 +10,6 @@ package game.component
 	{
 		private var _selected:Boolean;
 		private var _data:Object;
-		private var _index:int;
 		
 		public function RadioButton()
 		{
@@ -67,16 +66,6 @@ package game.component
 		public function get data():Object
 		{
 			return _data;
-		}
-
-		public function set index(value:int):void
-		{
-			_index = value;
-		}
-		
-		public function get index():int
-		{
-			return _index;
 		}
 	}
 }

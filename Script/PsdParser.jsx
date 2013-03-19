@@ -37,6 +37,10 @@ var chineseCharRegExp = /[\u4e00-\u9fa5]/;
 //消除图层命名中的无意义字符
 var dummyTokenList = [/ /g, /副本\d*/g, /copy\d*/g];
 
+//检测按钮组件四态名称易写错的形式
+var stateNameList		= ["normal", "over", "down", "disable"];
+var stateNameRegExpList	= ["((\\w+?){1}normal)|(normal(\\w+){1})|nromal|norma\\b", "((\\w+?){1}over)|(over(\\w+){1})|ovre", "((\\w+?){1}down)|(down(\\w+){1})|donw", "((\\w+?){1}disable)|(disable(\\w+){1})|disble|disabled/disbled"];
+
 var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
 var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 
@@ -120,7 +124,7 @@ function loadSetting()
 	var file = Files.open(settingFilePath, "unicode", false);
 	var line = "";
 	do {
-		if(line.match(/^[^\#\s]+?$/igm) != null)
+		if(line.match(/^\w.+?$/igm) != null)
 		{
 			readSkinTemplateSetting(line);
 			readSkinCodeFolderSetting(line);
@@ -135,7 +139,7 @@ function readSkinTemplateSetting(line)
 	var index = line.indexOf(SETTING_SKIN_TEMPLATE_TOKEN);
 	if(index != -1)
 	{
-		skinCodeTemplate = line.substring(SETTING_SKIN_TEMPLATE_TOKEN.length + 1);
+		skinCodeTemplate = line.substring(SETTING_SKIN_TEMPLATE_TOKEN.length);
 	}
 }
 
@@ -278,26 +282,11 @@ function parseElementList(elementList)
 		var element = elementList[i];
 		if (element.isLayer == true)
 		{
-			var parser = getLayerElementParser(element);
-			if (parser != null)
-			{
-				obj = parser(element);
-			}
-			else
-			{
-				logError(parseLayerElementName(element).type + "  " + "未找到对应解析函数");
-			}
+			obj = parseLayerElement(element);
 		}
 		else
 		{
-			if (element instanceof Text)
-			{
-				obj = parseSimpleTextElement(element);
-			}
-			else
-			{
-				obj = parseSimpleImageElement(element);
-			}
+			obj = parseSimpleElement(element);
 		}
 		if (obj != null)
 		{
@@ -305,6 +294,33 @@ function parseElementList(elementList)
 		}
 	}
 	return result;
+}
+
+function parseLayerElement(element)
+{
+	if(element.frames && element.frames[0].visible == false)
+	{
+		return null;
+	}
+	var parser = getLayerElementParser(element);
+	if (parser == null)
+	{
+		logError(parseLayerElementName(element).type + "  " + "未找到对应解析函数");
+	}
+	return parser(element);
+}
+
+function parseSimpleElement(element)
+{
+	if(element.visible == false)
+	{
+		return null;
+	}
+	if (element instanceof Text)
+	{
+		return parseSimpleTextElement(element);
+	}
+	return obj = parseSimpleImageElement(element);
 }
 
 function parseList(element)
@@ -407,6 +423,7 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 	{
 		var subElement = elementList[i];
 		subElementName = eliminateElementDummyToken(subElement);
+		verifyStateName(element.name, subElementName);
 		if (subElement.isLayer == false)
 		{
 			logError(typeName + " " + result.name + " 格式错误！文件夹内容包含非状态文件夹内容！");
@@ -424,6 +441,18 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 	adjustContainerBound(result);
 	adjustChildBound(children, result.bound);
 	return result;
+}
+
+function verifyStateName(elementName, stateName)
+{
+	var len = stateNameList.length;
+	for(var i = 0; i < len; i++)
+	{
+		if(stateName.match(stateNameRegExpList[i]) != null)
+		{
+			logError(elementName + " 状态名错误:‘" + stateName + "’应为‘" + stateNameList[i] + "'");
+		}
+	}
 }
 
 function parseSimpleImageElement(element)
@@ -727,9 +756,17 @@ function atomParseTextElement(element)
 		{
 			content = "<u>" + content + "</u>";
 		}
+		else
+		{
+			result.format.underline = false;
+		}
 		if (obj.bold == true)
 		{
 			content = "<b>" + content + "</b>";
+		}
+		else
+		{
+			result.format.bold = false;
 		}
 		content = "<font color='" + obj.fillColor + "'>" + content + "</font>";
 		result.content += content;
@@ -781,7 +818,7 @@ function parseTextDefaultTextFormat(textAttrs)
 		leading = textAttrs.leading - result.size;
 	}
 	leading = leading > 0 ? leading : 0;
-	result.leading = leading;
+	result.leading = Math.round(leading * 100) * 0.01;
 	result.underline = textAttrs.underline;
 	return result;
 }
@@ -1073,20 +1110,17 @@ function exportAllElementsToPNG()
 	for (i = 0; i < n; i++)
 	{
 		var layer = dom.layers[i];
-		if (layer.layerType == "web" || layer.frames[f].visible == false) continue;
+		if (layer.layerType == "web") continue;
+		if(layer.frames[f].visible == false)
+		{
+			dom.setLayerVisible(-1, -1, true, true);
+		}
 		m = layer.frames[f].elements.length;
 		for (j = 0; j < m; j++)
 		{
 			elem = layer.frames[f].elements[j];
-			if (elem.visible)
-			{
-				elem.visible = false;
-				visArr.push(elem);
-			}
-			else
-			{
-				visArr["_" + i + "_" + j] = true;
-			}
+			elem.visible = false;
+			visArr.push(elem);
 		}
 	}
 
@@ -1094,11 +1128,10 @@ function exportAllElementsToPNG()
 	for (i = 0; i < n; i++)
 	{
 		var layer = dom.layers[i];
-		if (layer.layerType == "web" || layer.frames[f].visible == false) continue;
+		if (layer.layerType == "web") continue;
 		m = layer.frames[f].elements.length;
 		for (j = 0; j < m; j++)
 		{
-			if (visArr["_" + i + "_" + j]) continue;
 			elem = layer.frames[f].elements[j];
 			if (elem instanceof Text) continue; //ignore text elements
 			rect = elem.pixelRect;

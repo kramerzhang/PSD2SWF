@@ -133,7 +133,6 @@ package game.component
 				var item:ListItemBase = _itemList[i];
 				if(_orientation == ORIENTATION_COLUMN)
 				{
-					var itemHeight:int = item.height;
 					item.x = (i % _columnCount) * (item.width + _horizontalGap);
 					item.y = int(i / _columnCount) * (item.height + _verticalGap);
 				}

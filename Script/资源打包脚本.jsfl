@@ -237,7 +237,8 @@ function addLinkageName()
 		lib.setItemProperty('linkageExportForAS', true);
 		lib.setItemProperty('linkageExportForRS', false);
 		lib.setItemProperty('linkageExportInFirstFrame', true);
-		if(qualityMap[moduleName + "/" + item.name] == 100)
+		var imageQuality = qualityMap[moduleName + "/" + item.name];
+		if(imageQuality == 100)
 		{
 			lib.setItemProperty('compressionType', 'lossless');
 		}

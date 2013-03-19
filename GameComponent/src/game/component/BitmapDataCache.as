@@ -50,6 +50,7 @@ package game.component
 		{
 			var result:BitmapData = _bitmapDataMap[link];
 			if(result == null)
+				
 			{
 				var domain:ApplicationDomain = Component.domain;
 				if(domain == null)

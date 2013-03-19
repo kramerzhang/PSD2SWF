@@ -12,6 +12,7 @@ package game.component
 	{
 		private var _btnList:Vector.<RadioButton>;
 		private var _selectedBtn:RadioButton;
+		private var _selectedIndex:int;
 		
 		public function RadioButtonGroup()
 		{
@@ -95,7 +96,6 @@ package game.component
 		private function addToBtnList(btn:RadioButton):void
 		{
 			_btnList.push(btn);
-			updateBtnIndex();
 		}
 		
 		private function removeFromBtnList(btn:RadioButton):void
@@ -104,17 +104,6 @@ package game.component
 			if(index > -1)
 			{
 				_btnList.splice(index, 1);
-				updateBtnIndex();
-			}
-		}
-		
-		private function updateBtnIndex():void
-		{
-			var len:int = _btnList.length;
-			for(var i:int = 0; i < len; i++)
-			{
-				var btn:RadioButton = _btnList[i];
-				btn.index = i;
 			}
 		}
 		
@@ -131,11 +120,9 @@ package game.component
 		private function onBtnClick(evt:MouseEvent):void
 		{
 			var btn:RadioButton = evt.target as RadioButton;
-			if(_selectedBtn != btn)
+			if(this.selection != btn)
 			{
-				_selectedBtn.selected = false;
-				_selectedBtn = btn;
-				_selectedBtn.selected = true;
+				this.selection = btn;
 				rearrangeBtnListDepth();
 				dispatchEvent(Component.EVENT_CHANGE);
 			}
@@ -162,6 +149,10 @@ package game.component
 		
 		public function set selection(value:RadioButton):void
 		{
+			if(_selectedBtn != null)
+			{
+				_selectedBtn.selected = false;
+			}
 			_selectedBtn = value;
 			_selectedBtn.selected = true;
 		}
@@ -169,6 +160,24 @@ package game.component
 		public function get selection():RadioButton
 		{
 			return _selectedBtn;
+		}
+		
+		public function set selectIndex(value:int):void
+		{
+			if(value < 0 || value > _btnList.length - 1)
+			{
+				throw new ArgumentError("按钮索引值越界！");
+			}
+			var btn:RadioButton = _btnList[value];
+			if(this.selection != btn)
+			{
+				this.selection = btn;
+			}
+		}
+		
+		public function get selectIndex():int
+		{
+			return _btnList.indexOf(this.selection);
 		}
 		
 		public override function set enabled(value:Boolean):void

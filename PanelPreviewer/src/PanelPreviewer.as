@@ -1,14 +1,18 @@
 package
 {
 	import com.adobe.serialization.json.JSON;
+	import com.demonsters.debugger.MonsterDebugger;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.external.ExternalInterface;
 	import flash.system.ApplicationDomain;
+	import flash.system.Capabilities;
+	import flash.system.Security;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 	
@@ -18,6 +22,7 @@ package
 	import game.core.resource.ResourceManager;
 	import game.core.resource.events.ResourceEvent;
 	import game.core.resource.item.ImageItem;
+	import game.core.util.StringUtil;
 	
 	public class PanelPreviewer extends Sprite
 	{
@@ -35,11 +40,20 @@ package
 		
 		public function PanelPreviewer()
 		{
+			MonsterDebugger.initialize(this);
+			Security.allowDomain("*");
 			this.stage.align = StageAlign.TOP_LEFT;
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			
-			initialize();
-			loadAssetXml();
+			try
+			{
+				initialize();
+				loadAssetXml();
+			}
+			catch(e:Error)
+			{
+				addLog(e.message);
+			}
 		}
 		
 		private function initialize():void
@@ -47,16 +61,25 @@ package
 			Component.domain = ApplicationDomain.currentDomain;
 			_assetMap = new Dictionary();
 			showLog();
+			checkExternalInterface();
 		}
 		
 		private function showLog():void
 		{
+			var textFromat:TextFormat = new TextFormat();
+			textFromat.font = "SimSun";
 			_log = new TextField();
+			_log.width = 300;
+			_log.wordWrap = true;
+			_log.defaultTextFormat = textFromat;
 			_log.autoSize = TextFieldAutoSize.LEFT;
-			_log.text = "生成面板预览中。。。";
-			_log.x = (this.stage.stageWidth - _log.width) >> 1;
-			_log.y = (this.stage.stageHeight - _log.height) >> 1;
+			_log.text = "生成面板预览中。。。\n------------------------------------------------\nFlashPlayer版本号：" + Capabilities.version;
 			addChild(_log);
+		}
+		
+		private function addLog(info:String):void
+		{
+			_log.appendText("\n------------------------------------------------\n" + info);
 		}
 		
 		private function hideLog():void
@@ -64,9 +87,22 @@ package
 			removeChild(_log);
 		}
 		
+		private function checkExternalInterface():void
+		{
+			if(ExternalInterface.available == true)
+			{
+				addLog("JS通讯可用");
+			}
+			else
+			{
+				addLog("ERROR:JS通讯不可用，请联系zhangjunqin@4399.com");
+			}
+		}
+		
 		private function loadAssetXml():void
 		{
 			initPsdUrl();
+			addLog("PSD文件： " + _psdUrl);
 			ResourceManager.loadXml(_psdUrl.replace(/\.psd/igm, ".xml"), onAssetXmlLoaded);
 		}
 		
@@ -105,6 +141,7 @@ package
 		{
 			if(_assetUrlList.length == 0)
 			{
+				addLog("图片列表加载成功！");
 				BitmapDataCache.mergeBitmapDataMap(_assetMap);
 				loadSkin();
 				return;
@@ -123,11 +160,13 @@ package
 		private function loadSkin():void
 		{
 			initSkinUrl();
+			addLog("Skin文件： " + _skinUrl);
 			ResourceManager.loadBinary(_skinUrl, onSkinLoaded);
 		}
 		
 		private function onSkinLoaded(evt:ResourceEvent):void
 		{
+			addLog("Skin文件加载成功！");
 			var binary:ByteArray = evt.content as ByteArray;
 			var skinStr:String = binary.readUTFBytes(binary.length);
 			skinStr = skinStr.replace(/[\t\n\r]/igm, "");
@@ -151,6 +190,10 @@ package
 			if(ExternalInterface.available == true)
 			{
 				_psdUrl = ExternalInterface.call("getPsdUrl");
+				if(_psdUrl == null || StringUtil.trim(_psdUrl) == "")
+				{
+					addLog("获取PSD文件路径失败！");
+				}
 			}
 		}
 		
@@ -159,6 +202,10 @@ package
 			if(ExternalInterface.available == true)
 			{
 				_skinUrl = ExternalInterface.call("getSkinUrl");
+				if(_skinUrl == null || StringUtil.trim(_skinUrl) == "")
+				{
+					addLog("获取Skin文件路径失败！");
+				}
 			}
 		}
 	}

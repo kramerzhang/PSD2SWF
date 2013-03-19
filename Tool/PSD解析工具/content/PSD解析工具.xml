@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gpc defaultLocale="zh_CN" version="3" keySequence="42" currentLocale="zh_CN">
+  <product appid="PHSP" version="13" name="Photoshop CS6"/>
+  <target id="PHSP-13"/>
+  <ConfiguratorPanel name="PSD解析工具" width="218" height="140" init="doInit" close="doClose" persistent="true" extensionId="com.configurator.PSDLayerExporter" extensionVersion="1.0.0" menuName="PSDLayerExporter" flyoutMenuAbout="$$$/Configurator/FlyoutMenu/about">
+    <onInit><![CDATA[]]></onInit>
+    <aboutBox><![CDATA[]]></aboutBox>
+    <extensionDescription><![CDATA[导出PSD文件图层及布局信息工具]]></extensionDescription>
+    <extensionAuthor><![CDATA[zhangjunqin@4399.com]]></extensionAuthor>
+    <onClose><![CDATA[]]></onClose>
+    <eventListeners>
+      <function id="doInit" actionType="jsfunction" jsFunctionName="invoke_script">
+        <param id="onInit"/>
+      </function>
+      <function id="doClose" actionType="jsfunction" jsFunctionName="invoke_script">
+        <param id="onClose"/>
+      </function>
+    </eventListeners>
+    <ps_command _itemId="Main-File-Open" scriptID="Main-File-Open" toolTip="$$$/Main-File-Open/desc" label="$$$/Main-File-Open/name" click="onClick" cfgVisible="$$$/Configurator/Attribute/visible/value###34" x="10" y="10" width="198" height="50" top="10" left="10" right="10">
+      <script><![CDATA[var totalNum = 0;var currentNum = 0;main();function main(){app.activeDocument.save();var path = app.activeDocument.fullName;totalNum = 1;openInFireworks(path.fsName);}function openInFireworks(filePath){var bt = new BridgeTalk();bt.target = "fireworks";bt.body = "function main(){fw.openDocument('" + convertPath(filePath) + "', false, false);var result = fw.runScript('PsdParser.jsx');fw.closeDocument(fw.getDocumentDOM(),false); return result}main();";bt.onResult = function(result){if(result.body.match("Error") != null){alert(result.body);}else{currentNum++;if(currentNum >= totalNum){if(totalNum == 1){var paramList = result.body.split("$");openPreview(filePath, paramList[1], paramList[2], paramList[3]);}else{alert("共解析 " + totalNum + " 文件完成！" );}}}};bt.onError = function(){alert("调用Fireworks失败，请卸载、重装Fireworks或联系zhangjunqin@4399.com");};bt.send();}function openPreview(psdPath, width, height, skinPath){var flashPalette = new Window("dialog", "面板SWF预览");var group = flashPalette.add("group");var flashPlayer = group.add("flashplayer", group.bounds);flashPlayer.preferredSize = [parseInt(width), parseInt(height)];var btnGroup = flashPalette.add("group");var closeBtn = btnGroup.add("button", undefined, "Close");closeBtn.onClick = function(){flashPalette.close();}flashPlayer.getPsdUrl = function(){return convertPath(psdPath);}flashPlayer.getSkinUrl = function(){return skinPath;}flashPlayer.loadMovie(new File(new File(psdPath).parent.fsName+ "/PanelPreviewer.swf"));flashPalette.show();}function convertPath(path){var result = "";result = path.replace(/([cdefg]):/i, "file:///$1|");result = result.replace(/\\/g, "/");return result;}]]></script>
+      <eventListeners>
+        <function id="onClick" actionType="jsfunction" jsFunctionName="ps_invoke_script">
+          <param id="script"/>
+        </function>
+      </eventListeners>
+    </ps_command>
+    <ps_command _itemId="Main-File-Open" scriptID="Main-File-Open" toolTip="$$$/Main-File-Open/desc###40" label="$$$/Main-File-Open/name###41" click="onClick" cfgVisible="$$$/Configurator/Attribute/visible/value###42" x="10" y="64" width="198" height="50" left="10" right="10">
+      <script><![CDATA[var totalNum = 0;var currentNum = 0;main();function main(){var folder = Folder.selectDialog ("选择PSD文件夹");var psdList = folder.getFiles("*.psd");var len = psdList.length;totalNum = len;currentNum = 0;for(var i = 0; i < len; i++){openInFireworks(convertPath(psdList[i].fsName));}}function openInFireworks(filePath){var bt = new BridgeTalk();bt.target = "fireworks";bt.body = "function main(){fw.openDocument('" + convertPath(filePath) + "', false, false);var result = fw.runScript('PsdParser.jsx');fw.closeDocument(fw.getDocumentDOM(),false); return result}main();";bt.onResult = function(result){if(result.body.match("Error") != null){alert(result.body);}else{currentNum++;if(currentNum >= totalNum){if(totalNum == 1){var paramList = result.body.split("$");openPreview(filePath, paramList[1], paramList[2], paramList[3]);}else{alert("共解析 " + totalNum + " 文件完成！" );}}}};bt.onError = function(){alert("调用Fireworks失败，请卸载、重装Fireworks或联系zhangjunqin@4399.com");};bt.send();}function openPreview(psdPath, width, height, skinPath){var flashPalette = new Window("dialog", "面板SWF预览");var group = flashPalette.add("group");var flashPlayer = group.add("flashplayer", group.bounds);flashPlayer.preferredSize = [parseInt(width), parseInt(height)];var btnGroup = flashPalette.add("group");var closeBtn = btnGroup.add("button", undefined, "Close");closeBtn.onClick = function(){flashPalette.close();}flashPlayer.getPsdUrl = function(){return convertPath(psdPath);}flashPlayer.getSkinUrl = function(){return skinPath;}flashPlayer.loadMovie(new File(new File(psdPath).parent.fsName+ "/PanelPreviewer.swf"));flashPalette.show();}function convertPath(path){var result = "";result = path.replace(/([cdefg]):/i, "file:///$1|");result = result.replace(/\\/g, "/");return result;}]]></script>
+      <eventListeners>
+        <function id="onClick" actionType="jsfunction" jsFunctionName="ps_invoke_script">
+          <param id="script"/>
+        </function>
+      </eventListeners>
+    </ps_command>
+    <text _itemId="widget_text" toolTip="$$$/Configurator/Widget/Text/desc" styleName="scopeTextArea" width="118" height="18" backgroundAlpha="0" cfgVisible="$$$/Configurator/Attribute/visible/value###38" fontSize="10" color="0x333333" fontWeight="normal" fontStyle="italic" textDecoration="none" textAlign="left" backgroundColor="16777215" borderColor="12040892" borderStyle="none" x="10" y="113">
+      <text><![CDATA[$$$/Configurator/key_###39]]></text>
+    </text>
+  </ConfiguratorPanel>
+  <images/>
+  <scripts>
+    <script id="Main-File-Open"><![CDATA[ErrStrs = {}; ErrStrs.USER_CANCELLED=localize("$$$/ScriptingSupport/Error/UserCancelled=User cancelled the operation"); try {var idOpn = charIDToTypeID( 'Opn ' ); executeAction( idOpn, undefined, DialogModes.ALL ); } catch(e){if (e.toString().indexOf(ErrStrs.USER_CANCELLED)!=-1) {;} else{alert(localize("$$$/ScriptingSupport/Error/CommandNotAvailable=The command is currently not available"));}}]]></script>
+  </scripts>
+  <elements>
+    <element id="ConfiguratorPanel" classRT="com.adobe.configurator2.component.panel.PanelRuntime">
+      <attr id="name" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="minWidth" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="minHeight" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="maxWidth" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="maxHeight" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="persistent" meta="Other" translate="y"/>
+      <attr id="extensionId" meta="Other" translate="y"/>
+      <attr id="extensionVersion" meta="Other" translate="y"/>
+      <attr id="extensionAuthor" meta="Other" translate="y"/>
+      <attr id="extensionDescription" meta="Other" translate="y"/>
+      <attr id="menuName" meta="Other" translate="y"/>
+      <attr id="init" meta="EVENT" translate="y"/>
+      <attr id="close" meta="EVENT" translate="y"/>
+      <attr id="onInit" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="aboutBox" meta="UI_ACCESSOR" localize="y" translate="y"/>
+      <attr id="flyoutMenuAbout" meta="Other" localize="y" translate="y"/>
+      <attr id="normalIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="rollOverIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="darkNormalIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="width" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="height" meta="UI_ACCESSOR" translate="y"/>
+    </element>
+    <element id="ps_command" classRT="com.adobe.configurator2.component.CommandButtonRuntime">
+      <attr id="label" meta="UI_ACCESSOR" localize="y" translate="y"/>
+      <attr id="toolTip" meta="UI_ACCESSOR" localize="y" translate="y"/>
+      <attr id="script" meta="OTHER" translate="y"/>
+      <attr id="click" meta="EVENT" translate="y"/>
+      <attr id="mouseUpIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="mouseOverIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="mouseDownSkinIcon" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="top" meta="UI_STYLE" translate="y"/>
+      <attr id="bottom" meta="UI_STYLE" translate="y"/>
+      <attr id="left" meta="UI_STYLE" translate="y"/>
+      <attr id="right" meta="UI_STYLE" translate="y"/>
+      <attr id="horizontalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="verticalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="x" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="y" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="cfgVisible" meta="UI_ACCESSOR" localize="y"/>
+      <attr id="width" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="height" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="top" meta="UI_STYLE" translate="y"/>
+      <attr id="bottom" meta="UI_STYLE" translate="y"/>
+      <attr id="left" meta="UI_STYLE" translate="y"/>
+      <attr id="right" meta="UI_STYLE" translate="y"/>
+      <attr id="horizontalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="verticalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="x" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="y" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="cfgVisible" meta="UI_ACCESSOR" localize="y"/>
+      <attr id="width" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="height" meta="UI_ACCESSOR" translate="y"/>
+    </element>
+    <element id="text" classRT="com.adobe.configurator2.component.TextAreaRuntime">
+      <attr id="text" meta="UI_ACCESSOR" localize="y" translate="y"/>
+      <attr id="toolTip" meta="UI_ACCESSOR" localize="y" translate="y"/>
+      <attr id="styleName" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="fontFamily" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="fontSize" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="color" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="fontWeight" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="fontStyle" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="textDecoration" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="textAlign" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="backgroundColor" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="backgroundAlpha" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="borderColor" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="borderStyle" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="borderThickness" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="dropShadowEnabled" meta="UI_STYLE" localize="y" translate="y"/>
+      <attr id="top" meta="UI_STYLE" translate="y"/>
+      <attr id="bottom" meta="UI_STYLE" translate="y"/>
+      <attr id="left" meta="UI_STYLE" translate="y"/>
+      <attr id="right" meta="UI_STYLE" translate="y"/>
+      <attr id="horizontalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="verticalCenter" meta="UI_STYLE" translate="y"/>
+      <attr id="x" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="y" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="cfgVisible" meta="UI_ACCESSOR" localize="y"/>
+      <attr id="width" meta="UI_ACCESSOR" translate="y"/>
+      <attr id="height" meta="UI_ACCESSOR" translate="y"/>
+    </element>
+  </elements>
+  <properties>
+    <property id="LocaleSearchPath2">${HostProductRoot}/Locales/${LocaleID}/Support Files/Panels/${PanelName}/dictionary.xml</property>
+    <property id="LocaleSearchPath1">${HostProductRoot}/Locales/${LocaleID}/Support Files/Panels/fsPanels.xml</property>
+  </properties>
+</gpc>

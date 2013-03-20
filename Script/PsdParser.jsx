@@ -65,6 +65,7 @@ function main()
 		loadSetting();
 		loadSharedXml();
 		resizeDocumentCanvas();
+		correctDocumentStructure();
 		parseDocument();
 		validateParseResult();
 		writeSkinFile();
@@ -228,6 +229,76 @@ function writeAssetXMLFile()
 	var file = Files.open(xmlPath, true, "unicode");
 	file.writeUTF8(assetXML);
 	file.close();
+}
+
+function correctDocumentStructure()
+{	
+	if(verifyDocumentStructure() == false)
+	{
+		createTopNormalLayer();
+		reorderDocumentStructure();
+	}
+}
+
+function verifyDocumentStructure()
+{
+	var layerList = doc.topLayers;
+	var len = layerList.length;
+	for(var i = 0; i < len; i++)
+	{
+		var layer = layerList[i];
+		if(layer.name == "层" || layer.name == "layer")
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+function createTopNormalLayer()
+{
+	doc.addNewLayer("层", false);
+}
+
+function reorderDocumentStructure()
+{
+	var sublayerNameList = getSublayerNameList();
+	var len = sublayerNameList.length;
+	for(var i = 0; i < len; i++)
+	{
+		var sublayerName = sublayerNameList[i];
+		doc.reorderLayer(getLayerIndex(sublayerName) ,getLayerIndex("层"), false, 0, 2);
+	}
+}
+
+function getSublayerNameList()
+{
+	var result = new Array();
+	var layerList = doc.topLayers;
+	var len = layerList.length;
+	for(var i = 0; i < len; i++)
+	{
+		var layer = layerList[i];
+		if(layer.layerType != "normal" || layer.name == "层" || layer.name == "layer")
+		{
+			continue;
+		}
+		result.push(layer.name);
+	}
+	return result;
+}
+
+function getLayerIndex(layerName)
+{
+	var len = doc.layers.length;
+	for(var i = 0; i < len; i++)
+	{
+		if(doc.layers[i].name == layerName)
+		{
+			return i;
+		}
+	}
+	return -1;
 }
 
 function parseDocument()

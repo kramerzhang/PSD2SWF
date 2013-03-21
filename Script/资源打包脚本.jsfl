@@ -26,7 +26,7 @@ var FLA_FOLDER_TOKEN = "FLA_FOLDER=";
 var SWF_FOLDER_TOKEN = "SWF_FOLDER=";
 var SWC_FOLDER_TOKEN = "SWC_FOLDER=";
 
-main();
+//main();
 
 function main()
 {

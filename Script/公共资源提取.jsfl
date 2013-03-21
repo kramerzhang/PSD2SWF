@@ -12,7 +12,7 @@ var INDEX_THRESHOLD = 1;
 var folderPath = "";
 var SHARED = "shared";
 
-main();
+//main();
 
 function main()
 {

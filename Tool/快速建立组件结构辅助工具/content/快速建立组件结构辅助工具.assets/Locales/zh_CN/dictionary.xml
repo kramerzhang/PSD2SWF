@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asf locale="zh_CN" version="1.0" xmlns="http://ns.adobe.com/asf">
+  <str name="Configurator/Attribute/visible/value###11" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###14" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###17" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###2" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###20" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###23" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###26" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###29" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###32" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###35" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###38" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###4" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###41" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###44" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###47" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###7" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###8" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Container/Canvas/desc" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/Container/TabNavigator/desc" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/Container/TabNavigator/dropListLabel###5" translate="yes">
+    <val>选择一页:</val>
+  </str>
+  <str name="Configurator/Container/VBox/desc" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/FlyoutMenu/about" translate="yes">
+    <val>关于</val>
+  </str>
+  <str name="Configurator/key_###1" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/key_###3" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/TabNavigator/Canvas###6" translate="yes">
+    <val>选项卡 1</val>
+  </str>
+  <str name="Main-File-New/desc" translate="yes">
+    <val>Button</val>
+  </str>
+  <str name="Main-File-New/desc###12" translate="yes">
+    <val>Slider</val>
+  </str>
+  <str name="Main-File-New/desc###15" translate="yes">
+    <val>Button</val>
+  </str>
+  <str name="Main-File-New/desc###18" translate="yes">
+    <val>ScrollBar</val>
+  </str>
+  <str name="Main-File-New/desc###21" translate="yes">
+    <val>DragBar</val>
+  </str>
+  <str name="Main-File-New/desc###24" translate="yes">
+    <val>List</val>
+  </str>
+  <str name="Main-File-New/desc###27" translate="yes">
+    <val>Stepper</val>
+  </str>
+  <str name="Main-File-New/desc###30" translate="yes">
+    <val>RadioButton</val>
+  </str>
+  <str name="Main-File-New/desc###33" translate="yes">
+    <val>RadioButtonGroup</val>
+  </str>
+  <str name="Main-File-New/desc###36" translate="yes">
+    <val>Container</val>
+  </str>
+  <str name="Main-File-New/desc###39" translate="yes">
+    <val>Label</val>
+  </str>
+  <str name="Main-File-New/desc###42" translate="yes">
+    <val>Image</val>
+  </str>
+  <str name="Main-File-New/desc###45" translate="yes">
+    <val>ScaleImage</val>
+  </str>
+  <str name="Main-File-New/desc###9" translate="yes">
+    <val>ComboBox</val>
+  </str>
+  <str name="Main-File-New/name" translate="yes">
+    <val>新建标签按钮</val>
+  </str>
+  <str name="Main-File-New/name###10" translate="yes">
+    <val>新建下拉菜单</val>
+  </str>
+  <str name="Main-File-New/name###13" translate="yes">
+    <val>新建滑动条</val>
+  </str>
+  <str name="Main-File-New/name###16" translate="yes">
+    <val>新建按钮</val>
+  </str>
+  <str name="Main-File-New/name###19" translate="yes">
+    <val>新建滚动条</val>
+  </str>
+  <str name="Main-File-New/name###22" translate="yes">
+    <val>新建拖拽条</val>
+  </str>
+  <str name="Main-File-New/name###25" translate="yes">
+    <val>新建列表</val>
+  </str>
+  <str name="Main-File-New/name###28" translate="yes">
+    <val>新建步进器</val>
+  </str>
+  <str name="Main-File-New/name###31" translate="yes">
+    <val>新建单选按钮</val>
+  </str>
+  <str name="Main-File-New/name###34" translate="yes">
+    <val>新建单选按钮组</val>
+  </str>
+  <str name="Main-File-New/name###37" translate="yes">
+    <val>新建容器</val>
+  </str>
+  <str name="Main-File-New/name###40" translate="yes">
+    <val>新建文本</val>
+  </str>
+  <str name="Main-File-New/name###43" translate="yes">
+    <val>新建图像</val>
+  </str>
+  <str name="Main-File-New/name###46" translate="yes">
+    <val>新建九宫图像</val>
+  </str>
+</asf>

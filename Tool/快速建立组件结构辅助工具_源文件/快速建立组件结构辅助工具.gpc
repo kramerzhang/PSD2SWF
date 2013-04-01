@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gpc defaultLocale="zh_CN" version="3" keySequence="47" currentLocale="zh_CN">
+<gpc defaultLocale="zh_CN" version="3" keySequence="51" currentLocale="zh_CN">
   <product appid="PHSP" version="13" name="Photoshop CS6"/>
   <target id="PHSP-13"/>
-  <ConfiguratorPanel name="快速建立组件结构辅助工具" width="218" height="254" init="doInit" close="doClose" persistent="true" extensionId="com.configurator.extension" extensionVersion="1.0.0" menuName="快速建立组件结构辅助工具" flyoutMenuAbout="$$$/Configurator/FlyoutMenu/about">
+  <ConfiguratorPanel name="快速建立组件结构辅助工具" width="218" height="254" init="doInit" close="doClose" persistent="true" extensionId="com.configurator.extension" extensionVersion="1.0.0" menuName="快速建立组件结构辅助工具" flyoutMenuAbout="$$$/Configurator/FlyoutMenu/about" normalIcon="">
     <onInit><![CDATA[]]></onInit>
     <aboutBox><![CDATA[]]></aboutBox>
     <extensionDescription><![CDATA[]]></extensionDescription>
@@ -16,7 +16,7 @@
         <param id="onClose"/>
       </function>
     </eventListeners>
-    <ps_command _itemId="Main-File-New" scriptID="Main-File-New" toolTip="$$$/Main-File-New/desc" label="$$$/Main-File-New/name" click="onClick" cfgVisible="$$$/Configurator/Attribute/visible/value###8" x="10" y="10" width="94" height="26">
+    <ps_command _itemId="Main-File-New" scriptID="Main-File-New" toolTip="$$$/Main-File-New/desc" label="$$$/Main-File-New/name" click="onClick" cfgVisible="$$$/Configurator/Attribute/visible/value###8" x="10" y="10" width="94" height="26" mouseUpIcon="">
       <script><![CDATA[var label = {"Label_{name}":["normal"]};var image = {"Image_{name}":["normal"]};var scale = {"ScaleImage_{name}_4,4,4,4":["normal"]};var buttonLabel = {"Label_label":["normal", "over", "down", "disable"]};var buttonImage = {"Image_image":["normal", "over", "down", "disable"]};var buttonScaleImage = {"ScaleImage_scaleImage_4,4,4,4":["normal", "over", "down", "disable"]};var scaleLabelButton = {"Button_{name}":[buttonLabel, buttonScaleImage]};var labelButton = {"Button_{name}":[buttonLabel, buttonImage]};var scaleButton = {"Button_{name}":[buttonScaleImage]};var button = {"Button_{name}":[buttonImage]};var radioButton = {"RadioButton_{name}":[{"Label":["normal"]}, buttonScaleImage]};var radioButtonGroup = {"RadioButtonGroup_{name}":[radioButton, radioButton, radioButton]};var dragBar = {"DragBar": [{"Image":["normal"]}]};var list = {"List_{name}":["Item"]};var scrollBar = {"ScrollBar_{name}":[{"Button_arrowDown":[buttonImage]}, {"Button_arrowUp":[buttonImage]}, {"Button_thumb":[buttonScaleImage]}, {"Button_track":[buttonImage]}, {"Image_thumb":["normal"]}]};var slider = {"Slider_{name}":[{"Button_btn":[buttonImage]},{"Image_track":["normal"]}]};var comboBox = {"ComboBox_{name}":[{"Label_label":["normal"]}, {"List_list":["Item"]}, {"Button_btn":[buttonImage]}]};var stepper = {"Stepper_{name}":[{"Button_nextBtn":[buttonLabel, buttonImage]}, {"Button_prevBtn":[buttonLabel, buttonImage]}, {"Label_txt":["normal"]}]};var container = {"Container_{name}":null};function createComponent(parentLayerSets, obj){for(var property in obj){var layerSet = parentLayerSets.add();layerSet.name = property;var subLayerSetList = obj[property];var len = subLayerSetList == null ? 0 : subLayerSetList.length;for(var i = (len - 1); i >= 0; i--){if((subLayerSetList[i] instanceof Object) == true){createComponent(layerSet.layerSets, subLayerSetList[i]);}else{var subLayerSet = layerSet.layerSets.add();subLayerSet.name = subLayerSetList[i];}}}};createComponent(app.activeDocument.layerSets, labelButton);]]></script>
       <eventListeners>
         <function id="onClick" actionType="jsfunction" jsFunctionName="ps_invoke_script">

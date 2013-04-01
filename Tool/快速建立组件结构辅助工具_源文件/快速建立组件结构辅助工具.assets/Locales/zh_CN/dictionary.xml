@@ -45,11 +45,17 @@
   <str name="Configurator/Attribute/visible/value###47" translate="yes">
     <val>True</val>
   </str>
+  <str name="Configurator/Attribute/visible/value###49" translate="yes">
+    <val>True</val>
+  </str>
+  <str name="Configurator/Attribute/visible/value###51" translate="yes">
+    <val>True</val>
+  </str>
   <str name="Configurator/Attribute/visible/value###7" translate="yes">
     <val>True</val>
   </str>
   <str name="Configurator/Attribute/visible/value###8" translate="yes">
-    <val>True</val>
+    <val>true</val>
   </str>
   <str name="Configurator/Container/Canvas/desc" translate="yes">
     <val/>
@@ -72,8 +78,38 @@
   <str name="Configurator/key_###3" translate="yes">
     <val/>
   </str>
+  <str name="Configurator/key_###48" translate="yes">
+    <val/>
+  </str>
+  <str name="Configurator/key_###50" translate="yes">
+    <val>icon/Button.png</val>
+  </str>
   <str name="Configurator/TabNavigator/Canvas###6" translate="yes">
     <val>选项卡 1</val>
+  </str>
+  <str name="Configurator/Widget/HTML/netUnAvailablePromptDetail" translate="yes">
+    <val>要继续操作，请确保您已连接到 Internet，并且您的首选项允许各项服务连接到 Internet，同时还要确保请求的 URL {0} 可用。</val>
+  </str>
+  <str name="Configurator/Widget/HTML/netUnAvailablePromptTitle" translate="yes">
+    <val>未检测到 Internet 连接，或者未能找到所请求的地址。</val>
+  </str>
+  <str name="Configurator/Widget/HTML/offlinePromptDetail" translate="yes">
+    <val>要继续操作，请首先确保您已经连接到 Internet 并且首选项设置允许服务连接到 Internet。</val>
+  </str>
+  <str name="Configurator/Widget/HTML/offlinePromptTitle" translate="yes">
+    <val>未检测到 Internet 连接</val>
+  </str>
+  <str name="Configurator/Widget/HTML/reloadLabel" translate="yes">
+    <val>重新加载</val>
+  </str>
+  <str name="Configurator/Widget/HTML/reloadText" translate="yes">
+    <val>单击以测试连接</val>
+  </str>
+  <str name="Configurator/Widget/Swf/desc" translate="yes">
+    <val>SWF 或图像加载器</val>
+  </str>
+  <str name="Configurator/Widget/Swf/noDisplayPrompt" translate="yes">
+    <val>可以在预览 UI 中或者将面板导出到产品中之后查看 SWF 内容。</val>
   </str>
   <str name="Main-File-New/desc" translate="yes">
     <val>Button</val>

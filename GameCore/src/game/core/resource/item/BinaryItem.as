@@ -3,7 +3,6 @@ package game.core.resource.item
 	/**
 	 *@author Kramer(QQ:21524742)
 	 */	
-	import flash.errors.IOError;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -12,25 +11,25 @@ package game.core.resource.item
 	import flash.events.SecurityErrorEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
-	import flash.utils.ByteArray;
 	
 	import game.core.pool.IPoolableObject;
 	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	import game.core.resource.storage.FileStorage;
-	
+
 	[Event(name="progress", type = "flash.events.ProgressEvent")]
 	[Event(name="error", type = "flash.events.ErrorEvent")]
 	[Event(name="open", type = "flash.events.Event")]
 	[Event(name="complete", type = "game.core.resource.events.ResourceEvent")]
 	public class BinaryItem extends EventDispatcher implements ILoadable, IPoolableObject
 	{
+		
 		private var _isLoading:Boolean;
 		protected var _url:String;
 		protected var _streamLoader:URLStream;
 		
-		protected var _content:ByteArray;
+		protected var _content:ByteArrayWrapper;
 		protected var _priority:int;
 		protected var _isDuplicate:Boolean;
 		
@@ -48,7 +47,7 @@ package game.core.resource.item
 		
 		public function load():void
 		{
-			_content = FileStorage.getFile(_url);
+			_content = FileStorage.getFile(_url) as ByteArrayWrapper;
 			if(_content == null)
 			{
 				_streamLoader.load(new URLRequest(_url));
@@ -103,7 +102,7 @@ package game.core.resource.item
 		
 		private function readContent():void
 		{
-			_content = new ByteArray();
+			_content = new ByteArrayWrapper();
 			_streamLoader.readBytes(_content);
 			_streamLoader.close();
 		}
@@ -131,12 +130,13 @@ package game.core.resource.item
 		public function cloneContent(item:ILoadable):void
 		{
 			var binaryItem:BinaryItem = item as BinaryItem;
-			var source:ByteArray = binaryItem._content;
+			var source:ByteArrayWrapper = binaryItem._content;
 			var sourcePostion:int = source.position;
 			source.position = 0;
-			_content = new ByteArray();
+			_content = new ByteArrayWrapper();
 			source.readBytes(_content);
 			source.position = sourcePostion;
+			_content.resetCompressByExternal(source);
 			dispatchEvent(new ResourceEvent(ResourceEvent.COMPLETE, _content));
 		}
 		

@@ -3,10 +3,7 @@ package game.core.resource.item
 	/**
 	 *@author Kramer(QQ:21524742)
 	 */	
-	import flash.utils.ByteArray;
-	
 	import game.core.pool.ObjectPoolManager;
-	import game.core.resource.ResourceManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	
@@ -28,7 +25,7 @@ package game.core.resource.item
 		override public function cloneContent(item:ILoadable):void
 		{
 			var xmlItem:XmlItem = item as XmlItem;
-			var source:ByteArray = xmlItem._content;
+			var source:ByteArrayWrapper = xmlItem._content;
 			_content = source;
 			var sourcePosition:int = source.position;
 			source.position = 0;

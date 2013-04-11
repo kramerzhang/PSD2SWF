@@ -4,16 +4,13 @@ package game.core.resource.item
 	 *@author Kramer(QQ:21524742)
 	 */	
 	import flash.display.Loader;
-	import flash.display.MovieClip;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
-	import flash.utils.ByteArray;
 	
 	import game.core.pool.ObjectPoolManager;
-	import game.core.resource.ResourceManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	

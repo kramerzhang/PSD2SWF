@@ -28,11 +28,11 @@ package game.component
 			_selected = value;
 			if(_selected == true)
 			{
-				this.state = ButtonState.STATE_DOWN;
+				this.state = Button.STATE_DOWN;
 			}
 			else
 			{
-				this.state = ButtonState.STATE_NORMAL;
+				this.state = Button.STATE_NORMAL;
 			}
 		}
 		

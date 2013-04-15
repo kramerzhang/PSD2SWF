@@ -10,6 +10,11 @@ package game.component
 
 	public class Button extends Container
 	{
+		public static const STATE_NORMAL:String 	= "normal";
+		public static const STATE_OVER:String		= "over";
+		public static const STATE_DOWN:String		= "down";
+		public static const STATE_DISABLE:String	= "disable";
+		
 		private var _state:String;
 		private var _label:Label; //optional
 		private var _image:Image; //required
@@ -48,16 +53,16 @@ package game.component
 			switch(evt.type)
 			{
 				case MouseEvent.ROLL_OUT:
-					this.state = ButtonState.STATE_NORMAL;
+					this.state = Button.STATE_NORMAL;
 					break;
 				case MouseEvent.ROLL_OVER:
-					this.state = ButtonState.STATE_OVER;
+					this.state = Button.STATE_OVER;
 					break;
 				case MouseEvent.MOUSE_DOWN:
-					this.state = ButtonState.STATE_DOWN;
+					this.state = Button.STATE_DOWN;
 					break;
 				case MouseEvent.MOUSE_UP:
-					this.state = ButtonState.STATE_OVER;
+					this.state = Button.STATE_OVER;
 					break;
 			}
 		}
@@ -69,12 +74,12 @@ package game.component
 			if(value == true)
 			{
 				addMouseEventListener();
-				this.state = ButtonState.STATE_NORMAL;
+				this.state = Button.STATE_NORMAL;
 			}
 			else
 			{
 				removeMouseEventListener();
-				this.state = ButtonState.STATE_DISABLE;
+				this.state = Button.STATE_DISABLE;
 			}
 		}
 		

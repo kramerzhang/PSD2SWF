@@ -8,8 +8,9 @@ package game.component
 	import flash.display.BitmapDataChannel;
 	
 	import game.component.core.ISkinnable;
+	import game.component.core.IStateChangeable;
 	
-	public class Image extends Bitmap implements ISkinnable
+	public class Image extends Bitmap implements ISkinnable, IStateChangeable
 	{
 		public static const DEFAULT_STATE:String = "normal";
 		

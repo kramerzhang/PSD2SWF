@@ -10,8 +10,9 @@ package game.component
 	import flash.text.TextFormatAlign;
 	
 	import game.component.core.ISkinnable;
+	import game.component.core.IStateChangeable;
 	
-	public class Label extends TextField implements ISkinnable
+	public class Label extends TextField implements ISkinnable, IStateChangeable
 	{
 		public static const FILTER_BLACK:Array = [new GlowFilter(0x000000, 0.5, 2, 2, 12)];
 		public static const FILTER_WHITE:Array = [new GlowFilter(0xFFFFFF, 0.5, 2, 2, 12)];

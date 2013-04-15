@@ -5,6 +5,8 @@ package game.component
 	 */	
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
+	
+	import game.component.core.IStateChangeable;
 
 	public class Button extends Container
 	{
@@ -79,13 +81,14 @@ package game.component
 		protected function set state(value:String):void
 		{
 			_state = value;
-			if(_image != null)
+			var childNum:int = this.numChildren;
+			for(var i:int = 0; i < childNum; i++)
 			{
-				_image.state = value;
-			}
-			if(_label != null)
-			{
-				_label.state = value;
+				var child:IStateChangeable = this.getChildAt(i) as IStateChangeable;
+				if(child != null)
+				{
+					child.state = _state;
+				}
 			}
 		}
 		

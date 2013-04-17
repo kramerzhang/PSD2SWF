@@ -2,7 +2,8 @@
  * ...
  * @author KramerZhang(QQ:21524742)
  * 重要概念：
- * Element在Fireworks可以是图层文件夹也可以基本图层
+ * Layer专指图层文件夹
+ * Element在Fireworks可以是图层文件夹也可以基本图层(图像、文本)
  * fw.launchApp("file:///C|/Program Files (x86)/Adobe/Flash Professional CS5.5/Adobe Flash CS5.5/Flash.exe", ["file:///D|/Temp/Panel/EquipExchange.fla"]); fw中调用Flash的方法
  */
 var doc = fw.getDocumentDOM();
@@ -1073,11 +1074,15 @@ function eliminateElementDummyToken(element)
 
 function unionRectangle(rectArr)
 {
+	if(rectArr.length == 0)
+	{
+		return {x:0, y:0, width:0, height:0};
+	}
 	var result = new Object();
 	var left = 1048576;
 	var top = 1048576;
-	var right = 0;
-	var bottom = 0;
+	var right = -1048576;
+	var bottom = -1048576;
 	var len = rectArr.length;
 	for (var i = 0; i < len; i++)
 	{

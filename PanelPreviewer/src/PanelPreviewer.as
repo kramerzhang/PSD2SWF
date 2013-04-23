@@ -170,12 +170,58 @@ package
 			var binary:ByteArray = evt.content as ByteArray;
 			var skinStr:String = binary.readUTFBytes(binary.length);
 			skinStr = skinStr.replace(/[\t\n\r]/igm, "");
+			skinStr = replaceColon(skinStr);
 			skinStr = skinStr.match(/(?<=skin\:Object=).*?(?=;)/igm)[0];
 			skinStr = skinStr.replace(/(\b\w+(?=:))/igm, "\"$1\"");
 			skinStr = skinStr.replace(/(0x[0-9a-f]+?\b)/igm, "\"$1\"");
 			_skinObj = com.adobe.serialization.json.JSON.decode(skinStr);
+			eliminateColonPlaceholderInSkinObj(_skinObj);
 			hideLog();
 			createPanel();
+		}
+		
+		private function replaceColon(str:String):String
+		{
+			var result:String = str;
+			var colonMatchList:Array = result.match(/(?<=content\:\").*?(?=\")/igm);
+			for each(var match:String in colonMatchList)
+			{
+				result = result.replace(match, match.replace(/\:/g, "${colon}"));
+			}
+			return result;
+		}
+		
+		private function replaceColonPlaceholder(str:String):String
+		{
+			return str.replace(/\${colon}/g, ":");
+		}
+		
+		private function eliminateColonPlaceholderInSkinObj(obj:Object):void
+		{
+			for(var key:String in obj)
+			{
+				if(obj[key] is Number)
+				{
+				}
+				else if(obj[key] is String)
+				{
+					if(key == "content")
+					{
+						obj[key] = replaceColonPlaceholder(obj[key]);
+					}
+				}
+				else if(obj[key] is Array)
+				{
+					for each(var value:Object in obj[key])
+					{
+						eliminateColonPlaceholderInSkinObj(value);
+					}
+				}
+				else if(obj[key] is Object)
+				{
+					eliminateColonPlaceholderInSkinObj(obj[key]);
+				}
+			}
 		}
 		
 		private function createPanel():void

@@ -13,7 +13,7 @@ package game.component
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
-
+	
 	public class ScrollBar extends Container
 	{
 		public static const MODE_HIDE_THUMB:int = 0;
@@ -155,6 +155,10 @@ package game.component
 		
 		public function set target(value:DisplayObject):void
 		{
+			if(_target != null)
+			{
+				_target.y = _targetStartY;
+			}
 			_target = value;
 			_targetStartY = _target.y;
 			_mask.x = _target.x;
@@ -179,6 +183,7 @@ package game.component
 			_maskHeight = value;
 		}
 		
+		//当外部修改滚动条高度时调用
 		public function update():void
 		{
 			updateTargetPosition();

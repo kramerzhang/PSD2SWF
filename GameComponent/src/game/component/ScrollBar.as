@@ -86,23 +86,40 @@ package game.component
 			_track.addEventListener(MouseEvent.CLICK, onTrackClick);
 			_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 			_thumb.addEventListener(MouseEvent.MOUSE_UP, onThumbMouseUp);
+			_target.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
+			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
+		}
+		
+		private function onMouseWheelHandler(e:MouseEvent):void
+		{	
+			if (e.delta > 0)
+			{
+				scrollOneStep(-_scrollStep);
+			}
+			else if (e.delta < 0)
+			{
+				scrollOneStep(_scrollStep);
+			}
 		}
 		
 		private function onArrowClick(evt:MouseEvent):void
 		{
-			var evtTarget:Object = evt.target;
-			var upBound:int = _track.y;
-			var lowBound:int = _track.y + _track.height - _thumb.height;
-			var targetY:int = 0;
-			switch(evtTarget)
+			switch(evt.target)
 			{
 				case _arrowUp:
-					targetY = _thumb.y - _scrollStep;
+					scrollOneStep(-_scrollStep);
 					break;
 				case _arrowDown:
-					targetY = _thumb.y + _scrollStep;
+					scrollOneStep(_scrollStep);
 					break;
 			}
+		}
+		
+		private function scrollOneStep(step:int):void
+		{
+			var upBound:int = _track.y;
+			var lowBound:int = _track.y + _track.height - _thumb.height;
+			var targetY:int = _thumb.y + step;
 			_thumb.y = Math.min(Math.max(targetY, upBound), lowBound);
 			scrollTarget();
 		}
@@ -149,8 +166,22 @@ package game.component
 		
 		private function scrollTarget():void
 		{
-			var ratio:Number = (_thumb.y - _dragRect.y) / _dragRect.height;
-			_target.y = _targetStartY - (_target.height - _maskHeight) * ratio;
+			if(_target.height <= _maskHeight)
+			{
+				_target.y = _targetStartY;
+			}
+			else
+			{
+				var ratio:Number = (_thumb.y - _dragRect.y) / _dragRect.height;
+				_target.y = _targetStartY - (_target.height - _maskHeight) * ratio;
+			}
+		}
+		
+		public function scrollToBottom():void
+		{
+			var lowBound:int = _track.y + _track.height - _thumb.height;
+			_thumb.y = lowBound;
+			scrollTarget();
 		}
 		
 		public function set target(value:DisplayObject):void
@@ -183,12 +214,12 @@ package game.component
 			_maskHeight = value;
 		}
 		
-		//当外部修改滚动条高度时调用
 		public function update():void
 		{
 			updateTargetPosition();
 			updateMask();
 			updateThumbHeight();
+			updateVisibility();
 			updateThumbPosition();
 		}
 		
@@ -237,12 +268,16 @@ package game.component
 			{
 				thumbHeight = scrollableHeight;
 			}
-			if(thumbHeight < scrollableHeight)
+			_thumb.height = thumbHeight;
+			updateDragRect();
+		}
+		
+		private function updateVisibility():void
+		{
+			if(_thumb.height < _track.height)
 			{
 				this.visible = true;
 				_thumb.visible = true;
-				_thumb.height = thumbHeight;
-				updateDragRect();
 				updateThumbIcon();
 			}
 			else

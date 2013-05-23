@@ -804,6 +804,11 @@ function generateLabelSkin(obj, indent)
 //---------------------------------------------------------------------------------
 function atomParseTextElement(element)
 {
+	if((element instanceof Text) == false)
+	{
+		logError(element.name + " 为图像图层，在Label组件中应为文本图层！");
+		return;
+	}
 	var result = new Object();
 	result.name = eliminateElementDummyToken(element);
 	result.x = element.left;
@@ -903,6 +908,11 @@ function parseFontSize(sizeStr)
 
 function atomParseImageElement(element)
 {
+	if((element instanceof Text) == true)
+	{
+		logError(element.name + " 为文本图层，在Image组件中应为图像图层！");
+		return;
+	}
 	var result = new Object();
 	var obj = parseImageElementName(element);
 	if(assetMap[obj.name] == undefined || obj.quality > parseInt(assetMap[obj.name]))

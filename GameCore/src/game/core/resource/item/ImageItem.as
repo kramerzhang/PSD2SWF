@@ -17,7 +17,7 @@ package game.core.resource.item
 		
 		override public function get type():String
 		{
-			return ResourceType.IMGAE;
+			return ResourceType.IMAGE;
 		}
 		
 		override public function recycle():void

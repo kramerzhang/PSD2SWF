@@ -30,6 +30,10 @@ package game.component
 		private static var _rect:Rectangle;
 		private static var _dstPoint:Point;
 		private static var _transformMatrix:Matrix;
+		
+		private static var _imageTotalMemory:int = 0;
+		private static var _scaleImageGridMemory:int = 0
+		private static var _scaleImageTotalMemory:int = 0;
 				
 		initialize();
 		
@@ -62,6 +66,7 @@ package game.component
 					var clz:Class = domain.getDefinition(link) as Class;
 					result = new clz() as BitmapData;
 					_bitmapDataMap[link] = result;
+					_imageTotalMemory += result.width * result.height * 4;
 				}
 				else
 				{
@@ -116,6 +121,7 @@ package game.component
 					result.draw(grid, _transformMatrix);
 				}
 			}
+			_scaleImageTotalMemory += result.width * result.height * 4;
 			return result;
 		}
 		
@@ -149,6 +155,7 @@ package game.component
 					_rect.width = _splitRow[j + 1] - _splitRow[j];
 					_rect.height = _splitCol[i + 1] - _splitCol[i];
 					var bmpd:BitmapData = new BitmapData(_rect.width, _rect.height, true, 0);
+					_scaleImageGridMemory += bmpd.width * bmpd.height * 4;
 					bmpd.copyPixels(source, _rect, _dstPoint);
 					result[i * 3 + j] = bmpd;
 				}
@@ -187,6 +194,24 @@ package game.component
 			}
 		}
 		
+		/**
+		 * UI图像元素（普通位图、九宫切片、九宫位图）所占用的内存量,单位为K。<br/>
+		 * <strong>Image Memory：</strong>域中图片类定义所占用的总内存。<br/>
+		 * <strong>ScaleImage Grid Memory：</strong>内存中图片切九宫后，九宫切片所占有的总内存。<br/>
+		 * <strong>ScaleImage Memory：</strong>九宫图片占用总内存。<br/>
+		 * 当UI面板中图片内存使用量较大时，可以采取以下优化策略，按性价比从高到低：<br/>
+		 * <li>1.检查同一个九宫图片的九宫参数是否相同，同一九宫图片使其九宫参数相同。（可减小九宫切片内存占用）
+		 * <li>2.检查资源中九宫图片的面积，尽量缩小九宫图片中心切片面积。（可减小九宫切片内存占用和图片内存占用）
+		 * <li>3.将Image和ScaleImage继承自Sprite，重用BitmapData。（可减小九宫图片内存占用）
+		 */
+		public static function printMemoryInfomation():void
+		{
+			trace("===========================================");
+			trace("Image Memory:           " + _imageTotalMemory);
+			trace("ScaleImage Grid Memory: " + _scaleImageGridMemory);
+			trace("ScaleImage Memory:      " + _scaleImageTotalMemory);
+			trace("===========================================");
+		}
 	}
 }
 

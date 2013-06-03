@@ -60,37 +60,32 @@ package game.component
 			return tempChild;
 		}
 		
+		//注意List做为Container，可以添加非ListItemBase的显示元素，所以这里的深度值，非ListItemBase显示对象也计算在内
 		public override function addChildAt(child:DisplayObject, index:int):DisplayObject
 		{
-			var tempChild:DisplayObject = super.addChildAt(child, index); 
-			var item:ListItemBase = tempChild as ListItemBase;
+			var item:ListItemBase = child as ListItemBase;
 			if(item != null)
 			{
 				item.skin = _itemSkin;
 				var insertIndex:int = findInsertIndex(index);
 				addItemToList(item, insertIndex);
 			}
-			return tempChild;
+			return super.addChildAt(child, index); 
 		}
 		
 		private function findInsertIndex(index:int):int
 		{
-			var item:ListItemBase;
-			while(true)
+			var len:int = _itemList.length;
+			for(var i:int = 0; i < len; i++)
 			{
-				item = this.getChildAt(index) as ListItemBase;
-				if(item != null)
+				var item:ListItemBase = _itemList[i];
+				var itemIndex:int = getChildIndex(item);
+				if(itemIndex >= index)
 				{
-					break;
+					return i;
 				}
-				index--;
 			}
-			var existIndex:int = _itemList.indexOf(item);
-			if(existIndex > -1)
-			{
-				return existIndex;
-			}
-			return 0;
+			return len;
 		}
 		
 		public override function removeChild(child:DisplayObject):DisplayObject

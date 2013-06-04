@@ -731,22 +731,17 @@ function generateImageSkin(obj, indent)
 {
 	var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
-	if (obj.normal != null)
+	for(var state in obj)
 	{
-		result += "\n" + indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
+		if(obj[state] instanceof Object)
+		{
+			if(obj[state].link != undefined)
+			{
+				result += "\n" + indent + "\t" + state + ":" + atomGenerateImageObjStr(obj[state]) + ",";
+			}
+		}
 	}
-	if (obj.over != null)
-	{
-		result += ",\n" + indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
-	}
-	if (obj.down != null)
-	{
-		result += ",\n" + indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
-	}
-	if (obj.disable != null)
-	{
-		result += ",\n" + indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
-	}
+	result = result.substring(0, result.length - 1);
 	result += "\n" + indent + "}"
 	return result;
 }
@@ -755,22 +750,17 @@ function generateScaleImageSkin(obj, indent)
 {
 	var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height", "top", "right", "bottom", "left"], [1, 1, 0, 0, 0, 0, 0, 0, 0, 0]) + ",";
-	if (obj.normal != null)
+	for(var state in obj)
 	{
-		result += "\n" + indent + "\t" + "normal:" + atomGenerateImageObjStr(obj.normal);
+		if(obj[state] instanceof Object)
+		{
+			if(obj[state].link != undefined)
+			{
+				result += "\n" + indent + "\t" + state + ":" + atomGenerateImageObjStr(obj[state]) + ",";
+			}
+		}
 	}
-	if (obj.over != null)
-	{
-		result += ",\n" + indent + "\t" + "over:" + atomGenerateImageObjStr(obj.over);
-	}
-	if (obj.down != null)
-	{
-		result += ",\n" + indent + "\t" + "down:" + atomGenerateImageObjStr(obj.down);
-	}
-	if (obj.disable != null)
-	{
-		result += ",\n" + indent + "\t" + "disable:" + atomGenerateImageObjStr(obj.disable);
-	}
+	result = result.substring(0, result.length - 1);
 	result += "\n" + indent + "}"
 	return result;
 }
@@ -779,22 +769,17 @@ function generateLabelSkin(obj, indent)
 {
 	var result = indent + "{";
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
-	if (obj.normal != null)
+	for(var state in obj)
 	{
-		result += "\n" + indent + "\t" + "normal:" + atomGenerateTextObjStr(obj.normal);
+		if(obj[state] instanceof Object)
+		{
+			if(obj[state].format != undefined)
+			{
+				result += "\n" + indent + "\t" + state + ":" + atomGenerateTextObjStr(obj[state]) + ",";
+			}
+		}
 	}
-	if (obj.over != null)
-	{
-		result += ",\n" + indent + "\t" + "over:" + atomGenerateTextObjStr(obj.over);
-	}
-	if (obj.down != null)
-	{
-		result += ",\n" + indent + "\t" + "down:" + atomGenerateTextObjStr(obj.down);
-	}
-	if (obj.disable != null)
-	{
-		result += ",\n" + indent + "\t" + "disable:" + atomGenerateTextObjStr(obj.disable);
-	}
+	result = result.substring(0, result.length - 1);
 	result += "\n" + indent + "}";
 	return result;
 }
@@ -907,7 +892,7 @@ function parseFontSize(sizeStr)
 }
 
 function atomParseImageElement(element)
-{
+{	
 	if((element instanceof Text) == true)
 	{
 		logError(element.name + " 为文本图层，在Image组件中应为图像图层！");

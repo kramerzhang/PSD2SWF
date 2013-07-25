@@ -63,6 +63,9 @@ package game.component
 				case "Button":
 					child = new Button();
 					break;
+				case "LabelButton":
+					child = new LabelButton();
+					break;
 				case "ScaleImage":
 					child = new ScaleImage();
 					break;

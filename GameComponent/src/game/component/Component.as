@@ -14,7 +14,6 @@ package game.component
 	public class Component extends Sprite implements ISkinnable
 	{
 		public static const EVENT_TYPE_CHANGE:String 		= "change";
-		public static const EVENT_TYPE_CONSTRUCT:String 	= "construct";
 		public static const EVENT_CHANGE:Event 				= new Event(EVENT_TYPE_CHANGE);
 		
 		private static var _domain:ApplicationDomain; //所有UI面板资源放入该ApplicationDomain

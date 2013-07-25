@@ -18,11 +18,26 @@ package game.component
 		private var _itemList:Vector.<ListItemBase>;
 		private var _itemSkin:Object;
 		
-		private var _horizontalGap:int; //item水平间距
-		private var _verticalGap:int;	//item垂直间距
-		private var _columnCount:int;	//横向item数量
-		private var _rowCount:int;		//纵向item数量
-		private var _orientation:int    //填充item的方向
+		/**
+		 * item水平间距
+		 */		
+		private var _horizontalGap:int; 
+		/**
+		 * item垂直间距
+		 */		
+		private var _verticalGap:int;
+		/**
+		 * 横向item数量
+		 */		
+		private var _columnCount:int;
+		/**
+		 *纵向item数量 
+		 */		
+		private var _rowCount:int;
+		/**
+		 *填充item的方向 
+		 */		
+		private var _orientation:int;
 		
 		private var _selectedItem:ListItemBase;
 		
@@ -204,6 +219,7 @@ package game.component
 		public function set selection(value:ListItemBase):void
 		{
 			_selectedItem = value;
+			_selectedItem.selected = true;
 		}
 		
 		public function get selection():ListItemBase

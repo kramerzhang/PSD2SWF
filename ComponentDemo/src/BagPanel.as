@@ -3,6 +3,7 @@ package
 	import com.demonsters.debugger.MonsterDebugger;
 	
 	import flash.system.ApplicationDomain;
+	import flash.utils.getTimer;
 	
 	import game.component.ComboBox;
 	import game.component.Component;
@@ -19,14 +20,13 @@ package
 		
 		public function BagPanel()
 		{
-			MonsterDebugger.initialize(this);
-			Component.domain = ApplicationDomain.currentDomain;
-			this.skin = BagPanelSkin.skin;
+			super(BagPanelSkin.resource, BagPanelSkin.skin);
 		}
 		
 		protected override function configChildren():void
 		{
 			
 		}
+		
 	}
 }

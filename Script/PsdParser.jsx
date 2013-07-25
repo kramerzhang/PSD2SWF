@@ -16,12 +16,14 @@ var sharedAssetMap = null;
 var assetMap = {};
 //生成Skin文件路径
 var skinFilePath = "";
+//图片资源链接名拼接字符串
+var resource = "";
 
-var typeList =		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper"];
-var parserList =	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
-var generatorList =	[generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarSkin, generateListSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
-var validatorList =	[validateImage, validateImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
-var regExpList =	[null, null, null, buttonRegExp, comboBoxRegExp, null, null, null, radioButtonRegExp, radioButtonGroupRegExp, scrollBarRegExp, sliderRegExp, stepperRegExp];
+var typeList =		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper", "LabelButton"];
+var parserList =	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
+var generatorList =	[generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarSkin, generateListSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
+var validatorList =	[validateImage, validateImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
+var regExpList =	[null, null, null, buttonRegExp, comboBoxRegExp, null, null, null, radioButtonRegExp, radioButtonGroupRegExp, scrollBarRegExp, sliderRegExp, stepperRegExp, labelButtonExp];
 
 //使用正则表达式对组件名称进行验证，$表示名称结尾
 var buttonRegExp =				{required: ["(Image|ScaleImage)_.*"]};
@@ -31,6 +33,7 @@ var radioButtonGroupRegExp =	{required: ["RadioButton_.*"]};
 var scrollBarRegExp =			{required: ["Button_arrowDown$", "Button_arrowUp$", "Button_thumb$", ".*_track$"], optional: ["Image_thumbIcon$"]};
 var sliderRegExp =				{required: ["Button_btn$", ".*_track$"]};
 var stepperRegExp =				{required: ["Label_txt$", "Button_nextBtn$", "Button_prevBtn$"], optional: ["Button_lastBtn$", "Button_firstBtn$"]};
+var labelButtonExp = 			{required: ["Label_.*", "(Image|ScaleImage)_.*"]}
 
 //资源名称命名验证正则表达式，1.不允许数字和特殊符号作为命名开始，2.图像图层命名中不能包含中文字符
 var firstTokenRegExp = /^([0-9]|\~|\!|\@|\#|\^|\*)/;
@@ -46,7 +49,7 @@ var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
 var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 
 //默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
-var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t}\n}";
+var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*组件结构大纲\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t\tpublic static var resource:Array=${resource};\n\t}\n}";
 //Skin文件默认保存目录为Psd文件目录下的0_code文件夹
 var skinCodeFolderPath = "0_code";
 var SETTING_FILE_NAME = "PSD2SWF.ini";
@@ -173,6 +176,7 @@ function writeSkinFile()
 	str = str.replace("${hint}", hint);
 	str = str.replace("${className}", skinClassName);
 	str = str.replace("${placeholder}", content);
+	str = str.replace("${resource}", "[" + resource.substring(0, resource.length - 2) + "]");
 	str = str.replace(/\\n/g, "\n");
 	str = str.replace(/\\t/g, "\t");
 	file.writeUTF8(str);
@@ -738,6 +742,7 @@ function generateImageSkin(obj, indent)
 			if(obj[state].link != undefined)
 			{
 				result += "\n" + indent + "\t" + state + ":" + atomGenerateImageObjStr(obj[state]) + ",";
+				resource += "{type:\"Image\", link:" + "\"" + obj[state].link + "\"}, ";
 			}
 		}
 	}
@@ -757,6 +762,7 @@ function generateScaleImageSkin(obj, indent)
 			if(obj[state].link != undefined)
 			{
 				result += "\n" + indent + "\t" + state + ":" + atomGenerateImageObjStr(obj[state]) + ",";
+				resource += "{type:\"ScaleImage\", link:" + "\"" + obj[state].link + "\", width:" + obj.width + ", height:" + obj.height + ", top:" + obj.top + ", right:" + obj.right + ", bottom:" + obj.bottom + ", left:" + obj.left + "}, ";
 			}
 		}
 	}

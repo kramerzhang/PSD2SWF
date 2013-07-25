@@ -1,28 +1,28 @@
 package game.skin
 {
-	import BagPanel.dibanmoji;dibanmoji;
-	import BagPanel.diban;diban;
-	import BagPanel.neidiban;neidiban;
-	import BagPanel.xuanguakuang;xuanguakuang;
-	import BagPanel.anniu1;anniu1;
-	import BagPanel.anniu2;anniu2;
-	import BagPanel.anniu3;anniu3;
-	import BagPanel.anniu4;anniu4;
-	import BagPanel.huawen2;huawen2;
-	import BagPanel.huawen1;huawen1;
-	import BagPanel.biaoti;biaoti;
-	import BagPanel.beibaotxtbiaoti;beibaotxtbiaoti;
-	import BagPanel.biaoqian1;biaoqian1;
-	import BagPanel.biaoqian2;biaoqian2;
-	import BagPanel.biaoqian3;biaoqian3;
-	import BagPanel.biaoqian4;biaoqian4;
-	import BagPanel.redanniu3;redanniu3;
-	import BagPanel.shurukuang;shurukuang;
-	import BagPanel.close1;close1;
-	import BagPanel.close2;close2;
-	import BagPanel.close3;close3;
+	import shared.dibanmoji;dibanmoji;
+	import shared.diban;diban;
+	import shared.neidiban;neidiban;
+	import shared.xuanguakuang;xuanguakuang;
+	import shared.anniu1;anniu1;
+	import shared.anniu2;anniu2;
+	import shared.anniu3;anniu3;
+	import shared.anniu4;anniu4;
+	import shared.huawen2;huawen2;
+	import shared.huawen1;huawen1;
+	import shared.biaoti;biaoti;
+	import shared.beibaotxtbiaoti;beibaotxtbiaoti;
+	import shared.biaoqian1;biaoqian1;
+	import shared.biaoqian2;biaoqian2;
+	import shared.biaoqian3;biaoqian3;
+	import shared.biaoqian4;biaoqian4;
+	import shared.redanniu3;redanniu3;
+	import shared.shurukuang;shurukuang;
+	import shared.close1;close1;
+	import shared.close2;close2;
+	import shared.close3;close3;
 
-	/*
+	/*组件结构大纲
 	BagPanel:Container
 		close:Button
 		dragBar:DragBar
@@ -44,7 +44,7 @@ package game.skin
 		ptgj:Button
 		divide:Button
 		sale:Button
-		sort:Button
+		sort:LabelButton
 		pageList:RadioButtonGroup
 		tabs:RadioButtonGroup
 		beibaotxtbiaoti:Image
@@ -61,7 +61,7 @@ package game.skin
 			mynormal:Container
 				neidiban:Image
 		diban:ScaleImage
-		底板墨迹:ScaleImage
+		dibianmoji:ScaleImage
 	*/
 	public class BagPanelSkin
 	{
@@ -73,9 +73,9 @@ package game.skin
 						children:
 						[
 							{name:"myImage",type:"Image",x:0,y:0,width:29,height:28,
-								normal:{link:"BagPanel.close1",x:0,y:0,width:29,height:28},
-								over:{link:"BagPanel.close2",x:0,y:0,width:29,height:28},
-								down:{link:"BagPanel.close3",x:0,y:0,width:29,height:28}
+								normal:{link:"shared.close1",x:0,y:0,width:29,height:28},
+								over:{link:"shared.close2",x:0,y:0,width:29,height:28},
+								down:{link:"shared.close3",x:0,y:0,width:29,height:28}
 							}
 						]
 					},
@@ -105,16 +105,16 @@ package game.skin
 						normal:{x:0,y:0,width:31,height:17,content:"<font color='#ac8123'>元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
 					},
 					{name:"shurukuang3",type:"ScaleImage",x:190,y:403,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
+						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
 					},
 					{name:"shurukuang1",type:"ScaleImage",x:52,y:403,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
+						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
 					},
 					{name:"shurukuang2",type:"ScaleImage",x:190,y:380,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
+						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
 					},
 					{name:"shurukuang0",type:"ScaleImage",x:52,y:380,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:81,height:20}
+						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
 					},
 					{name:"txtBeibaorongliangshuzi",type:"Label",x:225,y:329,width:55,height:17,
 						normal:{x:0,y:0,width:55,height:17,content:"<font color='#ffffff'>000/000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
@@ -129,10 +129,10 @@ package game.skin
 								normal:{x:0,y:0,width:46,height:17,content:"<font color='#ffffff'>VIP会员</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 							}
 						]
 					},
@@ -143,10 +143,10 @@ package game.skin
 								normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>普通挂机</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 							}
 						]
 					},
@@ -157,10 +157,10 @@ package game.skin
 								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>拆  分</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 							}
 						]
 					},
@@ -171,24 +171,24 @@ package game.skin
 								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>出  售</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 							}
 						]
 					},
-					{name:"sort",type:"Button",x:24,y:353,width:60,height:22,
+					{name:"sort",type:"LabelButton",x:24,y:353,width:60,height:22,
 						children:
 						[
 							{name:"txtSort",type:"Label",x:13,y:3,width:40,height:17,
 								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>整  理</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 							}
 						]
 					},
@@ -202,10 +202,10 @@ package game.skin
 										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>5</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:32,height:22},
-										down:{link:"BagPanel.redanniu3",x:0,y:0,width:32,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:32,height:22}
+										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
+										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
 									}
 								]
 							},
@@ -216,10 +216,10 @@ package game.skin
 										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>4</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:32,height:22},
-										down:{link:"BagPanel.redanniu3",x:0,y:0,width:32,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:32,height:22}
+										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
+										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
 									}
 								]
 							},
@@ -230,10 +230,10 @@ package game.skin
 										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>3</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:32,height:22},
-										down:{link:"BagPanel.redanniu3",x:0,y:0,width:32,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:32,height:22}
+										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
+										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
 									}
 								]
 							},
@@ -244,10 +244,10 @@ package game.skin
 										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>2</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:32,height:22},
-										down:{link:"BagPanel.redanniu3",x:0,y:0,width:32,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:32,height:22}
+										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
+										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
 									}
 								]
 							},
@@ -258,10 +258,10 @@ package game.skin
 										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>1</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:32,height:22},
-										down:{link:"BagPanel.redanniu3",x:0,y:0,width:32,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:32,height:22}
+										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
+										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
 									}
 								]
 							}
@@ -277,10 +277,10 @@ package game.skin
 										normal:{x:0,y:0,width:33,height:17,content:"<font color='#ffffff'>其他</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:1.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"BagPanel.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"BagPanel.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"BagPanel.biaoqian4",x:0,y:0,width:51,height:21}
+										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
+										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
+										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
+										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
 									}
 								]
 							},
@@ -291,10 +291,10 @@ package game.skin
 										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>宝石</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"BagPanel.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"BagPanel.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"BagPanel.biaoqian4",x:0,y:0,width:51,height:21}
+										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
+										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
+										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
+										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
 									}
 								]
 							},
@@ -305,10 +305,10 @@ package game.skin
 										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>药品</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"BagPanel.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"BagPanel.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"BagPanel.biaoqian4",x:0,y:0,width:51,height:21}
+										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
+										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
+										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
+										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
 									}
 								]
 							},
@@ -319,10 +319,10 @@ package game.skin
 										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>装备</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"BagPanel.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"BagPanel.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"BagPanel.biaoqian4",x:0,y:0,width:51,height:21}
+										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
+										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
+										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
+										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
 									}
 								]
 							},
@@ -333,26 +333,26 @@ package game.skin
 										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>全</font><font color='#fe0000'>部</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"BagPanel.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"BagPanel.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"BagPanel.biaoqian4",x:0,y:0,width:51,height:21}
+										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
+										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
+										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
+										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
 									}
 								]
 							}
 						]
 					},
 					{name:"beibaotxtbiaoti",type:"Image",x:119,y:17,width:61,height:26,
-						normal:{link:"BagPanel.beibaotxtbiaoti",x:0,y:0,width:61,height:26}
+						normal:{link:"shared.beibaotxtbiaoti",x:0,y:0,width:61,height:26}
 					},
 					{name:"biaoti",type:"Image",x:77,y:17,width:142,height:25,
-						normal:{link:"BagPanel.biaoti",x:0,y:0,width:142,height:25}
+						normal:{link:"shared.biaoti",x:0,y:0,width:142,height:25}
 					},
 					{name:"huawen1",type:"Image",x:162,y:14,width:117,height:33,
-						normal:{link:"BagPanel.huawen1",x:0,y:0,width:117,height:33}
+						normal:{link:"shared.huawen1",x:0,y:0,width:117,height:33}
 					},
 					{name:"huawen2",type:"Image",x:17,y:14,width:117,height:33,
-						normal:{link:"BagPanel.huawen2",x:0,y:0,width:117,height:33}
+						normal:{link:"shared.huawen2",x:0,y:0,width:117,height:33}
 					},
 					{name:"myvipanniuContainer",type:"Container",x:282,y:151,width:79,height:246,
 						children:
@@ -364,10 +364,10 @@ package game.skin
 										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程仓库</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 									}
 								]
 							},
@@ -378,10 +378,10 @@ package game.skin
 										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程购药</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 									}
 								]
 							},
@@ -392,10 +392,10 @@ package game.skin
 										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>回    城</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 									}
 								]
 							},
@@ -406,15 +406,15 @@ package game.skin
 										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>VIP 福利</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 									},
 									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"BagPanel.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"BagPanel.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"BagPanel.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"BagPanel.anniu4",x:0,y:0,width:60,height:22}
+										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
+										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
+										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
+										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
 									}
 								]
 							},
 							{name:"xuanguakuang",type:"Image",x:0,y:0,width:79,height:246,
-								normal:{link:"BagPanel.xuanguakuang",x:0,y:0,width:79,height:246}
+								normal:{link:"shared.xuanguakuang",x:0,y:0,width:79,height:246}
 							}
 						]
 					},
@@ -425,19 +425,20 @@ package game.skin
 								children:
 								[
 									{name:"neidiban",type:"Image",x:0,y:0,width:248,height:248,
-										normal:{link:"BagPanel.neidiban",x:0,y:0,width:248,height:248}
+										normal:{link:"shared.neidiban",x:0,y:0,width:248,height:248}
 									}
 								]
 							}
 						]
 					},
 					{name:"diban",type:"ScaleImage",x:13,y:12,width:270,height:429,top:80,right:12,bottom:12,left:40,
-						normal:{link:"BagPanel.diban",x:0,y:0,width:270,height:429}
+						normal:{link:"shared.diban",x:0,y:0,width:270,height:429}
 					},
-					{name:"底板墨迹",type:"ScaleImage",x:0,y:0,width:294,height:457,top:24,right:24,bottom:24,left:24,
-						normal:{link:"BagPanel.dibanmoji",x:0,y:0,width:294,height:457}
+					{name:"dibianmoji",type:"ScaleImage",x:0,y:0,width:294,height:457,top:24,right:24,bottom:24,left:24,
+						normal:{link:"shared.dibanmoji",x:0,y:0,width:294,height:457}
 					}
 				]
 			};
+		public static var resource:Array=[{type:"Image", link:"shared.close1"}, {type:"Image", link:"shared.close2"}, {type:"Image", link:"shared.close3"}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"shared.beibaotxtbiaoti"}, {type:"Image", link:"shared.biaoti"}, {type:"Image", link:"shared.huawen1"}, {type:"Image", link:"shared.huawen2"}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"shared.xuanguakuang"}, {type:"Image", link:"shared.neidiban"}, {type:"ScaleImage", link:"shared.diban", width:270, height:429, top:80, right:12, bottom:12, left:40}, {type:"ScaleImage", link:"shared.dibanmoji", width:294, height:457, top:24, right:24, bottom:24, left:24}];
 	}
 }

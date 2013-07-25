@@ -28,7 +28,7 @@ package
 	{
 		//PSD文件所在目录路径
 		//测试值，在PS中由预览FlashPlayer传入实际值
-		private var _psdUrl:String = "file:///C|/Users/Administrator/Documents/GitHub/PSD2SWF/ComponentDemo/assets/BagPanel.psd";
+		private var _psdUrl:String = "file:///C|/Users/Administrator/Documents/GitHub/PSD2SWF/PSD/BagPanel.psd";
 		//Skin文件路径
 		//测试值，在PS中由预览FlashPlayer传入实际值
 		private var _skinUrl:String = "file:///C|/Users/Administrator/Documents/GitHub/PSD2SWF/ComponentDemo/assets/0_code/game/skin/BagPanelSkin.as";
@@ -226,8 +226,7 @@ package
 		
 		private function createPanel():void
 		{
-			var panel:Panel = new Panel();
-			panel.skin = _skinObj;
+			var panel:Panel = new Panel([], _skinObj);
 			addChild(panel);
 		}
 		

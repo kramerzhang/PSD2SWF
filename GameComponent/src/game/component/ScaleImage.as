@@ -7,6 +7,7 @@ package game.component
 	
 	public class ScaleImage extends Image
 	{
+		public static const CLASS_NAME:String = "ScaleImage";
 		private var _scaleX:Number = 1;
 		private var _scaleY:Number = 1;
 		private var _width:Number;

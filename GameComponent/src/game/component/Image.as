@@ -12,6 +12,7 @@ package game.component
 	
 	public class Image extends Bitmap implements ISkinnable, IStateChangeable
 	{
+		public static const CLASS_NAME:String = "Image";
 		public static const DEFAULT_STATE:String = "normal";
 		
 		protected var _skin:Object;

@@ -142,7 +142,7 @@ package game.component
 			var source:BitmapData = getBitmapData(link);
 			if((top + bottom) >= source.height || (left + right) >= source.width)
 			{
-				throw new Error("Bitmap scale9Grid setting error!");
+				throw new Error("图片九宫参数设置错误：左右切片宽度之和不能大于图片宽度，上下切片高度之和不能大于图片高度！");
 			}
 			var result:Vector.<BitmapData> = new Vector.<BitmapData>(SLICE_LIST_LENGTH, true);
 			updateSplitData(source.width, source.height, top, right, bottom, left);

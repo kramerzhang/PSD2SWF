@@ -2,6 +2,7 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="game.component.core.IStateChangeable"/>
+    <classEntry path="game.component.LabelButton"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

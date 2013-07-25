@@ -16,8 +16,9 @@ package game.component
 		public static const STATE_DISABLE:String	= "disable";
 		
 		private var _state:String;
-		private var _label:Label; //optional
-		private var _image:Image; //required
+		
+		protected var _labelDisplay:Label; //optional
+		protected var _image:Image; //required
 		
 		public function Button()
 		{
@@ -105,12 +106,12 @@ package game.component
 		protected override function configChildren():void
 		{
 			_image = getChildByType(Image) as Image;
-			_label = getChildByType(Label) as Label;
+			_labelDisplay = getChildByType(Label) as Label;
 		}
 		
-		public function get label():Label
+		public function get labelDisplay():Label
 		{
-			return _label;
+			return _labelDisplay;
 		}
 		
 		private function getChildByType(type:Class):DisplayObject

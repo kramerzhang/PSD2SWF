@@ -13,6 +13,7 @@ package game.component
 		private var _btn:Button;
 		private var _label:Label;
 		private var _list:List;
+		private var _background:Image;
 		private var _listInitY:int;
 		private var _scrollBar:ScrollBar;
 		
@@ -56,6 +57,7 @@ package game.component
 			_label.enabled = true;
 			_list = getChildByName("list") as List;
 			_listInitY = _list.y;
+			_background = getChildByName("back") as Image;
 			_scrollBar = getChildByName("scrollBar") as ScrollBar;
 			if(_scrollBar != null)
 			{
@@ -98,6 +100,10 @@ package game.component
 		
 		private function showList():void
 		{
+			if(_background != null)
+			{
+				addChild(_background);
+			}
 			if(_scrollBar != null)
 			{
 				addChild(_scrollBar);
@@ -117,6 +123,10 @@ package game.component
 			if(_scrollBar != null)
 			{
 				removeChild(_scrollBar);
+			}
+			if(_background != null)
+			{
+				removeChild(_background);
 			}
 			_isListShow = false;
 		}

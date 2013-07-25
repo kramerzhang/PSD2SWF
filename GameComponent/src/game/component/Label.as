@@ -14,8 +14,8 @@ package game.component
 	
 	public class Label extends TextField implements ISkinnable, IStateChangeable
 	{
-		public static const FILTER_BLACK:Array = [new GlowFilter(0x000000, 0.5, 2, 2, 12)];
-		public static const FILTER_WHITE:Array = [new GlowFilter(0xFFFFFF, 0.5, 2, 2, 12)];
+		public static const FILTER_BLACK:Array = [new GlowFilter(0x000000, 1, 2, 2, 12)];
+		public static const FILTER_WHITE:Array = [new GlowFilter(0xFFFFFF, 1, 2, 2, 12)];
 		public static const DEFAULT_FORMAT:Object = {align:"left", bold:false, color:0x000000, font:"SimSun", italic:false, leading:0, letterSpacing:0, size:12, underline:false};
 		public static const DEFAULT_STATE:String = "normal";
 		

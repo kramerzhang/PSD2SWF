@@ -44,7 +44,7 @@ package game.skin
 		ptgj:Button
 		divide:Button
 		sale:Button
-		sort:LabelButton
+		sort:Button
 		pageList:RadioButtonGroup
 		tabs:RadioButtonGroup
 		beibaotxtbiaoti:Image
@@ -80,8 +80,8 @@ package game.skin
 						]
 					},
 					{name:"dragBar",type:"DragBar",x:0,y:0,width:295,height:45},
-					{name:"txtCopperBind",type:"Label",x:198,y:405,width:67,height:18,
-						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
+					{name:"txtCopperBind",type:"Label",x:198,y:405,width:40,height:18,
+						normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>整  理</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
 					},
 					{name:"txtBindMoney",type:"Label",x:198,y:382,width:69,height:17,
 						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
@@ -178,11 +178,11 @@ package game.skin
 							}
 						]
 					},
-					{name:"sort",type:"LabelButton",x:24,y:353,width:60,height:22,
+					{name:"sort",type:"Button",x:24,y:353,width:82,height:22,
 						children:
 						[
-							{name:"txtSort",type:"Label",x:13,y:3,width:40,height:17,
-								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>整  理</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
+							{name:"txtSort",type:"Label",x:13,y:3,width:69,height:17,
+								normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
 							},
 							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
 								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},

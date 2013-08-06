@@ -10,6 +10,10 @@ package
 			super(MainMenuPanelSkin.resource, MainMenuPanelSkin.skin);
 		}
 		
+		override protected function configChildren():void
+		{
+			
+		}
 		
 	}
 }

@@ -5,6 +5,7 @@ package
 	import flash.system.ApplicationDomain;
 	import flash.utils.getTimer;
 	
+	import game.component.Button;
 	import game.component.ComboBox;
 	import game.component.Component;
 	import game.component.Image;
@@ -17,6 +18,8 @@ package
 	public class BagPanel extends Panel
 	{
 		private var _pageList:RadioButtonGroup;
+		private var _closeBtn:Button;
+		
 		
 		public function BagPanel()
 		{
@@ -25,7 +28,7 @@ package
 		
 		protected override function configChildren():void
 		{
-			
+			_closeBtn = getChildByName("close") as Button;
 		}
 		
 	}

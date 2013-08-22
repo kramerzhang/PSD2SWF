@@ -408,7 +408,7 @@ function parseList(element)
 	for (var i = 0; i < len; i++)
 	{
 		var child = children[i];
-		if (child.name == "myItem")
+		if (child.name == "Item")
 		{
 			result.item = child;
 			itemIndex = i;
@@ -1041,7 +1041,7 @@ function extractElementName(arr)
 {
 	if (arr[1] == undefined)
 	{
-		return "my" + arr[0];
+		return arr[0];
 	}
 	return arr[1];
 }

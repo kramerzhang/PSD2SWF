@@ -14,16 +14,16 @@ package game.component
 		private static const STAGE_OFFSET:int = 30;
 		private var _parent:Sprite;
 		private var _stage:Stage;
-		private var _isDragging:Boolean;
+		private var _isDragging:Boolean = false;
 		
 		public function DragBar()
 		{
+			super();
 			initialize();
 		}
 		
 		private function initialize():void
 		{
-			_isDragging = false;
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
 		}

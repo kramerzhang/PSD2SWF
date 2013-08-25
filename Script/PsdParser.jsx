@@ -30,7 +30,7 @@ var buttonRegExp =				{required: ["(Image|ScaleImage)_.*"]};
 var comboBoxRegExp =			{required: ["Label_label$", "List_list$", "Button_btn$"], optional: ["ScrollBar_scrollBar$"]};
 var radioButtonRegExp =			{required: ["(Image|ScaleImage)_.*"]};
 var radioButtonGroupRegExp =	{required: ["RadioButton_.*"]};
-var scrollBarRegExp =			{required: ["Button_arrowDown$", "Button_arrowUp$", "Button_thumb$", ".*_track$"], optional: ["Image_thumbIcon$"]};
+var scrollBarRegExp =			{required: ["Button_arrowDown$", "Button_arrowUp$", "Button_thumb$", ".*_track$", "viewport$"], optional: ["Image_thumbIcon$"]};
 var sliderRegExp =				{required: ["Button_btn$", ".*_track$"]};
 var stepperRegExp =				{required: ["Label_txt$", "Button_nextBtn$", "Button_prevBtn$"], optional: ["Button_lastBtn$", "Button_firstBtn$"]};
 var labelButtonExp = 			{required: ["Label_.*", "(Image|ScaleImage)_.*"]}
@@ -44,9 +44,6 @@ var dummyTokenList = [/ /g, /副本\d*/g, /copy\d*/g];
 //检测按钮组件四态名称易写错的形式
 var stateNameList		= ["normal", "over", "down", "disable"];
 var stateNameRegExpList	= ["((\\w+?){1}normal)|(normal(\\w+){1})|nromal|norma\\b", "((\\w+?){1}over)|(over(\\w+){1})|ovre", "((\\w+?){1}down)|(down(\\w+){1})|donw", "((\\w+?){1}disable)|(disable(\\w+){1})|disble|disabled/disbled"];
-
-var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
-var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
 
 //默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
 var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*组件结构大纲\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t\tpublic static var resource:Array=${resource};\n\t}\n}";
@@ -1063,12 +1060,6 @@ function eliminateElementDummyToken(element)
 	for (var i = 0; i < len; i++)
 	{
 		name = name.replace(dummyTokenList[i], "");
-	}
-	//replace legacy type
-	var typeLen = oldTypeList.length;
-	for (var j = 0; j < typeLen; j++)
-	{
-		name = name.replace(oldTypeList[j], newTypeList[j]);
 	}
 	return name;
 }

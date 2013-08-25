@@ -14,13 +14,13 @@ package game.component
 		private var _resourceList:Array;
 		private var _resourceIndex:int;
 		
-		private var _tempSkin:Object;
+		private var _skin:Object;
 		
 		public function Panel(resourceList:Array, skin:Object)
 		{
 			super();
 			_resourceList = resourceList;
-			_tempSkin = skin;
+			_skin = skin;
 			prepareResource();
 		}
 		
@@ -51,7 +51,7 @@ package game.component
 			if(_resourceIndex >= _resourceList.length)
 			{
 				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-				this.skin = _tempSkin;
+				this.skin = _skin;
 			}
 		}
 		
@@ -62,7 +62,11 @@ package game.component
 		
 		public override function get name():String
 		{
-			return this.skin.name;
+			if(this.skin != null)
+			{
+				return this.skin.name;
+			}
+			return "Panel";
 		}
 	}
 }

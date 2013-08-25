@@ -30,24 +30,22 @@ package game.component
 		private var _scrollStep:int = 5;
 		
 		private var _target:DisplayObject;
-		private var _targetStartY:int;
-		private var _maskWidth:Number;
-		private var _maskHeight:Number;
-		private var _mask:Shape;
+		private var _viewport:Rectangle;
+		private var _targetMask:Shape;
 		
 		private var _dragRect:Rectangle;
 		private var _isThumbDrag:Boolean;
 		
 		public function ScrollBar()
 		{
+			super();
 			initialize();
 		}
 		
 		private function initialize():void
 		{
 			_dragRect = new Rectangle();
-			_scrollStep = 5;
-			_mask = new Shape();
+			_targetMask = new Shape();
 			_mode = MODE_HIDE_THUMB;
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);
@@ -74,20 +72,32 @@ package game.component
 			_arrowDown = getChildByName("arrowDown") as Button;
 			_thumb = getChildByName("thumb") as Button;
 			_thumbIcon = getChildByName("thumbIcon") as Image;
+			var viewportPlaceholder:Image = getChildByName("viewport") as Image; //在PSD文件中定义滚动条内容的范围
+			removeChild(viewportPlaceholder);
+			
+			_viewport = new Rectangle(viewportPlaceholder.x, viewportPlaceholder.y, viewportPlaceholder.width, viewportPlaceholder.height);
 			_thumb.visible = false;
 			_thumb.y = _track.y;
-			_maskHeight = (_arrowDown.y + _arrowDown.height) - _arrowUp.y;
 		}
 		
-		private function addMouseEventListener():void
+		private function addChildrenEventListener():void
 		{
 			_arrowUp.addEventListener(MouseEvent.CLICK, onArrowClick);
 			_arrowDown.addEventListener(MouseEvent.CLICK, onArrowClick);
 			_track.addEventListener(MouseEvent.CLICK, onTrackClick);
 			_thumb.addEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
 			_thumb.addEventListener(MouseEvent.MOUSE_UP, onThumbMouseUp);
-			_target.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
 			addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
+		}
+		
+		private function removeChildrenEventListener():void
+		{
+			_arrowUp.removeEventListener(MouseEvent.CLICK, onArrowClick);
+			_arrowDown.removeEventListener(MouseEvent.CLICK, onArrowClick);
+			_track.removeEventListener(MouseEvent.CLICK, onTrackClick);
+			_thumb.removeEventListener(MouseEvent.MOUSE_DOWN, onThumbMouseDown);
+			_thumb.removeEventListener(MouseEvent.MOUSE_UP, onThumbMouseUp);
+			removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
 		}
 		
 		private function onMouseWheelHandler(e:MouseEvent):void
@@ -128,7 +138,7 @@ package game.component
 		{
 			var halfThumbHeight:int = _thumb.height >> 1;
 			var localY:int = evt.localY;
-			var thumbCenterY:int = Math.min(Math.max(localY, _track.y + halfThumbHeight), _track.y + _track.height - halfThumbHeight);
+			var thumbCenterY:int = _track.y + Math.min(Math.max(localY, halfThumbHeight), _track.height - halfThumbHeight);
 			_thumb.y = thumbCenterY - halfThumbHeight;
 			scrollTarget();
 		}
@@ -166,14 +176,14 @@ package game.component
 		
 		private function scrollTarget():void
 		{
-			if(_target.height <= _maskHeight)
+			if(_target.height <= _viewport.height)
 			{
-				_target.y = _targetStartY;
+				_target.y = _targetMask.y;
 			}
 			else
 			{
 				var ratio:Number = (_thumb.y - _dragRect.y) / _dragRect.height;
-				_target.y = _targetStartY - (_target.height - _maskHeight) * ratio;
+				_target.y = _targetMask.y - (_target.height - _viewport.height) * ratio;
 			}
 		}
 		
@@ -188,18 +198,50 @@ package game.component
 		{
 			if(_target != null)
 			{
-				_target.y = _targetStartY;
+				removeTargetMask();
+				removeChildrenEventListener();
+				removeTargetWheelEventListener();
 			}
 			_target = value;
-			_targetStartY = _target.y;
-			_mask.x = _target.x;
-			_mask.y = _target.y;
+			if(_target != null)
+			{
+				addTargetMask();
+				addChildrenEventListener();
+				addTargetWheelEventListener();
+				update();
+			}
+		}
+		
+		private function addTargetMask():void
+		{
 			if(_target.parent != null)
 			{
-				_target.parent.addChild(_mask);
+				_targetMask.x = this.x + _viewport.x
+				_targetMask.y = this.y + _viewport.y;
+				_target.x = _targetMask.x;
+				_target.y = _targetMask.y;
+				_target.parent.addChild(_targetMask);
+				_target.mask = _targetMask;
 			}
-			addMouseEventListener();
-			update();
+		}
+		
+		private function removeTargetMask():void
+		{
+			if(_targetMask.parent != null)
+			{
+				_targetMask.parent.removeChild(_targetMask);
+			}
+			_target.mask = null;
+		}
+		
+		private function addTargetWheelEventListener():void
+		{
+			_target.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
+		}
+		
+		private function removeTargetWheelEventListener():void
+		{
+			_target.removeEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheelHandler);
 		}
 		
 		public function get target():DisplayObject
@@ -207,17 +249,10 @@ package game.component
 			return _target;
 		}
 		
-		public override function set height(value:Number):void
-		{
-			_track.height = value - _arrowUp.height - _arrowDown.height;
-			_arrowDown.y = _track.y + _track.height;
-			_maskHeight = value;
-		}
-		
 		public function update():void
 		{
 			updateTargetPosition();
-			updateMask();
+			updateViewport();
 			updateThumbHeight();
 			updateVisibility();
 			updateThumbPosition();
@@ -225,31 +260,30 @@ package game.component
 		
 		private function updateTargetPosition():void
 		{
-			if(_target.height <= _maskHeight)
+			if(_target.height <= _viewport.height)
 			{
-				_target.y = _targetStartY;
+				_target.y = _targetMask.y;
 			}
 			else
 			{
-				if((_target.y + _target.height) < (_maskHeight + _targetStartY))
+				if((_target.y + _target.height) < (_viewport.height + _targetMask.y))
 				{
-					_target.y = _targetStartY + _maskHeight - _target.height ;
+					_target.y = _targetMask.y + _viewport.height - _target.height ;
 				}
 			}
 		}
 		
-		private function updateMask():void
+		private function updateViewport():void
 		{
-			_maskWidth = _target.width;
-			updateMaskShape(_maskWidth, _maskHeight);
-			_target.mask = _mask;
-			_mask.x = _target.x;
-			_mask.y = _targetStartY;
+			if(_target != null)
+			{
+				updateViewportShape(_viewport.width, _viewport.height);
+			}
 		}
 		
-		private function updateMaskShape(w:int, h:int):void
+		private function updateViewportShape(w:int, h:int):void
 		{
-			var g:Graphics = _mask.graphics;
+			var g:Graphics = _targetMask.graphics;
 			g.clear();
 			g.beginFill(0x000000);
 			g.drawRect(0, 0, w, h);
@@ -258,15 +292,14 @@ package game.component
 		
 		private function updateThumbHeight():void
 		{
-			var scrollableHeight:int = _track.height;
 			var thumbHeight:int = 0;
-			if(_target.height > _maskHeight)
+			if(_target.height > _viewport.height)
 			{
-				thumbHeight = scrollableHeight * scrollableHeight / _target.height;
+				thumbHeight = _track.height * _viewport.height / _target.height;
 			}
 			else
 			{
-				thumbHeight = scrollableHeight;
+				thumbHeight = _track.height;
 			}
 			_thumb.height = thumbHeight;
 			updateDragRect();
@@ -295,7 +328,7 @@ package game.component
 			if(_thumb.visible == true)
 			{
 				var thumbRatio:Number = (_thumb.y - _dragRect.y) / _dragRect.height;
-				var targetRatio:Number = (_targetStartY - _target.y) / (_target.height - _maskHeight);
+				var targetRatio:Number = (_targetMask.y - _target.y) / (_target.height - _viewport.height);
 				if(thumbRatio > targetRatio)
 				{
 					_thumb.y = _dragRect.y + _dragRect.height * targetRatio;
@@ -321,6 +354,23 @@ package game.component
 			_dragRect.height = _track.height - _thumb.height;
 		}
 		
+		public function set viewport(value:Rectangle):void
+		{
+			_viewport = value;
+			update();
+		}
+		
+		public function get viewport():Rectangle
+		{
+			return _viewport;
+		}
+		
+		public override function set height(value:Number):void
+		{
+			_track.height = value - _arrowUp.height - _arrowDown.height;
+			_arrowDown.y = _track.y + _track.height;
+		}
+		
 		public function set mode(value:int):void
 		{
 			_mode = value;
@@ -329,6 +379,15 @@ package game.component
 		public function get mode():int
 		{
 			return _mode;
+		}
+		
+		public function reset():void
+		{
+			if(_target != null)
+			{
+				_target.y = _targetMask.y;
+				update();
+			}
 		}
 	}
 }

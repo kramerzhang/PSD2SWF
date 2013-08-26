@@ -92,6 +92,17 @@ package game.component
 			return result;
 		}
 		
+		public static function disposeScaleBitmapData(link:String, width:int, height:int):void
+		{
+			var key:String = generateScaleBitmapDataKey(link, width, height);
+			var bitmapData:BitmapData = _scaleBitmapDataMap[key] as BitmapData;
+			if(bitmapData != null)
+			{
+				bitmapData.dispose();
+				delete _scaleBitmapDataMap[key];
+			}
+		}
+		
 		private static function createScaleBitmapData(link:String, width:int, height:int, top:int, right:int, bottom:int, left:int):BitmapData
 		{
 			if(width < (left + right))

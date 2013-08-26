@@ -58,10 +58,7 @@ package game.component
 			_listInitY = _list.y;
 			_background = getChildByName("back") as Image;
 			_scrollBar = getChildByName("scrollBar") as ScrollBar;
-			if(_scrollBar != null)
-			{
-				_scrollBar.mode = ScrollBar.MODE_HIDE_BAR;
-			}
+			
 			hideChildren();
 			addChildrenEventListener();
 		}

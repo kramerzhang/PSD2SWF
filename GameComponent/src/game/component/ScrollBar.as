@@ -16,8 +16,8 @@ package game.component
 	
 	public class ScrollBar extends Container
 	{
-		public static const MODE_HIDE_THUMB:int = 0;
-		public static const MODE_HIDE_BAR:int 	= 1;
+		public static const MODE_HIDE_BAR:int 	= 0;
+		public static const MODE_HIDE_THUMB:int = 1;
 		
 		private var _mode:int;
 		private var _stage:Stage;
@@ -292,7 +292,7 @@ package game.component
 		
 		private function updateThumbHeight():void
 		{
-			var thumbHeight:int = 0;
+			var thumbHeight:Number = 0;
 			if(_target.height > _viewport.height)
 			{
 				thumbHeight = _track.height * _viewport.height / _target.height;
@@ -327,12 +327,8 @@ package game.component
 		{
 			if(_thumb.visible == true)
 			{
-				var thumbRatio:Number = (_thumb.y - _dragRect.y) / _dragRect.height;
 				var targetRatio:Number = (_targetMask.y - _target.y) / (_target.height - _viewport.height);
-				if(thumbRatio > targetRatio)
-				{
-					_thumb.y = _dragRect.y + _dragRect.height * targetRatio;
-				}
+				_thumb.y = _dragRect.y + _dragRect.height * targetRatio;
 			}
 		}
 		
@@ -369,6 +365,7 @@ package game.component
 		{
 			_track.height = value - _arrowUp.height - _arrowDown.height;
 			_arrowDown.y = _track.y + _track.height;
+			update();
 		}
 		
 		public function set mode(value:int):void

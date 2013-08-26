@@ -2,7 +2,6 @@ package game.component
 {
 	/**
 	 * @author Kramer(QQ:21524742)
-	 * 注意：UI组件创建后不会释放资源，ScaleImage每次缩放都会创建新的BitmapData对象，且旧的BitmapData不会释放
 	 */	
 	
 	public class ScaleImage extends Image

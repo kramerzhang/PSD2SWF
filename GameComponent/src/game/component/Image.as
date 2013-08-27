@@ -60,19 +60,21 @@ package game.component
 			this.y = _skin.y + obj.y;
 			_width = obj.width;
 			_height = obj.height;
-			setSize(_width * _scaleX, _height * _scaleY);
+			updateBitmapData(_width * _scaleX, _height * _scaleY);
+		}
+		
+		protected function updateBitmapData(width:Number, height:Number):void
+		{
+			this.bitmapData = BitmapDataCache.getBitmapData(_skin[_state].link);
+			super.width = width;
+			super.height = height;
 		}
 		
 		public function setSize(width:Number, height:Number):void
 		{
-			if(this.bitmapData == null)
-			{
-				this.bitmapData = BitmapDataCache.getBitmapData(_skin[_state].link);
-			}
 			_scaleX = width / _width;
 			_scaleY = height / _height;
-			super.width = width;
-			super.height = height;
+			updateBitmapData(width, height);
 		}
 		
 		public override function set width(value:Number):void

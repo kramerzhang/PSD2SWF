@@ -16,8 +16,11 @@ package game.component
 		public override function setSize(width:Number, height:Number):void
 		{
 			disposeBitmapData();
-			_scaleX = width / _width;
-			_scaleY = height / _height;
+			super.setSize(width, height);
+		}
+		
+		protected override function updateBitmapData(width:Number, height:Number):void
+		{
 			this.bitmapData = BitmapDataCache.getScaleBitmapData(_skin[_state].link, width, height, _skin.top, _skin.right, _skin.bottom, _skin.left);
 		}
 		

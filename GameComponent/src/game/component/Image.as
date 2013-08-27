@@ -83,7 +83,7 @@ package game.component
 			{
 				return;
 			}
-			this.scaleX = value / _width;
+			setSize(value, this.height);
 		}
 		
 		public override function set height(value:Number):void
@@ -92,13 +92,12 @@ package game.component
 			{
 				return;
 			}
-			this.scaleY = value / _height;
+			setSize(this.width, value);
 		}
 		
 		public override function set scaleX(value:Number):void
 		{
-			_scaleX = value;
-			setSize(_width * _scaleX, this.height);
+			setSize(_width * value, this.height);
 		}
 		
 		public override function get scaleX():Number
@@ -108,8 +107,7 @@ package game.component
 		
 		public override function set scaleY(value:Number):void
 		{
-			_scaleY = value;
-			setSize(this.width, _height * _scaleY);
+			setSize(this.width, _height * value);
 		}
 		
 		public override function get scaleY():Number

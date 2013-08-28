@@ -3,6 +3,7 @@ package game.component
 	/**
 	 * @author Kramer(QQ:21524742)
 	 */	
+	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -13,8 +14,7 @@ package game.component
 		private var _btn:Button;
 		private var _label:Label;
 		private var _list:List;
-		private var _background:Image;
-		private var _listInitY:int;
+		private var _background:DisplayObject;
 		private var _scrollBar:ScrollBar;
 		
 		private var _stage:Stage;
@@ -55,8 +55,7 @@ package game.component
 			_label = getChildByName("label") as Label;
 			_label.enabled = true;
 			_list = getChildByName("list") as List;
-			_listInitY = _list.y;
-			_background = getChildByName("back") as Image;
+			_background = getChildByName("back") as DisplayObject;
 			_scrollBar = getChildByName("scrollBar") as ScrollBar;
 			
 			hideChildren();
@@ -104,9 +103,8 @@ package game.component
 			{
 				addChild(_scrollBar);
 			}
-			_list.y = _listInitY;
 			addChild(_list);
-			if(_scrollBar != null)
+			if(_scrollBar != null && _scrollBar.target == null)
 			{
 				_scrollBar.target = _list;
 			}

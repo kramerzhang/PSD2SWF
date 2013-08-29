@@ -54,7 +54,6 @@ package game.component
 		{
 			var result:BitmapData = _bitmapDataMap[link];
 			if(result == null)
-				
 			{
 				var domain:ApplicationDomain = Component.domain;
 				if(domain == null)
@@ -81,18 +80,37 @@ package game.component
 		
 		public static function getScaleBitmapData(link:String, width:int, height:int, top:int, right:int, bottom:int, left:int):BitmapData
 		{
-			var result:BitmapData;
+			var result:ReferenceCountableBitmapData;
 			var key:String = generateScaleBitmapDataKey(link, width, height);
-			result = _scaleBitmapDataMap[key] as BitmapData;
+			result = _scaleBitmapDataMap[key] as ReferenceCountableBitmapData;
 			if(result == null)
 			{
 				result = createScaleBitmapData(link, width, height, top, right, bottom, left);
 				_scaleBitmapDataMap[key] = result;
 			}
-			return result;
+			else
+			{
+				result.checkout();
+			}
+			return result as BitmapData;
 		}
 		
-		private static function createScaleBitmapData(link:String, width:int, height:int, top:int, right:int, bottom:int, left:int):BitmapData
+		public static function disposeScaleBitmapData(link:String, width:int, height:int):void
+		{
+			var key:String = generateScaleBitmapDataKey(link, width, height);
+			var bitmapData:ReferenceCountableBitmapData = _scaleBitmapDataMap[key] as ReferenceCountableBitmapData;
+			if(bitmapData != null)
+			{
+				bitmapData.checkin();
+				if(bitmapData.isDisposable() == true)
+				{
+					bitmapData.dispose();
+					delete _scaleBitmapDataMap[key];
+				}
+			}
+		}
+		
+		private static function createScaleBitmapData(link:String, width:int, height:int, top:int, right:int, bottom:int, left:int):ReferenceCountableBitmapData
 		{
 			if(width < (left + right))
 			{
@@ -102,7 +120,7 @@ package game.component
 			{
 				height = top + bottom;
 			}
-			var result:BitmapData = new BitmapData(width, height, true, 0);
+			var result:ReferenceCountableBitmapData = new ReferenceCountableBitmapData(width, height, true, 0);
 			var gridList:Vector.<BitmapData> = getBitmapDataGridList(link, top, right, bottom, left);
 			updateSplitData(width, height, top, right, bottom, left);
 			for(var i:int = 0; i < SPLIT_COL_COUNT; i++)
@@ -212,6 +230,33 @@ package game.component
 			trace("ScaleImage Memory:      " + _scaleImageTotalMemory);
 			trace("===========================================");
 		}
+	}
+}
+import flash.display.BitmapData;
+
+class ReferenceCountableBitmapData extends BitmapData
+{
+	private var _referenceCount:int = 0;
+	
+	public function ReferenceCountableBitmapData(width:int, height:int, transparent:Boolean=true, fillColor:uint=0xFFFFFF)
+	{
+		super(width, height, transparent, fillColor);
+		checkout();
+	}
+	
+	public function checkout():void
+	{
+		_referenceCount += 1;
+	}
+	
+	public function checkin():void
+	{
+		_referenceCount -= 1;
+	}
+	
+	public function isDisposable():Boolean
+	{
+		return _referenceCount == 0;
 	}
 }
 

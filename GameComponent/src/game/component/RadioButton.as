@@ -8,7 +8,7 @@ package game.component
 	[Event(name="change", type="flash.events.Event")]
 	public class RadioButton extends Button
 	{
-		private var _selected:Boolean;
+		private var _selected:Boolean = false;
 		private var _data:Object;
 		
 		public function RadioButton()
@@ -19,7 +19,6 @@ package game.component
 		
 		private function initialize():void
 		{
-			_selected = false;
 			addEventListener(MouseEvent.CLICK, onClick);
 		}
 		

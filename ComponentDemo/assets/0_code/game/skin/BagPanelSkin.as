@@ -1,444 +1,278 @@
 package game.skin
 {
-	import shared.dibanmoji;dibanmoji;
-	import shared.diban;diban;
-	import shared.neidiban;neidiban;
-	import shared.xuanguakuang;xuanguakuang;
-	import shared.anniu1;anniu1;
-	import shared.anniu2;anniu2;
-	import shared.anniu3;anniu3;
-	import shared.anniu4;anniu4;
-	import shared.huawen2;huawen2;
-	import shared.huawen1;huawen1;
-	import shared.biaoti;biaoti;
-	import shared.beibaotxtbiaoti;beibaotxtbiaoti;
-	import shared.biaoqian1;biaoqian1;
-	import shared.biaoqian2;biaoqian2;
-	import shared.biaoqian3;biaoqian3;
-	import shared.biaoqian4;biaoqian4;
-	import shared.redanniu3;redanniu3;
-	import shared.shurukuang;shurukuang;
-	import shared.close1;close1;
-	import shared.close2;close2;
-	import shared.close3;close3;
+	import BagPanel.beijing;beijing;
+	import BagPanel.vipbeijing;vipbeijing;
+	import BagPanel.xingzhuang2;xingzhuang2;
+	import BagPanel.guanbidi1;guanbidi1;
+	import BagPanel.guanbidi2;guanbidi2;
+	import BagPanel.shurukuang;shurukuang;
+	import BagPanel.kuang;kuang;
+	import BagPanel.kuangb;kuangb;
+	import BagPanel.vip;vip;
+	import BagPanel.quanbu1;quanbu1;
+	import BagPanel.quanbu2;quanbu2;
+	import BagPanel.quanbu3;quanbu3;
+	import BagPanel.guashoudi1;guashoudi1;
+	import BagPanel.guashoudi2;guashoudi2;
+	import BagPanel.guashoudi3;guashoudi3;
+	import BagPanel.zhuang1;zhuang1;
+	import BagPanel.zhuang2;zhuang2;
+	import BagPanel.zhuang3;zhuang3;
+	import BagPanel.baoshi1;baoshi1;
+	import BagPanel.baoshi2;baoshi2;
+	import BagPanel.baoshi3;baoshi3;
+	import BagPanel.baoguo;baoguo;
+	import BagPanel.chacha;chacha;
+	import BagPanel.chacha2;chacha2;
 
 	/*组件结构大纲
 	BagPanel:Container
 		close:Button
 		dragBar:DragBar
-		txtCopperBind:Label
-		txtBindMoney:Label
-		txtCopper:Label
-		txtMoney:Label
-		绑定铜币:Label
-		绑定元宝:Label
-		铜币:Label
-		元宝:Label
-		shurukuang3:ScaleImage
-		shurukuang1:ScaleImage
-		shurukuang2:ScaleImage
-		shurukuang0:ScaleImage
-		txtBeibaorongliangshuzi:Label
-		背包容量:Label
-		VIPguaji:Button
-		ptgj:Button
-		divide:Button
-		sale:Button
-		sort:Button
-		pageList:RadioButtonGroup
+		baoguo:Image
 		tabs:RadioButtonGroup
-		beibaotxtbiaoti:Image
-		biaoti:Image
-		huawen1:Image
-		huawen2:Image
-		myvipanniuContainer:Container
+		vip:Button
+		pageList:RadioButtonGroup
+		shenqingjiaru:Button
+		txtstx120/120:Label
+		shurukuang:Image
+		txtrongliang:Label
+		vipgongneng:Container
+			vipditu:Button
+			vipfuli:Button
+			piliangchushou:Button
+			yaunchengyaodian:Button
 			yaunchengck:Button
-			yuancgy:Button
-			huicheng:Button
-			vip:Button
-			xuanguakuang:Image
-		neidiban:Container
-			mynormal:Container
-				neidiban:Image
-		diban:ScaleImage
-		dibianmoji:ScaleImage
+			vipbeijing:Image
+		beijing:Image
 	*/
 	public class BagPanelSkin
 	{
 		public static var skin:Object=
-			{name:"BagPanel",type:"Container",x:0,y:0,width:361,height:457,
+			{name:"BagPanel",type:"Container",x:0,y:0,width:488,height:579,
 				children:
 				[
-					{name:"close",type:"Button",x:252,y:15,width:29,height:28,
+					{name:"close",type:"Button",x:352,y:18,width:38,height:39,
 						children:
 						[
-							{name:"myImage",type:"Image",x:0,y:0,width:29,height:28,
-								normal:{link:"shared.close1",x:0,y:0,width:29,height:28},
-								over:{link:"shared.close2",x:0,y:0,width:29,height:28},
-								down:{link:"shared.close3",x:0,y:0,width:29,height:28}
+							{name:"Image",type:"Image",x:0,y:0,width:38,height:39,
+								normal:{link:"BagPanel.chacha",x:0,y:0,width:38,height:39},
+								over:{link:"BagPanel.chacha2",x:0,y:0,width:38,height:39},
+								down:{link:"BagPanel.chacha2",x:0,y:0,width:38,height:39}
 							}
 						]
 					},
-					{name:"dragBar",type:"DragBar",x:0,y:0,width:295,height:45},
-					{name:"txtCopperBind",type:"Label",x:198,y:405,width:40,height:18,
-						normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>整  理</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
+					{name:"dragBar",type:"DragBar",x:0,y:0,width:399,height:48},
+					{name:"baoguo",type:"Image",x:1,y:0,width:396,height:86,
+						normal:{link:"BagPanel.baoguo",x:0,y:0,width:396,height:86}
 					},
-					{name:"txtBindMoney",type:"Label",x:198,y:382,width:69,height:17,
-						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
-					},
-					{name:"txtCopper",type:"Label",x:60,y:405,width:69,height:17,
-						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
-					},
-					{name:"txtMoney",type:"Label",x:60,y:382,width:69,height:17,
-						normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
-					},
-					{name:"绑定铜币",type:"Label",x:137,y:404,width:57,height:17,
-						normal:{x:0,y:0,width:57,height:17,content:"<font color='#ac8123'>绑定铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"绑定元宝",type:"Label",x:137,y:381,width:57,height:17,
-						normal:{x:0,y:0,width:57,height:17,content:"<font color='#ac8123'>绑定元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"铜币",type:"Label",x:24,y:404,width:31,height:17,
-						normal:{x:0,y:0,width:31,height:17,content:"<font color='#ac8123'>铜币</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"元宝",type:"Label",x:24,y:382,width:31,height:17,
-						normal:{x:0,y:0,width:31,height:17,content:"<font color='#ac8123'>元宝</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"shurukuang3",type:"ScaleImage",x:190,y:403,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
-					},
-					{name:"shurukuang1",type:"ScaleImage",x:52,y:403,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
-					},
-					{name:"shurukuang2",type:"ScaleImage",x:190,y:380,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
-					},
-					{name:"shurukuang0",type:"ScaleImage",x:52,y:380,width:81,height:20,top:4,right:4,bottom:4,left:4,
-						normal:{link:"shared.shurukuang",x:0,y:0,width:81,height:20}
-					},
-					{name:"txtBeibaorongliangshuzi",type:"Label",x:225,y:329,width:55,height:17,
-						normal:{x:0,y:0,width:55,height:17,content:"<font color='#ffffff'>000/000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"背包容量",type:"Label",x:194,y:328,width:45,height:17,
-						normal:{x:0,y:0,width:45,height:17,content:"<font color='#ac8123'>容量：</font>",format:{align:"left",bold:false,color:0xac8123,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-					},
-					{name:"VIPguaji",type:"Button",x:212,y:353,width:60,height:22,
+					{name:"tabs",type:"RadioButtonGroup",x:10,y:46,width:335,height:48,
 						children:
 						[
-							{name:"VIP会员",type:"Label",x:7,y:3,width:46,height:17,
-								normal:{x:0,y:0,width:46,height:17,content:"<font color='#ffffff'>VIP会员</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-							},
-							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-							}
-						]
-					},
-					{name:"ptgj",type:"Button",x:212,y:353,width:60,height:22,
-						children:
-						[
-							{name:"普通挂机",type:"Label",x:4,y:3,width:52,height:17,
-								normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>普通挂机</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-							},
-							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-							}
-						]
-					},
-					{name:"divide",type:"Button",x:149,y:353,width:60,height:22,
-						children:
-						[
-							{name:"拆分",type:"Label",x:13,y:3,width:40,height:17,
-								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>拆  分</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-							},
-							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-							}
-						]
-					},
-					{name:"sale",type:"Button",x:87,y:353,width:60,height:22,
-						children:
-						[
-							{name:"txtSell",type:"Label",x:13,y:3,width:40,height:17,
-								normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>出  售</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-							},
-							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-							}
-						]
-					},
-					{name:"sort",type:"Button",x:24,y:353,width:82,height:22,
-						children:
-						[
-							{name:"txtSort",type:"Label",x:13,y:3,width:69,height:17,
-								normal:{x:0,y:0,width:69,height:17,content:"<font color='#ffffff'>999999000</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
-							},
-							{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-								normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-								over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-								down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-								disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-							}
-						]
-					},
-					{name:"pageList",type:"RadioButtonGroup",x:29,y:325,width:164,height:22,
-						children:
-						[
-							{name:"page5",type:"RadioButton",x:132,y:0,width:32,height:22,
+							{name:"xianlu",type:"RadioButton",x:251,y:0,width:84,height:48,
 								children:
 								[
-									{name:"txt5",type:"Label",x:11,y:3,width:10,height:17,
-										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>5</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
-										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
+									{name:"Image",type:"Image",x:0,y:0,width:84,height:48,
+										normal:{link:"BagPanel.baoshi1",x:0,y:0,width:84,height:40},
+										over:{link:"BagPanel.baoshi2",x:0,y:1,width:83,height:39},
+										down:{link:"BagPanel.baoshi3",x:0,y:1,width:84,height:47}
 									}
 								]
 							},
-							{name:"page4",type:"RadioButton",x:99,y:0,width:32,height:22,
+							{name:"jifen",type:"RadioButton",x:84,y:0,width:85,height:48,
 								children:
 								[
-									{name:"txt4",type:"Label",x:11,y:3,width:10,height:17,
-										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>4</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
-										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
+									{name:"Image",type:"Image",x:0,y:0,width:85,height:48,
+										normal:{link:"BagPanel.zhuang1",x:0,y:0,width:85,height:40},
+										over:{link:"BagPanel.zhuang2",x:1,y:1,width:83,height:39},
+										down:{link:"BagPanel.zhuang3",x:1,y:1,width:84,height:47}
 									}
 								]
 							},
-							{name:"page3",type:"RadioButton",x:66,y:0,width:32,height:22,
+							{name:"chenghao",type:"RadioButton",x:168,y:0,width:84,height:48,
 								children:
 								[
-									{name:"txt3",type:"Label",x:11,y:3,width:12,height:17,
-										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>3</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:9,letterSpacing:0.6,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
-										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
+									{name:"Image",type:"Image",x:0,y:0,width:84,height:48,
+										normal:{link:"BagPanel.guashoudi1",x:0,y:0,width:84,height:40},
+										over:{link:"BagPanel.guashoudi2",x:0,y:1,width:83,height:39},
+										down:{link:"BagPanel.guashoudi3",x:0,y:1,width:84,height:47}
 									}
 								]
 							},
-							{name:"page2",type:"RadioButton",x:33,y:0,width:32,height:22,
+							{name:"rnewu",type:"RadioButton",x:0,y:0,width:85,height:48,
 								children:
 								[
-									{name:"txt2",type:"Label",x:11,y:3,width:12,height:17,
-										normal:{x:0,y:0,width:12,height:17,content:"<font color='#ffffff'>2</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
-										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
-									}
-								]
-							},
-							{name:"page1",type:"RadioButton",x:0,y:0,width:32,height:22,
-								children:
-								[
-									{name:"txt1",type:"Label",x:11,y:3,width:10,height:17,
-										normal:{x:0,y:0,width:10,height:17,content:"<font color='#ffffff'>1</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:32,height:22,top:4,right:4,bottom:4,left:4,
-										down:{link:"shared.redanniu3",x:0,y:0,width:32,height:22},
-										normal:{link:"shared.anniu1",x:0,y:0,width:32,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:32,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:32,height:22}
+									{name:"Image",type:"Image",x:0,y:0,width:85,height:48,
+										normal:{link:"BagPanel.quanbu1",x:0,y:0,width:85,height:40},
+										over:{link:"BagPanel.quanbu2",x:1,y:1,width:83,height:39},
+										down:{link:"BagPanel.quanbu3",x:1,y:1,width:84,height:47}
 									}
 								]
 							}
 						]
 					},
-					{name:"tabs",type:"RadioButtonGroup",x:27,y:52,width:243,height:22,
+					{name:"vip",type:"Button",x:348,y:67,width:36,height:14,
 						children:
 						[
-							{name:"other",type:"RadioButton",x:192,y:0,width:51,height:22,
+							{name:"Image",type:"Image",x:0,y:0,width:36,height:14,
+								normal:{link:"BagPanel.vip",x:0,y:0,width:36,height:14},
+								down:{link:"BagPanel.vip",x:0,y:0,width:36,height:14}
+							}
+						]
+					},
+					{name:"pageList",type:"RadioButtonGroup",x:28,y:527,width:116,height:26,
+						children:
+						[
+							{name:"pageFour",type:"RadioButton",x:90,y:0,width:26,height:26,
 								children:
 								[
-									{name:"other",type:"Label",x:12,y:5,width:33,height:17,
-										normal:{x:0,y:0,width:33,height:17,content:"<font color='#ffffff'>其他</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:1.6,size:12,underline:false}}
+									{name:"txtfourtss",type:"Label",x:7,y:3,width:12,height:22,
+										normal:{x:0,y:0,width:12,height:22,content:"<font color='#ffffff'>4</font>",format:{align:"center",bold:false,color:0xffffff,font:"ArialMT",italic:false,leading:18,letterSpacing:0,size:14,underline:false}}
 									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:26,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.kuang",x:0,y:0,width:26,height:26},
+										down:{link:"BagPanel.kuangb",x:0,y:0,width:26,height:26}
 									}
 								]
 							},
-							{name:"gem",type:"RadioButton",x:144,y:0,width:51,height:22,
+							{name:"pagethree",type:"RadioButton",x:60,y:0,width:26,height:26,
 								children:
 								[
-									{name:"gem",type:"Label",x:12,y:5,width:31,height:17,
-										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>宝石</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.6,size:12,underline:false}}
+									{name:"txthellot",type:"Label",x:7,y:3,width:12,height:22,
+										normal:{x:0,y:0,width:12,height:22,content:"<font color='#ffffff'>3</font>",format:{align:"center",bold:false,color:0xffffff,font:"ArialMT",italic:false,leading:18,letterSpacing:0,size:14,underline:false}}
 									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:26,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.kuang",x:0,y:0,width:26,height:26},
+										down:{link:"BagPanel.kuangb",x:0,y:0,width:26,height:26}
 									}
 								]
 							},
-							{name:"drug",type:"RadioButton",x:96,y:0,width:51,height:22,
+							{name:"pagetwo",type:"RadioButton",x:30,y:0,width:26,height:26,
 								children:
 								[
-									{name:"drug",type:"Label",x:13,y:5,width:31,height:17,
-										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>药品</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
+									{name:"txtherool",type:"Label",x:7,y:3,width:12,height:22,
+										normal:{x:0,y:0,width:12,height:22,content:"<font color='#ffffff'>2</font>",format:{align:"center",bold:false,color:0xffffff,font:"ArialMT",italic:false,leading:18,letterSpacing:0,size:14,underline:false}}
 									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:26,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.kuang",x:0,y:0,width:26,height:26},
+										down:{link:"BagPanel.kuangb",x:0,y:0,width:26,height:26}
 									}
 								]
 							},
-							{name:"equip",type:"RadioButton",x:48,y:0,width:51,height:22,
+							{name:"pageone",type:"RadioButton",x:0,y:0,width:26,height:26,
 								children:
 								[
-									{name:"equip",type:"Label",x:13,y:5,width:31,height:17,
-										normal:{x:0,y:0,width:31,height:17,content:"<font color='#ffffff'>装备</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:5.5,letterSpacing:0.8,size:12,underline:false}}
+									{name:"txthellot",type:"Label",x:7,y:3,width:12,height:22,
+										normal:{x:0,y:0,width:12,height:22,content:"<font color='#ffffff'>1</font>",format:{align:"center",bold:false,color:0xffffff,font:"ArialMT",italic:false,leading:18,letterSpacing:0,size:14,underline:false}}
 									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
-									}
-								]
-							},
-							{name:"all",type:"RadioButton",x:0,y:0,width:51,height:22,
-								children:
-								[
-									{name:"all",type:"Label",x:12,y:5,width:28,height:17,
-										normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>全</font><font color='#fe0000'>部</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:51,height:21,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.biaoqian1",x:0,y:0,width:51,height:21},
-										over:{link:"shared.biaoqian2",x:0,y:0,width:51,height:21},
-										down:{link:"shared.biaoqian3",x:0,y:0,width:51,height:21},
-										disable:{link:"shared.biaoqian4",x:0,y:0,width:51,height:21}
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:26,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.kuang",x:0,y:0,width:26,height:26},
+										down:{link:"BagPanel.kuangb",x:0,y:0,width:26,height:26}
 									}
 								]
 							}
 						]
 					},
-					{name:"beibaotxtbiaoti",type:"Image",x:119,y:17,width:61,height:26,
-						normal:{link:"shared.beibaotxtbiaoti",x:0,y:0,width:61,height:26}
-					},
-					{name:"biaoti",type:"Image",x:77,y:17,width:142,height:25,
-						normal:{link:"shared.biaoti",x:0,y:0,width:142,height:25}
-					},
-					{name:"huawen1",type:"Image",x:162,y:14,width:117,height:33,
-						normal:{link:"shared.huawen1",x:0,y:0,width:117,height:33}
-					},
-					{name:"huawen2",type:"Image",x:17,y:14,width:117,height:33,
-						normal:{link:"shared.huawen2",x:0,y:0,width:117,height:33}
-					},
-					{name:"myvipanniuContainer",type:"Container",x:282,y:151,width:79,height:246,
+					{name:"shenqingjiaru",type:"Button",x:296,y:527,width:76,height:26,
 						children:
 						[
-							{name:"yaunchengck",type:"Button",x:7,y:70,width:60,height:22,
-								children:
-								[
-									{name:"yuanchengc",type:"Label",x:5,y:3,width:52,height:17,
-										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程仓库</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-									}
-								]
+							{name:"txtguanbi",type:"Label",x:23,y:5,width:28,height:17,
+								normal:{x:0,y:0,width:28,height:17,content:"<font color='#ffffff'>整理</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
 							},
-							{name:"yuancgy",type:"Button",x:7,y:97,width:60,height:22,
-								children:
-								[
-									{name:"yuancgy",type:"Label",x:5,y:3,width:52,height:17,
-										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程购药</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-									}
-								]
-							},
-							{name:"huicheng",type:"Button",x:7,y:124,width:60,height:22,
-								children:
-								[
-									{name:"huicheng",type:"Label",x:5,y:3,width:52,height:17,
-										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>回    城</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-									}
-								]
-							},
-							{name:"vip",type:"Button",x:7,y:151,width:60,height:22,
-								children:
-								[
-									{name:"VIPfuli",type:"Label",x:5,y:3,width:52,height:17,
-										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>VIP 福利</font>",format:{align:"left",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:0,letterSpacing:0,size:12,underline:false}}
-									},
-									{name:"myScaleImage",type:"ScaleImage",x:0,y:0,width:60,height:22,top:4,right:4,bottom:4,left:4,
-										normal:{link:"shared.anniu1",x:0,y:0,width:60,height:22},
-										over:{link:"shared.anniu2",x:0,y:0,width:60,height:22},
-										down:{link:"shared.anniu3",x:0,y:0,width:60,height:22},
-										disable:{link:"shared.anniu4",x:0,y:0,width:60,height:22}
-									}
-								]
-							},
-							{name:"xuanguakuang",type:"Image",x:0,y:0,width:79,height:246,
-								normal:{link:"shared.xuanguakuang",x:0,y:0,width:79,height:246}
+							{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:76,height:26,top:4,right:4,bottom:4,left:4,
+								normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:76,height:26},
+								over:{link:"BagPanel.guanbidi1",x:0,y:0,width:76,height:26},
+								down:{link:"BagPanel.guanbidi2",x:0,y:0,width:76,height:26}
 							}
 						]
 					},
-					{name:"neidiban",type:"Container",x:24,y:73,width:248,height:248,
+					{name:"txtstx120/120",type:"Label",x:219,y:533,width:46,height:17,
+						normal:{x:0,y:0,width:46,height:17,content:"<font color='#ffffff'>120/120</font>",format:{align:"center",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:20,letterSpacing:0,size:12,underline:false}}
+					},
+					{name:"shurukuang",type:"Image",x:202,y:527,width:75,height:27,
+						normal:{link:"BagPanel.shurukuang",x:0,y:0,width:75,height:27}
+					},
+					{name:"txtrongliang",type:"Label",x:163,y:533,width:40,height:17,
+						normal:{x:0,y:0,width:40,height:17,content:"<font color='#ffffff'>容量: </font>",format:{align:"center",bold:false,color:0xffffff,font:"SimSun",italic:false,leading:20,letterSpacing:0,size:12,underline:false}}
+					},
+					{name:"vipgongneng",type:"Container",x:387,y:65,width:101,height:217,
 						children:
 						[
-							{name:"mynormal",type:"Container",x:0,y:0,width:248,height:248,
+							{name:"vipditu",type:"Button",x:11,y:167,width:78,height:26,
 								children:
 								[
-									{name:"neidiban",type:"Image",x:0,y:0,width:248,height:248,
-										normal:{link:"shared.neidiban",x:0,y:0,width:248,height:248}
+									{name:"txtguaji",type:"Label",x:16,y:5,width:46,height:17,
+										normal:{x:0,y:0,width:46,height:17,content:"<font color='#ffffff'>VIP挂机</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
+									},
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:78,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:78,height:26},
+										over:{link:"BagPanel.guanbidi1",x:0,y:0,width:78,height:26},
+										down:{link:"BagPanel.guanbidi2",x:0,y:0,width:78,height:26}
 									}
 								]
+							},
+							{name:"vipfuli",type:"Button",x:11,y:137,width:78,height:26,
+								children:
+								[
+									{name:"txtfuli",type:"Label",x:16,y:5,width:46,height:17,
+										normal:{x:0,y:0,width:46,height:17,content:"<font color='#ffffff'>VIP福利</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
+									},
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:78,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:78,height:26},
+										over:{link:"BagPanel.guanbidi1",x:0,y:0,width:78,height:26},
+										down:{link:"BagPanel.guanbidi2",x:0,y:0,width:78,height:26}
+									}
+								]
+							},
+							{name:"piliangchushou",type:"Button",x:11,y:107,width:78,height:26,
+								children:
+								[
+									{name:"txtchushou",type:"Label",x:14,y:5,width:52,height:17,
+										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>批量出售</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
+									},
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:78,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:78,height:26},
+										over:{link:"BagPanel.guanbidi1",x:0,y:0,width:78,height:26},
+										down:{link:"BagPanel.guanbidi2",x:0,y:0,width:78,height:26}
+									}
+								]
+							},
+							{name:"yaunchengyaodian",type:"Button",x:11,y:77,width:78,height:26,
+								children:
+								[
+									{name:"txtyaodian",type:"Label",x:14,y:5,width:52,height:17,
+										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程药店</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
+									},
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:78,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:78,height:26},
+										over:{link:"BagPanel.guanbidi1",x:0,y:0,width:78,height:26},
+										down:{link:"BagPanel.guanbidi2",x:0,y:0,width:78,height:26}
+									}
+								]
+							},
+							{name:"yaunchengck",type:"Button",x:11,y:47,width:78,height:26,
+								children:
+								[
+									{name:"txtcangku",type:"Label",x:14,y:5,width:52,height:17,
+										normal:{x:0,y:0,width:52,height:17,content:"<font color='#ffffff'>远程仓库</font>",format:{align:"left",bold:false,color:0xffffff,font:"NSimSun",italic:false,leading:21,letterSpacing:0,size:12,underline:false}}
+									},
+									{name:"ScaleImage",type:"ScaleImage",x:0,y:0,width:78,height:26,top:4,right:4,bottom:4,left:4,
+										normal:{link:"BagPanel.xingzhuang2",x:0,y:0,width:78,height:26},
+										over:{link:"BagPanel.guanbidi1",x:0,y:0,width:78,height:26},
+										down:{link:"BagPanel.guanbidi2",x:0,y:0,width:78,height:26}
+									}
+								]
+							},
+							{name:"vipbeijing",type:"Image",x:0,y:0,width:101,height:217,
+								normal:{link:"BagPanel.vipbeijing",x:0,y:0,width:101,height:217}
 							}
 						]
 					},
-					{name:"diban",type:"ScaleImage",x:13,y:12,width:270,height:429,top:80,right:12,bottom:12,left:40,
-						normal:{link:"shared.diban",x:0,y:0,width:270,height:429}
-					},
-					{name:"dibianmoji",type:"ScaleImage",x:0,y:0,width:294,height:457,top:24,right:24,bottom:24,left:24,
-						normal:{link:"shared.dibanmoji",x:0,y:0,width:294,height:457}
+					{name:"beijing",type:"Image",x:0,y:18,width:397,height:561,
+						normal:{link:"BagPanel.beijing",x:0,y:0,width:397,height:561}
 					}
 				]
 			};
-		public static var resource:Array=[{type:"Image", link:"shared.close1"}, {type:"Image", link:"shared.close2"}, {type:"Image", link:"shared.close3"}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.shurukuang", width:81, height:20, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.redanniu3", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:32, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian1", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian2", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian3", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.biaoqian4", width:51, height:21, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"shared.beibaotxtbiaoti"}, {type:"Image", link:"shared.biaoti"}, {type:"Image", link:"shared.huawen1"}, {type:"Image", link:"shared.huawen2"}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu1", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu2", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu3", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"shared.anniu4", width:60, height:22, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"shared.xuanguakuang"}, {type:"Image", link:"shared.neidiban"}, {type:"ScaleImage", link:"shared.diban", width:270, height:429, top:80, right:12, bottom:12, left:40}, {type:"ScaleImage", link:"shared.dibanmoji", width:294, height:457, top:24, right:24, bottom:24, left:24}];
+		public static var resource:Array=[{type:"Image", link:"BagPanel.chacha"}, {type:"Image", link:"BagPanel.chacha2"}, {type:"Image", link:"BagPanel.chacha2"}, {type:"Image", link:"BagPanel.baoguo"}, {type:"Image", link:"BagPanel.baoshi1"}, {type:"Image", link:"BagPanel.baoshi2"}, {type:"Image", link:"BagPanel.baoshi3"}, {type:"Image", link:"BagPanel.zhuang1"}, {type:"Image", link:"BagPanel.zhuang2"}, {type:"Image", link:"BagPanel.zhuang3"}, {type:"Image", link:"BagPanel.guashoudi1"}, {type:"Image", link:"BagPanel.guashoudi2"}, {type:"Image", link:"BagPanel.guashoudi3"}, {type:"Image", link:"BagPanel.quanbu1"}, {type:"Image", link:"BagPanel.quanbu2"}, {type:"Image", link:"BagPanel.quanbu3"}, {type:"Image", link:"BagPanel.vip"}, {type:"Image", link:"BagPanel.vip"}, {type:"ScaleImage", link:"BagPanel.kuang", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuangb", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuang", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuangb", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuang", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuangb", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuang", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.kuangb", width:26, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:76, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:76, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:76, height:26, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"BagPanel.shurukuang"}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.xingzhuang2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi1", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"ScaleImage", link:"BagPanel.guanbidi2", width:78, height:26, top:4, right:4, bottom:4, left:4}, {type:"Image", link:"BagPanel.vipbeijing"}, {type:"Image", link:"BagPanel.beijing"}];
 	}
 }

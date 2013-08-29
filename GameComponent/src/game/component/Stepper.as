@@ -23,26 +23,16 @@ package game.component
 		private var _firstBtn:Button;//optional
 		
 		private var _editable:Boolean;
-		private var _minimum:Number;
-		private var _maximum:Number;
-		private var _value:Number;
-		private var _oldValue:Number;
-		private var _step:Number;
-		private var _formatter:String;
+		private var _minimum:Number = 1;
+		private var _maximum:Number = 10;
+		private var _value:Number = 0;
+		private var _oldValue:Number = 0;
+		private var _step:Number = 1;
+		private var _formatter:String = "vv/mm";
 		
 		public function Stepper()
 		{
-			initialize();
-		}
-		
-		private function initialize():void
-		{
-			_minimum = 1;
-			_maximum = 10;
-			_step = 1;
-			_value = 0;
-			_oldValue = 0;
-			_formatter = "vv/mm";
+			super();
 		}
 		
 		protected override function configChildren():void
@@ -53,9 +43,10 @@ package game.component
 			_nextBtn = getChildByName("nextBtn") as Button;
 			_lastBtn = getChildByName("lastBtn") as Button;
 			_firstBtn = getChildByName("firstBtn") as Button;
+			
 			this.editable = false;
-			addBtnEventListener();
 			this.value = 1;
+			addBtnEventListener();
 		}
 		
 		//屏蔽文本自身的CHANGE事件向上传递

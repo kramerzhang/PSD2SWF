@@ -27,6 +27,7 @@ package game.component
 		
 		public function Label()
 		{
+			super();
 			initialize();
 		}
 		

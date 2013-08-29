@@ -80,7 +80,7 @@ package game.component
 		
 		protected function configChildren():void
 		{
-			//子类中对元素建立引用入口
+			//子类中对元素建立引用，开始业务逻辑入口
 		}
 		
 		public override function set width(value:Number):void

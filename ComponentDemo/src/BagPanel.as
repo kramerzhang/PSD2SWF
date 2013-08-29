@@ -2,6 +2,7 @@ package
 {
 	import com.demonsters.debugger.MonsterDebugger;
 	
+	import flash.events.MouseEvent;
 	import flash.system.ApplicationDomain;
 	import flash.utils.getTimer;
 	
@@ -12,6 +13,7 @@ package
 	import game.component.Panel;
 	import game.component.RadioButton;
 	import game.component.RadioButtonGroup;
+	import game.component.ScaleImage;
 	import game.skin.BagPanelSkin;
 	
 	[SWF(width="600", height="500")]
@@ -19,16 +21,14 @@ package
 	{
 		private var _pageList:RadioButtonGroup;
 		private var _closeBtn:Button;
+		private var _inputBoundary:ScaleImage;
 		
 		
 		public function BagPanel()
 		{
+			Component.domain = ApplicationDomain.currentDomain;
+			
 			super(BagPanelSkin.resource, BagPanelSkin.skin);
-		}
-		
-		protected override function configChildren():void
-		{
-			_closeBtn = getChildByName("close") as Button;
 		}
 		
 	}

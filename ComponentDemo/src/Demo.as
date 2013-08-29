@@ -1,5 +1,7 @@
 package
 {
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	import flash.display.Sprite;
 	import flash.system.ApplicationDomain;
 	
@@ -10,6 +12,8 @@ package
 	{
 		public function Demo()
 		{
+			MonsterDebugger.initialize(this);
+			
 			Component.domain = ApplicationDomain.currentDomain;
 			addChild(new BagPanel());
 		}

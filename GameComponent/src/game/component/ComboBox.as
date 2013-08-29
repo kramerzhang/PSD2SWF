@@ -3,6 +3,7 @@ package game.component
 	/**
 	 * @author Kramer(QQ:21524742)
 	 */	
+	import flash.display.DisplayObject;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -13,8 +14,7 @@ package game.component
 		private var _btn:Button;
 		private var _label:Label;
 		private var _list:List;
-		private var _background:Image;
-		private var _listInitY:int;
+		private var _background:DisplayObject;
 		private var _scrollBar:ScrollBar;
 		
 		private var _stage:Stage;
@@ -22,10 +22,9 @@ package game.component
 		private var _listData:Array;
 		private var _data:Object;
 		
-		private var _isListShow:Boolean;
-		
 		public function ComboBox()
 		{
+			super();
 			initialize();
 		}
 		
@@ -42,9 +41,9 @@ package game.component
 		
 		private function onRemoveFromStage(evt:Event):void
 		{
-			if(_isListShow == true)
+			if(contains(_list) == true)
 			{
-				hideList();
+				hideChildren();
 				_stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 			}
 			_stage = null;
@@ -56,18 +55,14 @@ package game.component
 			_label = getChildByName("label") as Label;
 			_label.enabled = true;
 			_list = getChildByName("list") as List;
-			_listInitY = _list.y;
-			_background = getChildByName("back") as Image;
+			_background = getChildByName("back") as DisplayObject;
 			_scrollBar = getChildByName("scrollBar") as ScrollBar;
-			if(_scrollBar != null)
-			{
-				_scrollBar.mode = ScrollBar.MODE_HIDE_BAR;
-			}
-			hideList();
-			addChildEventListener();
+			
+			hideChildren();
+			addChildrenEventListener();
 		}
 		
-		private function addChildEventListener():void
+		private function addChildrenEventListener():void
 		{
 			if(_scrollBar != null)
 			{
@@ -86,19 +81,19 @@ package game.component
 		private function onBtnClick(evt:MouseEvent):void
 		{
 			evt.stopPropagation();
-			if(_isListShow == false)
+			if(contains(_list) == false)
 			{
-				showList();
+				showChildren();
 				_stage.addEventListener(MouseEvent.CLICK, onStageClick);
 			}
 			else
 			{
-				hideList();
+				hideChildren();
 				_stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 			}
 		}
 		
-		private function showList():void
+		private function showChildren():void
 		{
 			if(_background != null)
 			{
@@ -108,16 +103,14 @@ package game.component
 			{
 				addChild(_scrollBar);
 			}
-			_list.y = _listInitY;
 			addChild(_list);
-			if(_scrollBar != null)
+			if(_scrollBar != null && _scrollBar.target == null)
 			{
 				_scrollBar.target = _list;
 			}
-			_isListShow = true;
 		}
 		
-		private function hideList():void
+		private function hideChildren():void
 		{
 			removeChild(_list);
 			if(_scrollBar != null)
@@ -128,7 +121,6 @@ package game.component
 			{
 				removeChild(_background);
 			}
-			_isListShow = false;
 		}
 		
 		private function onListChange(evt:Event):void
@@ -141,7 +133,7 @@ package game.component
 		
 		private function onStageClick(evt:MouseEvent):void
 		{
-			hideList();
+			hideChildren();
 			_stage.removeEventListener(MouseEvent.CLICK, onStageClick);
 		}
 		

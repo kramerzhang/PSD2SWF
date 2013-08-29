@@ -21,23 +21,23 @@ package game.component
 		/**
 		 * item水平间距
 		 */		
-		private var _horizontalGap:int; 
+		private var _horizontalGap:int = DEFAULT_GAP; 
 		/**
 		 * item垂直间距
 		 */		
-		private var _verticalGap:int;
+		private var _verticalGap:int = DEFAULT_GAP;
 		/**
 		 * 横向item数量
 		 */		
-		private var _columnCount:int;
+		private var _columnCount:int = 1;
 		/**
 		 *纵向item数量 
 		 */		
-		private var _rowCount:int;
+		private var _rowCount:int = int.MAX_VALUE;
 		/**
 		 *填充item的方向 
 		 */		
-		private var _orientation:int;
+		private var _orientation:int = 0;
 		
 		private var _selectedItem:ListItemBase;
 		
@@ -50,11 +50,6 @@ package game.component
 		private function initialize():void
 		{
 			_itemList = new Vector.<ListItemBase>();
-			_orientation = 0;
-			_columnCount = 1;
-			_rowCount = int.MAX_VALUE;
-			_horizontalGap = DEFAULT_GAP;
-			_verticalGap = DEFAULT_GAP;
 		}
 		
 		public override function set skin(value:Object):void

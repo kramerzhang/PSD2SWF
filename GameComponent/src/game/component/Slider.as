@@ -11,15 +11,15 @@ package game.component
 	public class Slider extends Container
 	{
 		private var _stage:Stage;
-		private var _isBtnDrag:Boolean;
 		
 		private var _btn:Button;
 		private var _track:Image;
 		private var _mask:Shape;
-		private var _value:Number;
+		private var _dragRect:Rectangle;
+		private var _value:Number = 0;
 		//拖拽按钮btn可拖拽范围距离track条左右边界的距离
 		private var _boundOffset:Number = 0;
-		private var _dragRect:Rectangle;
+		private var _isBtnDrag:Boolean = false;
 		
 		public function Slider()
 		{
@@ -28,8 +28,6 @@ package game.component
 		
 		private function initialize():void
 		{
-			_isBtnDrag = false;
-			_value = 0;
 			_dragRect = new Rectangle();
 			addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemoveFromStage);

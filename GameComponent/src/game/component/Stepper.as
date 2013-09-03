@@ -37,12 +37,12 @@ package game.component
 		
 		protected override function configChildren():void
 		{
-			_txt = getChildByName("txt") as Label;
+			_txt = getChildLabel("txt");
 			_txt.addEventListener(Event.CHANGE, onTextChange);
-			_prevBtn = getChildByName("prevBtn") as Button;
-			_nextBtn = getChildByName("nextBtn") as Button;
-			_lastBtn = getChildByName("lastBtn") as Button;
-			_firstBtn = getChildByName("firstBtn") as Button;
+			_prevBtn = getChildButton("prevBtn");
+			_nextBtn = getChildButton("nextBtn");
+			_lastBtn = getChildButton("lastBtn");
+			_firstBtn = getChildButton("firstBtn");
 			
 			this.editable = false;
 			this.value = 1;

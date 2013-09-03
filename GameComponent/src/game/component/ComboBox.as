@@ -51,12 +51,12 @@ package game.component
 		
 		protected override function configChildren():void
 		{
-			_btn = getChildByName("btn") as Button;
-			_label = getChildByName("label") as Label;
+			_btn = getChildButton("btn");
+			_label = getChildLabel("label");
 			_label.enabled = true;
-			_list = getChildByName("list") as List;
+			_list = getChildList("list");
 			_background = getChildByName("back") as DisplayObject;
-			_scrollBar = getChildByName("scrollBar") as ScrollBar;
+			_scrollBar = getChildScrollBar("scrollBar");
 			
 			hideChildren();
 			addChildrenEventListener();

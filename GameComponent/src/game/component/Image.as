@@ -4,8 +4,6 @@ package game.component
 	 * @author Kramer(QQ:21524742)
 	 */	
 	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.BitmapDataChannel;
 	
 	import game.component.core.ISkinnable;
 	import game.component.core.IStateChangeable;

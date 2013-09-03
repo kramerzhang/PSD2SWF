@@ -49,8 +49,8 @@ package game.component
 		
 		protected override function configChildren():void
 		{
-			_btn = getChildByName("btn") as Button;
-			_track = getChildByName("track") as Image;
+			_btn = getChildButton("btn");
+			_track = getChildImage("track");
 			updateDragRect();
 			createTrackMask();
 			updateBtnPosition();

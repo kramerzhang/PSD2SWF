@@ -3,7 +3,6 @@ package game.component
 	/**
 	 * @author Kramer(QQ:21524742)
 	 */	
-	import flash.debugger.enterDebugger;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -111,6 +110,12 @@ package game.component
 				return super.height;
 			}
 			return _height;
+		}
+		
+		public function move(x:Number, y:Number):void
+		{
+			this.x = x;
+			this.y = y;
 		}
 		
 		public function set enabled(value:Boolean):void

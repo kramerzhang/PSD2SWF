@@ -1,5 +1,7 @@
 package game.component
 {
+	
+
 	/**
 	 * 
 	 * @author Kramer(QQ:21524742)

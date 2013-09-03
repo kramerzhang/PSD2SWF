@@ -56,5 +56,66 @@ package game.component
 				throw new Error(message);
 			}
 		}
+		
+		public function getChildButton(name:String):Button
+		{
+			return getChildByName(name) as Button;
+		}
+		
+		public function getChildLabelButton(name:String):LabelButton
+		{
+			return getChildByName(name) as LabelButton;
+		}
+		
+		public function getChildRadioButton(name:String):RadioButton
+		{
+			return getChildByName(name) as RadioButton;
+		}
+		
+		public function getChildRadioButtonGroup(name:String):RadioButtonGroup
+		{
+			return getChildByName(name) as RadioButtonGroup;
+		}
+		
+		public function getChildImage(name:String):Image
+		{
+			return getChildByName(name) as Image;
+		}
+		
+		public function getChildScaleImage(name:String):ScaleImage
+		{
+			return getChildByName(name) as ScaleImage;
+		}
+		
+		public function getChildLabel(name:String):Label
+		{
+			return getChildByName(name) as Label;
+		}
+		
+		public function getChildContainer(name:String):Container
+		{
+			return getChildByName(name) as Container;
+		}
+		
+		public function getChildScrollBar(name:String):ScrollBar
+		{
+			return getChildByName(name) as ScrollBar;
+		}
+		
+		public function getChildList(name:String):List
+		{
+			return getChildByName(name) as List;
+		}
+		
+		public function getChildStepper(name:String):Stepper
+		{
+			return getChildByName(name) as Stepper;
+		}
+		
+		public function getChildSlider(name:String):Slider
+		{
+			return getChildByName(name) as Slider;
+		}
+		
 	}
 }

@@ -67,12 +67,12 @@ package game.component
 		
 		protected override function configChildren():void
 		{
-			_track = getChildByName("track") as Container;
-			_arrowUp = getChildByName("arrowUp") as Button;
-			_arrowDown = getChildByName("arrowDown") as Button;
-			_thumb = getChildByName("thumb") as Button;
-			_thumbIcon = getChildByName("thumbIcon") as Image;
-			var viewportPlaceholder:Image = getChildByName("viewport") as Image; //在PSD文件中定义滚动条内容的范围
+			_track = getChildContainer("track");
+			_arrowUp = getChildButton("arrowUp");
+			_arrowDown = getChildButton("arrowDown");
+			_thumb = getChildButton("thumb");
+			_thumbIcon = getChildImage("thumbIcon");
+			var viewportPlaceholder:Image = getChildImage("viewport"); //在PSD文件中定义滚动条内容的范围
 			removeChild(viewportPlaceholder);
 			
 			_viewport = new Rectangle(viewportPlaceholder.x, viewportPlaceholder.y, viewportPlaceholder.width, viewportPlaceholder.height);

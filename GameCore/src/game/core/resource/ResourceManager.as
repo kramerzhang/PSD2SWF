@@ -3,17 +3,14 @@ package game.core.resource
 	/**
 	 *@author Kramer(QQ:21524742)
 	 */	
-	import flash.events.ErrorEvent;
-	import flash.events.Event;
-	import flash.events.ProgressEvent;
 	import flash.media.Sound;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	
 	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourcePriority;
-	import game.core.resource.events.ResourceEvent;
 	import game.core.resource.item.BinaryItem;
+	import game.core.resource.item.BitmapDataPackItem;
 	import game.core.resource.item.ILoadable;
 	import game.core.resource.item.ImageItem;
 	import game.core.resource.item.LinkageItem;
@@ -84,6 +81,17 @@ package game.core.resource
 			addItemToLoadingQueue(imageItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		
+		public static function loadBitmapDataPack(url:String,
+												  completeHandler:Function, 
+												  priority:int = ResourcePriority.LOW,
+												  errHandler:Function = null, 
+												  startHandler:Function = null, 
+												  progressHandler:Function = null):void
+		{
+			var packItem:BitmapDataPackItem = _objectPoolManager.getObject(BitmapDataPackItem) as BitmapDataPackItem;
+			addItemToLoadingQueue(packItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
+		}
+		
 		public static function loadBinary(url:String, 
 										  completeHandler:Function, 
 										  priority:int = ResourcePriority.LOW,
@@ -97,10 +105,10 @@ package game.core.resource
 		
 		private static function addItemToLoadingQueue(item:ILoadable,
 													  url:String,
-													  completeHandler:Function, 
-													  errHandler:Function = null, 
-													  startHandler:Function = null, 
+													  completeHandler:Function,
+													  startHandler:Function = null,
 													  progressHandler:Function = null,
+													  errHandler:Function = null, 
 													  priority:int = ResourcePriority.LOW):void
 		{
 			item.url = url;

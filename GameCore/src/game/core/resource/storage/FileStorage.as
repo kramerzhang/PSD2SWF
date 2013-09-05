@@ -146,9 +146,6 @@ package game.core.resource.storage
 			return null;
 		}
 		
-		/**
-		 * SharedObject的保存机制可以根据项目实际情况，调整为按时存储或控制每帧存储的数量，以不影响游戏运行流畅度为宜
-		 */
 		public static function addFile(url:String, file:ByteArray):void
 		{
 			if(_isDevMode == true)
@@ -166,7 +163,7 @@ package game.core.resource.storage
 			{
 				updateFileVersion(originalUrl, version);
 				var fileSO:SharedObject = SharedObjectManager.getCommonSharedObject(originalUrl);
-				//originalUrl包含空格的情况下，fileSO为null
+				//if there is space in the originalUrl
 				if(fileSO != null)
 				{
 					fileSO.data[KEY_DATA] = file;

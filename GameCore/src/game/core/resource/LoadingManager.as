@@ -10,6 +10,7 @@ package game.core.resource
 	
 	import game.core.log.LogLevel;
 	import game.core.log.Logger;
+	import game.core.message.MessageHud;
 	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.events.ResourceEvent;
 	import game.core.resource.item.ILoadable;
@@ -17,7 +18,9 @@ package game.core.resource
 	
 	public class LoadingManager
 	{
-		private static const PARALLEL_MAX_NUM:int = 1;
+		private static const PARALLEL_MAX_NUM:int = 3;
+		
+
 		
 		private static var _waitList:Vector.<ILoadable>;
 		private static var _duplicateMap:HashMap;
@@ -37,7 +40,7 @@ package game.core.resource
 			_duplicateMap = new HashMap();
 			_objectPoolManager = ObjectPoolManager.getInstance();
 			_logger = Logger.getLogger("LoadingManager");
-			_logger.setLevel(LogLevel.ERROR);
+			_logger.setLevel(LogLevel.INFO);
 		}
 		
 		public static function addItem(item:ILoadable):void

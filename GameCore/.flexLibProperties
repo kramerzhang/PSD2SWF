@@ -1,8 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="game.core.message.Message"/>
+    <classEntry path="game.core.core.IDisposable"/>
+    <classEntry path="game.core.core.IReferenceCountable"/>
+    <classEntry path="game.core.core.lib_internal"/>
+    <classEntry path="game.core.driver.DriveMethodWrapper"/>
+    <classEntry path="game.core.driver.Driver"/>
+    <classEntry path="game.core.driver.DriverManager"/>
+    <classEntry path="game.core.driver.IDrivable"/>
+    <classEntry path="game.core.fsm.FSM"/>
+    <classEntry path="game.core.log.IAppender"/>
+    <classEntry path="game.core.log.LogLevel"/>
+    <classEntry path="game.core.log.Logger"/>
+    <classEntry path="game.core.log.appender.LocalConnectionAppender"/>
+    <classEntry path="game.core.log.appender.TraceAppender"/>
+    <classEntry path="game.core.message.MessageHud"/>
     <classEntry path="game.core.message.MessageObject"/>
+    <classEntry path="game.core.object.ObjectBase"/>
+    <classEntry path="game.core.pathfinder.IHeuristic"/>
+    <classEntry path="game.core.pathfinder.IPathFindableMap"/>
+    <classEntry path="game.core.pathfinder.ManhattanHeuristic"/>
+    <classEntry path="game.core.pathfinder.Node"/>
+    <classEntry path="game.core.pathfinder.NodeMatrix"/>
+    <classEntry path="game.core.pathfinder.Pathfinder"/>
+    <classEntry path="game.core.pool.IPoolableObject"/>
+    <classEntry path="game.core.pool.ObjectPool"/>
+    <classEntry path="game.core.pool.ObjectPoolManager"/>
+    <classEntry path="game.core.resource.BitmapDataCacheManager"/>
+    <classEntry path="game.core.resource.LoadingManager"/>
+    <classEntry path="game.core.resource.ResourceLoadingQueue"/>
+    <classEntry path="game.core.resource.ResourceManager"/>
+    <classEntry path="game.core.resource.constant.ResourcePriority"/>
+    <classEntry path="game.core.resource.constant.ResourceType"/>
+    <classEntry path="game.core.resource.events.ResourceEvent"/>
+    <classEntry path="game.core.resource.item.BinaryItem"/>
+    <classEntry path="game.core.resource.item.BitmapDataPackItem"/>
+    <classEntry path="game.core.resource.item.ByteArrayWrapper"/>
+    <classEntry path="game.core.resource.item.ILoadable"/>
+    <classEntry path="game.core.resource.item.ImageItem"/>
+    <classEntry path="game.core.resource.item.LinkageItem"/>
+    <classEntry path="game.core.resource.item.LoadableItemFactory"/>
+    <classEntry path="game.core.resource.item.SoundItem"/>
+    <classEntry path="game.core.resource.item.SwfItem"/>
+    <classEntry path="game.core.resource.item.XmlItem"/>
+    <classEntry path="game.core.resource.storage.FileStorage"/>
+    <classEntry path="game.core.resource.storage.UrlUtil"/>
+    <classEntry path="game.core.resource.util.AutonomousImage"/>
+    <classEntry path="game.core.sharedObject.SharedObjectManager"/>
+    <classEntry path="game.core.tick.ITickable"/>
+    <classEntry path="game.core.tick.TickManager"/>
+    <classEntry path="game.core.util.AlignType"/>
+    <classEntry path="game.core.util.Color"/>
+    <classEntry path="game.core.util.Delegate"/>
+    <classEntry path="game.core.util.DisplayObjectUtil"/>
+    <classEntry path="game.core.util.HashMap"/>
+    <classEntry path="game.core.util.HtmlString"/>
+    <classEntry path="game.core.util.MathUtil"/>
+    <classEntry path="game.core.util.MovieClipUtil"/>
+    <classEntry path="game.core.util.StringUtil"/>
+    <classEntry path="game.core.util.TimeUtil"/>
+    <classEntry path="game.core.util.assert"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,16 +1,32 @@
 package game.core.message
 {
-	internal class MessageObject
+	import game.core.pool.IPoolableObject;
+
+	internal class MessageObject implements IPoolableObject
 	{
 		public var callback:Function;
 		public var priority:int = 0;
 		public var paramList:Array;
 		
-		public function MessageObject(callback:Function, priority:int = 0, paramList:Array = null)
+		public function MessageObject()
 		{
-			this.callback = callback;
-			this.priority = priority;
-			this.paramList = paramList;
+		}
+		
+		public function checkout():void
+		{
+			
+		}
+		
+		public function checkin():void
+		{
+			this.callback = null;
+			this.priority = 0;
+			this.paramList = null;
+		}
+		
+		public function dispose():void
+		{
+			
 		}
 	}
 }

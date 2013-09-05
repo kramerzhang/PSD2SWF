@@ -1,10 +1,20 @@
 package game.core.message
 {
+	import game.core.pool.ObjectPool;
 	import game.core.util.HashMap;
 
-	public class Message
+	public class MessageHud
 	{
-		private static var _map:HashMap = new HashMap();
+		private static var _map:HashMap;
+		private static var _messageObjPool:ObjectPool;
+		
+		initialize();
+		
+		private static function initialize():void
+		{
+			_map = new HashMap();
+			_messageObjPool = new ObjectPool(MessageObject);
+		}
 		
 		public static function addListener(obj:Object, messageName:String, func:Function, priority:int = 0, paramList:Array = null):void
 		{
@@ -22,7 +32,10 @@ package game.core.message
 			}
 			if(findMessageObjectByCallback(messageObjList, func) == -1)
 			{
-				var messageObj:MessageObject = new MessageObject(func, priority, paramList);
+				var messageObj:MessageObject = _messageObjPool.getObject() as MessageObject;
+				messageObj.callback = func;
+				messageObj.priority = 0;
+				messageObj.paramList = paramList;
 				messageObjList.push(messageObj);
 				messageObjList.sort(messageObjectSort);
 			}
@@ -103,6 +116,10 @@ package game.core.message
 			
 			if(func == null)
 			{
+				for each(var messageObj:MessageObject in messageObjList)
+				{
+					_messageObjPool.recycle(messageObj);
+				}
 				messageObjList.length = 0;
 			}
 			else
@@ -110,13 +127,21 @@ package game.core.message
 				var index:int = findMessageObjectByCallback(messageObjList, func);
 				if(index != -1)
 				{
-					messageObjList.splice(index, 1);
+					_messageObjPool.recycle(messageObjList.splice(index, 1)[0]);
 				}
 			}
 		}
 		
 		public static function removeObjectListener(obj:Object):void
 		{
+			var messageObjListMap:HashMap = _map.get(obj) as HashMap;
+			for each(var messageObjList:Vector.<MessageObject> in messageObjListMap.getValues())
+			{
+				for each(var messageObj:MessageObject in messageObjList)
+				{
+					_messageObjPool.recycle(messageObj);
+				}
+			}
 			_map.remove(obj);
 		}
 	}

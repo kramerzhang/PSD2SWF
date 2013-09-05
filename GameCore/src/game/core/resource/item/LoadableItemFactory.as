@@ -42,6 +42,9 @@ package game.core.resource.item
 					var swfItem:SwfItem = _objectPoolManager.getObject(SwfItem) as SwfItem; 
 					swfItem.url = url;
 					return swfItem;
+				case ResourceType.BITMAP_DATA_PACK:
+					var bitmapPackItem:BitmapDataPackItem = _objectPoolManager.getObject(BitmapDataPackItem) as BitmapDataPackItem;
+					return bitmapPackItem;
 			}
 			return null;
 		}

@@ -3,8 +3,6 @@ package game.core.resource.item
 	/**
 	 *@author Kramer(QQ:21524742)
 	 */	
-	import flash.system.LoaderContext;
-	
 	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourceType;
 	

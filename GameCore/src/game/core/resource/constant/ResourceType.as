@@ -11,6 +11,7 @@ package game.core.resource.constant
 		public static const IMAGE:String 	= "image";
 		public static const XML:String 		= "xml";
 		public static const SOUND:String 	= "sound";
+		public static const BITMAP_DATA_PACK:String = "bitmapDataPack";
 		
 		public function ResourceType()
 		{

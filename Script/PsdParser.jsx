@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ...
  * @author KramerZhang(QQ:21524742)
  * 重要概念：
@@ -22,7 +22,7 @@ var resource = "";
 var typeList =		["Image", "ScaleImage", "Label", "Button", "ComboBox", "Container", "DragBar", "List", "RadioButton", "RadioButtonGroup", "ScrollBar", "Slider", "Stepper", "LabelButton"];
 var parserList =	[parseImage, parseScaleImage, parseLabel, parseContainer, parseContainer, parseContainer, parseDragBar, parseList, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer, parseContainer];
 var generatorList =	[generateImageSkin, generateScaleImageSkin, generateLabelSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateDragBarSkin, generateListSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin, generateContainerSkin];
-var validatorList =	[validateImage, validateImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
+var validatorList =	[validateImage, validateScaleImage, validateLabel, validateContainer, validateContainer, validateContainer, validateContainer, validateList, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer, validateContainer];
 var regExpList =	[null, null, null, buttonRegExp, comboBoxRegExp, null, null, null, radioButtonRegExp, radioButtonGroupRegExp, scrollBarRegExp, sliderRegExp, stepperRegExp, labelButtonExp];
 
 //使用正则表达式对组件名称进行验证，$表示名称结尾
@@ -605,13 +605,26 @@ function validateImage(obj)
 			{
 				var link = obj[state].link;
 				var imageName = link.substring(link.indexOf(".") + 1);
-				validateComponentNameFirstToken({type:"Image", name:imageName});
+				validateComponentNameFirstToken({type:obj.type, name:imageName});
 				if (imageName.match(chineseCharRegExp) != null)
 				{
 					logError("图像图层 " + imageName + " 命名格式错误！名字中含有中文字符！");
 				}
 			}
 		}
+	}
+}
+
+function validateScaleImage(obj)
+{
+	validateImage(obj);
+	if((obj.top + obj.bottom) >= obj.hegith)
+	{
+		logError("九宫图像图层 " + obj.name +  " 九宫图片top和bottom设定值之和不能大于图片height（高度）值！");
+	}
+	if((obj.right + obj.left) >= obj.width)
+	{
+		logError("九宫图像图层 " + obj.name +  " 九宫图片right和left设定值之和不能大于图片width（宽度）值！");
 	}
 }
 

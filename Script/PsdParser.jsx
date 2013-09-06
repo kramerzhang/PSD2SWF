@@ -618,11 +618,11 @@ function validateImage(obj)
 function validateScaleImage(obj)
 {
 	validateImage(obj);
-	if((obj.top + obj.bottom) >= obj.hegith)
+	if((parseInt(obj.top) + parseInt(obj.bottom)) >= obj.hegith)
 	{
 		logError("九宫图像图层 " + obj.name +  " 九宫图片top和bottom设定值之和不能大于图片height（高度）值！");
 	}
-	if((obj.right + obj.left) >= obj.width)
+	if((parseInt(obj.right) + parseInt(obj.left)) >= obj.width)
 	{
 		logError("九宫图像图层 " + obj.name +  " 九宫图片right和left设定值之和不能大于图片width（宽度）值！");
 	}

@@ -6,6 +6,7 @@ package game.component
 	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	
 	import game.component.core.ISkinnable;
@@ -23,6 +24,7 @@ package game.component
 		private var _width:Number;
 		private var _height:Number;
 		private var _state:String;
+		private var _editable:Boolean;
 		
 		public function Label()
 		{
@@ -109,5 +111,24 @@ package game.component
 		{
 			return this.mouseEnabled;
 		}
+		
+		public function set editable(value:Boolean):void
+		{
+			_editable = value;
+			if(_editable == true)
+			{
+				this.type = TextFieldType.INPUT;
+			}
+			else
+			{
+				this.type = TextFieldType.DYNAMIC;
+			}
+		}
+		
+		public function get editable():Boolean
+		{
+			return _editable;
+		}
+		
 	}
 }

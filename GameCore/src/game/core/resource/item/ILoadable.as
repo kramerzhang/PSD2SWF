@@ -4,8 +4,10 @@ package game.core.resource.item
 	 *@author Kramer(QQ:21524742)
 	 */	
 	import flash.events.IEventDispatcher;
+	
+	import game.core.core.IDisposable;
 
-	public interface ILoadable extends IEventDispatcher
+	public interface ILoadable extends IEventDispatcher, IDisposable
 	{
 		function set url(value:String):void;
 		function get url():String;
@@ -26,6 +28,5 @@ package game.core.resource.item
 		function load():void;
 		function cloneContent(item:ILoadable):void;
 		function cancel():Boolean;
-		function recycle():void;
 	}
 }

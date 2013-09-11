@@ -20,13 +20,11 @@ package game.core.resource
 	{
 		private static const PARALLEL_MAX_NUM:int = 3;
 		
-
 		
 		private static var _waitList:Vector.<ILoadable>;
 		private static var _duplicateMap:HashMap;
 		private static var _loadingMap:HashMap;
 		private static var _logger:Logger;
-		private static var _objectPoolManager:ObjectPoolManager;
 		
 		public function LoadingManager(blocker:Blocker)
 		{
@@ -38,7 +36,6 @@ package game.core.resource
 			_waitList = new Vector.<ILoadable>();
 			_loadingMap = new HashMap();
 			_duplicateMap = new HashMap();
-			_objectPoolManager = ObjectPoolManager.getInstance();
 			_logger = Logger.getLogger("LoadingManager");
 			_logger.setLevel(LogLevel.INFO);
 		}
@@ -185,7 +182,7 @@ package game.core.resource
 				removeItemFromloadingMap(item);
 				loadNextItem();
 			}
-			recycleItem(item);
+			item.dispose();
 		}
 		
 		private static function onLoadError(evt:ErrorEvent):void
@@ -204,17 +201,12 @@ package game.core.resource
 				removeItemFromloadingMap(item);
 				loadNextItem();
 			}
-			recycleItem(item);
+			item.dispose();
 		}
 		
 		private static function removeItemFromloadingMap(item:ILoadable):void
 		{
 			_loadingMap.remove(item.url);
-		}
-		
-		private static function recycleItem(item:ILoadable):void
-		{
-			item.recycle();
 		}
 		
 		private static function applyEventOnDuplicate(item:ILoadable, evt:Event):void

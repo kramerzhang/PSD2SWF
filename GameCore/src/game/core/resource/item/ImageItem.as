@@ -17,10 +17,5 @@ package game.core.resource.item
 		{
 			return ResourceType.IMAGE;
 		}
-		
-		override public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(ImageItem, this);
-		}
 	}
 }

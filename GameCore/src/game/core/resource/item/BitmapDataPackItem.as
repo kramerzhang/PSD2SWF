@@ -10,7 +10,6 @@ package game.core.resource.item
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
-	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	
@@ -100,28 +99,6 @@ package game.core.resource.item
 		override public function get type():String
 		{
 			return ResourceType.BITMAP_DATA_PACK;
-		}
-		
-		override public function checkout():void
-		{
-			super.checkout();
-			addLoaderInfoEventListener();
-			initLoaderContext();
-			initBitmapDataList();
-		}
-		
-		override public function checkin():void
-		{
-			removeLoaderInfoEventListener();
-			_appDomain = null;
-			_loaderContext = null;
-			_bitmapDataList = null;
-			super.checkin();
-		}
-		
-		override public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(BitmapDataPackItem, this);
 		}
 		
 		override public function dispose():void

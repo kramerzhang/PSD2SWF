@@ -21,17 +21,9 @@ package game.core.resource
 
 	public class ResourceManager
 	{
-		private static var _objectPoolManager:ObjectPoolManager;
 		
 		public function ResourceManager(blocker:Blocker)
 		{
-		}
-		
-		initialize();
-		
-		private static function initialize():void
-		{
-			_objectPoolManager = ObjectPoolManager.getInstance();
 		}
 		
 		public static function loadXml(url:String, 
@@ -41,7 +33,7 @@ package game.core.resource
 									   startHandler:Function = null, 
 									   progressHandler:Function = null):void 
 		{
-			var xmlItem:XmlItem = _objectPoolManager.getObject(XmlItem) as XmlItem;
+			var xmlItem:XmlItem = new XmlItem();
 			addItemToLoadingQueue(xmlItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		
@@ -54,7 +46,7 @@ package game.core.resource
 									   applicationDomain:ApplicationDomain = null):void
 		{
 			var loaderContext:LoaderContext = new LoaderContext(false, applicationDomain);
-			var swfItem:SwfItem = _objectPoolManager.getObject(SwfItem) as SwfItem;
+			var swfItem:SwfItem = new SwfItem();
 			swfItem.loaderContext = loaderContext;
 			addItemToLoadingQueue(swfItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
@@ -66,7 +58,7 @@ package game.core.resource
 										   startHandler:Function = null, 
 										   progressHandler:Function = null):void
 		{
-			var linkageItem:LinkageItem = _objectPoolManager.getObject(LinkageItem) as LinkageItem;
+			var linkageItem:LinkageItem = new LinkageItem();
 			addItemToLoadingQueue(linkageItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		
@@ -77,7 +69,7 @@ package game.core.resource
 										 startHandler:Function = null, 
 										 progressHandler:Function = null):void
 		{
-			var imageItem:ImageItem = _objectPoolManager.getObject(ImageItem) as ImageItem;
+			var imageItem:ImageItem = new ImageItem();
 			addItemToLoadingQueue(imageItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		
@@ -88,7 +80,7 @@ package game.core.resource
 												  startHandler:Function = null, 
 												  progressHandler:Function = null):void
 		{
-			var packItem:BitmapDataPackItem = _objectPoolManager.getObject(BitmapDataPackItem) as BitmapDataPackItem;
+			var packItem:BitmapDataPackItem = new BitmapDataPackItem();
 			addItemToLoadingQueue(packItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		
@@ -99,7 +91,7 @@ package game.core.resource
 										  startHandler:Function = null, 
 										  progressHandler:Function = null):void
 		{
-			var binaryItem:BinaryItem = _objectPoolManager.getObject(BinaryItem) as BinaryItem;
+			var binaryItem:BinaryItem = new BinaryItem();
 			addItemToLoadingQueue(binaryItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		

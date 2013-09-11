@@ -46,17 +46,6 @@ package game.core.resource.item
 			return ResourceType.LINKAGE;
 		}
 		
-		override public function checkin():void
-		{
-			_itemClz = null;
-			super.checkin();
-		}
-		
-		override public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(LinkageItem, this);
-		}
-		
 		override public function dispose():void
 		{
 			_itemClz = null;

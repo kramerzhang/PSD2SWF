@@ -13,8 +13,6 @@ package game.core.resource.item
 	import flash.media.SoundLoaderContext;
 	import flash.net.URLRequest;
 	
-	import game.core.pool.IPoolableObject;
-	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	
@@ -22,7 +20,7 @@ package game.core.resource.item
 	[Event(name="error", type = "flash.events.ErrorEvent")]
 	[Event(name="open", type = "flash.events.Event")]
 	[Event(name="complete", type = "game.core.resource.events.ResourceEvent")]
-	public class SoundItem extends EventDispatcher implements ILoadable, IPoolableObject
+	public class SoundItem extends EventDispatcher implements ILoadable
 	{
 		private static const BUFFER_TIME:int = 2000;
 		private var _url:String;
@@ -195,11 +193,6 @@ package game.core.resource.item
 		{
 			_sound = new Sound();
 			addSoundEventListener();
-		}
-		
-		public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(SoundItem, this);
 		}
 		
 		public function dispose():void

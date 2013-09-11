@@ -22,7 +22,7 @@ package game.core.resource.item
 	[Event(name="error", type = "flash.events.ErrorEvent")]
 	[Event(name="open", type = "flash.events.Event")]
 	[Event(name="complete", type = "game.core.resource.events.ResourceEvent")]
-	public class BinaryItem extends EventDispatcher implements ILoadable, IPoolableObject
+	public class BinaryItem extends EventDispatcher implements ILoadable
 	{
 		
 		private var _isLoading:Boolean;
@@ -219,29 +219,6 @@ package game.core.resource.item
 		public function get errorHandler():Function
 		{
 			return _errorHandler;
-		}
-		
-		public function checkin():void
-		{
-			removeLoaderEventListener();
-			_content = null;
-			_url = null;
-			_priority = 0;
-			_isDuplicate = false;
-			_startHandler = null;
-			_progressHandler = null;
-			_completeHandler = null;
-			_errorHandler = null;
-		}
-		
-		public function checkout():void
-		{
-			addLoaderEventListener();
-		}
-		
-		public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(BinaryItem, this);
 		}
 		
 		public function dispose():void

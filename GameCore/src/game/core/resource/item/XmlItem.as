@@ -44,17 +44,6 @@ package game.core.resource.item
 			return ResourceType.XML;
 		}
 		
-		override public function checkin():void
-		{
-			_xml = null;
-			super.checkin();
-		}
-		
-		override public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(XmlItem, this);
-		}
-		
 		override public function dispose():void
 		{
 			_xml = null;

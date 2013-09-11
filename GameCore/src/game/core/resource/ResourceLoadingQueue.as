@@ -84,7 +84,7 @@ package game.core.resource
 		{
 			_itemLoadedNum++;
 			removeActiveItemEventListener(_activeItem);
-			_activeItem.recycle();
+			_activeItem.dispose();
 			if(_itemLoadedNum >= _itemTotalNum)
 			{
 				dispose();

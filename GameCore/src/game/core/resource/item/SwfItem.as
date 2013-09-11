@@ -10,7 +10,6 @@ package game.core.resource.item
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	
-	import game.core.pool.ObjectPoolManager;
 	import game.core.resource.constant.ResourceType;
 	import game.core.resource.events.ResourceEvent;
 	
@@ -80,25 +79,6 @@ package game.core.resource.item
 		override public function get type():String
 		{
 			return ResourceType.SWF;
-		}
-		
-		override public function checkout():void
-		{
-			super.checkout();
-			addLoaderInfoEventListener();
-		}
-		
-		override public function checkin():void
-		{
-			removeLoaderInfoEventListener();
-			_appDomain = null;
-			_loaderContext = null;
-			super.checkin();
-		}
-		
-		override public function recycle():void
-		{
-			ObjectPoolManager.getInstance().recycle(SwfItem, this);
 		}
 		
 		override public function dispose():void

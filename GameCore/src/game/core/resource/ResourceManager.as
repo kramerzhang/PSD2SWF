@@ -53,12 +53,13 @@ package game.core.resource
 		
 		public static function loadLinkage(url:String, 
 										   completeHandler:Function, 
+										   link:String,
 										   priority:int = ResourcePriority.LOW,
 										   errHandler:Function = null, 
 										   startHandler:Function = null, 
 										   progressHandler:Function = null):void
 		{
-			var linkageItem:LinkageItem = new LinkageItem();
+			var linkageItem:LinkageItem = new LinkageItem(link);
 			addItemToLoadingQueue(linkageItem, url, completeHandler, startHandler, progressHandler, errHandler, priority);
 		}
 		

@@ -11,13 +11,14 @@ package game.core.resource.item
 	
 	public class LinkageItem extends SwfItem
 	{
-		private static const LINK:String = "Image";
 		
 		private var _itemClz:Class;
+		private var _link:String;
 		
-		public function LinkageItem()
+		public function LinkageItem(link:String)
 		{
 			super();
+			_link = link;
 		}
 		
 		override public function cloneContent(item:ILoadable):void
@@ -32,9 +33,9 @@ package game.core.resource.item
 			var item:DisplayObject;
 			if(_itemClz == null)
 			{
-				if(_appDomain && _appDomain.hasDefinition(LINK))
+				if(_appDomain && _appDomain.hasDefinition(_link))
 				{
-					_itemClz = _appDomain.getDefinition(LINK) as Class;
+					_itemClz = _appDomain.getDefinition(_link) as Class;
 				}
 			}
 			item =  new _itemClz();

@@ -26,7 +26,14 @@ package game.component
 		
 		private function prepareResource():void
 		{
-			addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			if(_resourceList != null && _resourceList.length > 0)
+			{
+				addEventListener(Event.ENTER_FRAME, onEnterFrame);
+			}
+			else
+			{
+				this.skin = _skin;
+			}
 		}
 		
 		private function onEnterFrame(evt:Event):void

@@ -15,7 +15,7 @@ package game.component
 		public static const ORIENTATION_ROW:int 	= 1;
 		public static const DEFAULT_GAP:int 		= 3;
 		
-		private var _itemList:Vector.<ListItemBase>;
+		protected var _itemList:Vector.<ListItemBase>;
 		private var _itemSkin:Object;
 		
 		/**
@@ -130,7 +130,7 @@ package game.component
 			_itemList.length = 0;
 		}
 		
-		private function deployItem():void
+		protected function deployItem():void
 		{
 			var len:int = _itemList.length;
 			for(var i:int = 0; i < len; i++)

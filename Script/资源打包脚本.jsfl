@@ -234,14 +234,21 @@ function addLinkageName()
 	{
 		var item = itemList[i];
 		lib.selectItem(item.name);
-		lib.setItemProperty('linkageExportForAS', true);
-		lib.setItemProperty('linkageExportForRS', false);
-		lib.setItemProperty('linkageExportInFirstFrame', true);
 		var imageQuality = qualityMap[moduleName + "/" + item.name];
+		imageQuality = parseInt(imageQuality);
 		if(imageQuality == 100)
 		{
 			lib.setItemProperty('compressionType', 'lossless');
 		}
+		else
+		{
+			lib.setItemProperty('compressionType', 'photo');
+			lib.setItemProperty('useImportedJPEGQuality', false);
+			lib.setItemProperty('quality', imageQuality);
+		}
+		lib.setItemProperty('linkageExportForAS', true);
+		lib.setItemProperty('linkageExportForRS', false);
+		lib.setItemProperty('linkageExportInFirstFrame', true);
 		var linkName = item.name.replace(/\.png|\.jpg/g, "");
 		lib.setItemProperty('linkageClassName', moduleName + "." + linkName);
 	}

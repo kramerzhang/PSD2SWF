@@ -55,7 +55,7 @@ package game.component
 			beginDrag();
 		}
 		
-		private function onMouseUp(evt:MouseEvent):void
+		private function onMouseUp(evt:Event):void
 		{
 			endDrag();
 		}

@@ -45,6 +45,9 @@ var dummyTokenList = [/ /g, /副本\d*/g, /copy\d*/g];
 var stateNameList		= ["normal", "over", "down", "disable"];
 var stateNameRegExpList	= ["((\\w+?){1}normal)|(normal(\\w+){1})|nromal|norma\\b", "((\\w+?){1}over)|(over(\\w+){1})|ovre", "((\\w+?){1}down)|(down(\\w+){1})|donw", "((\\w+?){1}disable)|(disable(\\w+){1})|disble|disabled/disbled"];
 
+var oldTypeList = ["Bitmap", "ScaleBitmap", "Scroll_", "GroupRadioButton_"];
+var newTypeList = ["Image", "ScaleImage", "ScrollBar_", "RadioButtonGroup_"];
+
 //默认Skin模板,模板可根据项目需要调整,可以在PSD2SWF.ini中覆盖定义
 var skinCodeTemplate = "package game.skin\n{\n${assetImport}\n\t/*组件结构大纲\n${hint}\n\t*/\n\tpublic class ${className}\n\t{\n\t\tpublic static var skin:Object=\n${placeholder};\n\t\tpublic static var resource:Array=${resource};\n\t}\n}";
 //Skin文件默认保存目录为Psd文件目录下的0_code文件夹
@@ -1074,6 +1077,12 @@ function eliminateElementDummyToken(element)
 	{
 		name = name.replace(dummyTokenList[i], "");
 	}
+	//replace legacy type
+    var typeLen = oldTypeList.length;
+    for (var j = 0; j < typeLen; j++)
+    {
+            name = name.replace(oldTypeList[j], newTypeList[j]);
+    }
 	return name;
 }
 

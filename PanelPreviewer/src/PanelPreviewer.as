@@ -12,6 +12,7 @@ package
 	import flash.system.Security;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
@@ -69,17 +70,19 @@ package
 			var textFromat:TextFormat = new TextFormat();
 			textFromat.font = "SimSun";
 			_log = new TextField();
-			_log.width = 300;
+			_log.width = this.stage.stageWidth;
+			_log.height = this.stage.stageHeight;
+			_log.multiline = true;
+			_log.type = TextFieldType.INPUT;
 			_log.wordWrap = true;
 			_log.defaultTextFormat = textFromat;
-			_log.autoSize = TextFieldAutoSize.LEFT;
-			_log.text = "生成面板预览中。。。\n------------------------------------------------\nFlashPlayer版本号：" + Capabilities.version;
+			_log.text = "FlashPlayer版本号：" + Capabilities.version;
 			addChild(_log);
 		}
 		
 		private function addLog(info:String):void
 		{
-			_log.appendText("\n------------------------------------------------\n" + info);
+			_log.appendText("\n" + info);
 		}
 		
 		private function hideLog():void
@@ -141,12 +144,14 @@ package
 		{
 			if(_assetUrlList.length == 0)
 			{
-				addLog("图片列表加载成功！");
+				addLog("==============图片列表加载成功！==============");
 				BitmapDataCache.mergeBitmapDataMap(_assetMap);
 				loadSkin();
 				return;
 			}
-			ResourceManager.loadImage(_assetUrlList.pop(), onAssetLoaded);
+			var assetUrl:String = _assetUrlList.pop();
+			addLog("Asset: " + assetUrl);
+			ResourceManager.loadImage(assetUrl, onAssetLoaded);
 		}
 		
 		private function onAssetLoaded(evt:ResourceEvent):void
@@ -176,7 +181,6 @@ package
 			skinStr = skinStr.replace(/(0x[0-9a-f]+?\b)/igm, "\"$1\"");
 			_skinObj = com.adobe.serialization.json.JSON.decode(skinStr);
 			eliminateColonPlaceholderInSkinObj(_skinObj);
-			hideLog();
 			createPanel();
 		}
 		
@@ -228,6 +232,7 @@ package
 		{
 			var panel:Panel = new Panel([], _skinObj);
 			addChild(panel);
+			addLog("创建面板成功！\n");
 		}
 		
 		public function initPsdUrl():void

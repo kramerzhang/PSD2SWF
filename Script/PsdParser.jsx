@@ -908,7 +908,7 @@ function parseTextDefaultTextFormat(textAttrs)
 function parseFontSize(sizeStr)
 {
 	var result = sizeStr.replace("pt", "");
-	return parseInt(result);
+	return Math.round(parseFloat(result));
 }
 
 function atomParseImageElement(element)

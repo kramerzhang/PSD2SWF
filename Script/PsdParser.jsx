@@ -382,7 +382,7 @@ function parseLayerElement(element)
 	var parser = getLayerElementParser(element);
 	if (parser == null)
 	{
-		logError(parseLayerElementName(element).type + "  " + "未找到对应解析函数");
+		logError("【" + parseLayerElementName(element).type + "】" + "未找到对应解析函数");
 	}
 	return parser(element);
 }
@@ -492,7 +492,7 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 	var len = elementList.length;
 	if (len == 0)
 	{
-		logError(typeName + " " + result.name + " 格式错误！文件夹内容为空。");
+		logError(typeName + "【" + result.name + "】格式错误！文件夹内容为空。");
 		return result;
 	}
 	var children = new Array();
@@ -503,12 +503,12 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 		verifyStateName(element.name, subElementName);
 		if (subElement.isLayer == false)
 		{
-			logError(typeName + " " + result.name + " 格式错误！文件夹内容包含非状态文件夹内容！");
+			logError(typeName + "【" + result.name + "】格式错误！文件夹内容包含非状态文件夹内容！");
 			return result;
 		}
 		if (subElement.isLayer == true && subElement.elems.length == 0)
 		{
-			logError(typeName + " " + result.name + " 格式错误！状态文件夹内容为空！");
+			logError(typeName + "【" + result.name + "】格式错误！状态文件夹内容为空！");
 			return result;
 		}
 		result[subElementName] = atomParser(subElement.elems[0]);
@@ -592,7 +592,7 @@ function validateList(obj)
 	validateComponentNameFirstToken(obj);
 	if(obj.item == null)
 	{
-		logError(obj.type + " " + obj.name + " 格式错误！未包含名为Item的子文件夹");
+		logError(obj.type + "【" + obj.name + "】格式错误！未包含名为Item的子文件夹");
 		return;
 	}
 	validateContainer(obj.item);
@@ -612,7 +612,7 @@ function validateImage(obj)
 				validateComponentNameFirstToken({type:obj.type, name:imageName});
 				if (imageName.match(chineseCharRegExp) != null)
 				{
-					logError("图像图层 " + imageName + " 命名格式错误！名字中含有中文字符！");
+					logError("图像图层【" + imageName + "】命名格式错误！名字中含有中文字符！");
 				}
 			}
 		}
@@ -624,11 +624,11 @@ function validateScaleImage(obj)
 	validateImage(obj);
 	if((parseInt(obj.top) + parseInt(obj.bottom)) >= obj.hegith)
 	{
-		logError("九宫图像图层 " + obj.name +  " 九宫图片top和bottom设定值之和不能大于图片height（高度）值！");
+		logError("九宫图像图层【" + obj.name +  "】九宫图片top和bottom设定值之和不能大于图片height（高度）值！");
 	}
 	if((parseInt(obj.right) + parseInt(obj.left)) >= obj.width)
 	{
-		logError("九宫图像图层 " + obj.name +  " 九宫图片right和left设定值之和不能大于图片width（宽度）值！");
+		logError("九宫图像图层【" + obj.name +  "】九宫图片right和left设定值之和不能大于图片width（宽度）值！");
 	}
 }
 
@@ -660,7 +660,7 @@ function validateChildrenName(obj)
 				continue outer;
 			}
 		}
-		var content = obj.type + " 组件 " + obj.name + " 格式错误！";
+		var content = obj.type + " 组件【" + obj.name + "】格式错误！";
 		content += "子元素 " + required.replace("$", "") + " 未找到 ";
 		logError(content);
 	}
@@ -670,7 +670,7 @@ function validateComponentNameFirstToken(obj)
 {
 	if (obj.name.match(firstTokenRegExp) != null)
 	{
-		logError(obj.type + " 组件 " + obj.name + " 命名格式错误！命名以数字或特殊符号开始！");
+		logError(obj.type + " 组件【" + obj.name + "】命名格式错误！命名以数字或特殊符号开始！");
 	}
 }
 
@@ -811,7 +811,7 @@ function atomParseTextElement(element)
 {
 	if((element instanceof Text) == false)
 	{
-		logError(element.name + " 为图像图层，在Label组件中应为文本图层！");
+		logError("【" + element.name + "】为图像图层，在Label组件中应为文本图层！");
 		return;
 	}
 	var result = new Object();
@@ -915,7 +915,7 @@ function atomParseImageElement(element)
 {	
 	if((element instanceof Text) == true)
 	{
-		logError(element.name + " 为文本图层，在Image组件中应为图像图层！");
+		logError("【" + element.name + "】为文本图层，在Image组件中应为图像图层！");
 		return;
 	}
 	var result = new Object();
@@ -999,6 +999,10 @@ function parseImageElementName(element)
 	var arr = str.split("_");
 	obj.name = arr[0];
 	obj.quality = arr[1] == undefined ? DEFAULT_IMAGE_QUALITY : arr[1];
+	if(isNaN(Number(obj.quality)) == true)
+	{
+		logError("组件【 " + str + " 】的图片质量不是数字！下划线后面必须是数字!");
+	}
 	return obj;
 }
 
@@ -1265,7 +1269,7 @@ function createInexistentFolder(path)
 	{
 		if(Files.createDirectory(path) == false)
 		{
-			logError("创建路径" + path + "失败! 请检查路径是否存在。");
+			logError("创建路径 " + path + " 失败! 请检查路径是否存在。");
 		}
 	}
 }

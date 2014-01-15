@@ -129,5 +129,22 @@ package game.component
 		{
 			return _enabled;
 		}
+		
+		public static function cloneSkin(source:Object):Object
+		{
+			var result:Object = new Object();
+			for(var property:String in source)
+			{
+				if(typeof(source[property]) == "object")
+				{
+					result[property] = cloneSkin(source[property]);
+				}
+				else
+				{
+					result[property] = source[property];
+				}
+			}
+			return result;
+		}
 	}
 }

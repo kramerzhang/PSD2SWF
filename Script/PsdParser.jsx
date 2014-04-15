@@ -2,8 +2,10 @@
  * ...
  * @author KramerZhang(QQ:21524742)
  * 重要概念：
+ * GroupLayer:文件夹图层
+ * ImageLayer:图像图层
+ * TextLayer: 文本图层
  * Layer专指图层文件夹
- * Element在Fireworks可以是图层文件夹也可以基本图层(图像、文本)
  * fw.launchApp("file:///C|/Program Files (x86)/Adobe/Flash Professional CS5.5/Adobe Flash CS5.5/Flash.exe", ["file:///D|/Temp/Panel/EquipExchange.fla"]); fw中调用Flash的方法
  */
 var doc = fw.getDocumentDOM();
@@ -74,7 +76,7 @@ function main()
 		validateParseResult();
 		writeSkinFile();
 		writeAssetXMLFile();
-		exportAllElementsToPNG();
+		exportAllLayerToPNG();
 	}
 	catch (e)
 	{
@@ -321,7 +323,7 @@ function parseDocument()
 	}
 }
 
-function parseTopContainer(element)
+function parseTopContainer(layer)
 {
 	var result = new Object();
 	result.name = psdName;
@@ -330,18 +332,18 @@ function parseTopContainer(element)
 	result.y = 0;
 	result.width = doc.width;
 	result.height = doc.height;
-	result.children = parseElementList(element.elems);
+	result.children = parseLayerList(layer.elems);
 	result.bound = calculateContainerBound(result.children);
 	return result;
 }
 
-function parseContainer(element)
+function parseContainer(layer)
 {
 	var result = new Object();
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	result.name = obj.name;
 	result.type = obj.type;
-	var children = parseElementList(element.elems);
+	var children = parseLayerList(layer.elems);
 	result.bound = calculateContainerBound(children);
 	adjustContainerBound(result);
 	adjustChildBound(children, result.bound);
@@ -349,21 +351,29 @@ function parseContainer(element)
 	return result;
 }
 
-function parseElementList(elementList)
+function parseLayerList(layerList)
 {
 	var result = new Array();
-	var len = elementList.length;
+	var len = layerList.length;
 	for (var i = len - 1; i >= 0; i--)
 	{
 		var obj;
-		var element = elementList[i];
-		if (element.isLayer == true)
+		var layer = layerList[i];
+		if(layer.frames && layer.frames[0].visible == false)
 		{
-			obj = parseLayerElement(element);
+			return null;
+		}
+		if (layer.isLayer == true)
+		{
+			obj = parseGroupLayer(layer);
+		}
+		else if(layer instanceof Text)
+		{
+			obj = parseTextLayer(layer);
 		}
 		else
 		{
-			obj = parseSimpleElement(element);
+			obj = parseImageLayer(layer);
 		}
 		if (obj != null)
 		{
@@ -373,36 +383,19 @@ function parseElementList(elementList)
 	return result;
 }
 
-function parseLayerElement(element)
+function parseGroupLayer(layer)
 {
-	if(element.frames && element.frames[0].visible == false)
-	{
-		return null;
-	}
-	var parser = getLayerElementParser(element);
+	var parser = getGroupLayerParser(layer);
 	if (parser == null)
 	{
-		logError("【" + parseLayerElementName(element).type + "】" + "未找到对应解析函数");
+		logError(layer.name + "【" +  parseGroupLayerIdentifier(layer).type + "】" + "未找到对应解析函数");
 	}
-	return parser(element);
+	return parser(layer);
 }
 
-function parseSimpleElement(element)
+function parseList(layer)
 {
-	if(element.visible == false)
-	{
-		return null;
-	}
-	if (element instanceof Text)
-	{
-		return parseSimpleTextElement(element);
-	}
-	return obj = parseSimpleImageElement(element);
-}
-
-function parseList(element)
-{
-	var result = parseContainer(element);
+	var result = parseContainer(layer);
 	var children = result.children;
 	var len = children.length;
 	var itemIndex = -1;
@@ -421,10 +414,10 @@ function parseList(element)
 }
 
 //兼容使用透明图片决定可拖拽范围的做法，并且以使用透明图片方式优先级最高
-function parseDragBar(element)
+function parseDragBar(layer)
 {
 	var result = new Object();
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	result.name = obj.name;
 	result.type = obj.type;
 	if (result.name != undefined)
@@ -439,9 +432,9 @@ function parseDragBar(element)
 			result.bound = {x: result.x, y: result.y, width: result.width, height: result.height};
 		}
 	}
-	if (element.elems.length > 0)
+	if (layer.elems.length > 0)
 	{
-		var firstChild = parseElementList(element.elems)[0];
+		var firstChild = parseLayerList(layer.elems)[0];
 		result.x = firstChild.x;
 		result.y = firstChild.y;
 		result.width = firstChild.width;
@@ -452,28 +445,28 @@ function parseDragBar(element)
 	return result;
 }
 
-function parseLabel(element)
+function parseLabel(layer)
 {
 	var result = new Object();
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	result.name = obj.name;
 	result.type = obj.type;
-	return parseStateElement(element, result, "Label", atomParseTextElement);
+	return parseStateGroupLayer(layer, result, "Label", atomParseTextLayer);
 }
 
-function parseImage(element)
+function parseImage(layer)
 {
 	var result = new Object();
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	result.name = obj.name;
 	result.type = obj.type;
-	return parseStateElement(element, result, "Image", atomParseImageElement);
+	return parseStateGroupLayer(layer, result, "Image", atomParseImageLayer);
 }
 
-function parseScaleImage(element)
+function parseScaleImage(layer)
 {
 	var result = new Object();
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	result.name = obj.name;
 	result.type = obj.type;
 	var paramArr = obj.param.split(",");
@@ -481,15 +474,15 @@ function parseScaleImage(element)
 	result.right = paramArr[1];
 	result.bottom = paramArr[2];
 	result.left = paramArr[3];
-	return parseStateElement(element, result, "ScaleImage", atomParseImageElement);
+	return parseStateGroupLayer(layer, result, "ScaleImage", atomParseImageLayer);
 }
 
-//StateElement:Label, Image, ScaleImage
-function parseStateElement(element, preprocessResult, typeName, atomParser)
+//StateGroupLayer:Label, Image, ScaleImage
+function parseStateGroupLayer(layer, preprocessResult, typeName, atomParser)
 {
 	var result = preprocessResult;
-	var elementList = element.elems;
-	var len = elementList.length;
+	var layerList = layer.elems;
+	var len = layerList.length;
 	if (len == 0)
 	{
 		logError(typeName + "【" + result.name + "】格式错误！文件夹内容为空。");
@@ -498,21 +491,21 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 	var children = new Array();
 	for (var i = 0; i < len; i++)
 	{
-		var subElement = elementList[i];
-		subElementName = eliminateElementDummyToken(subElement);
-		verifyStateName(element.name, subElementName);
-		if (subElement.isLayer == false)
+		var subLayer = layerList[i];
+		subLayerName = eliminateDummyTokenOfLayerName(subLayer);
+		verifyStateName(layer.name, subLayerName);
+		if (subLayer.isLayer == false)
 		{
 			logError(typeName + "【" + result.name + "】格式错误！文件夹内容包含非状态文件夹内容！");
 			return result;
 		}
-		if (subElement.isLayer == true && subElement.elems.length == 0)
+		if (subLayer.isLayer == true && subLayer.elems.length == 0)
 		{
 			logError(typeName + "【" + result.name + "】格式错误！状态文件夹内容为空！");
 			return result;
 		}
-		result[subElementName] = atomParser(subElement.elems[0]);
-		children.push(result[subElementName]);
+		result[subLayerName] = atomParser(subLayer.elems[0]);
+		children.push(result[subLayerName]);
 	}
 	result.bound = calculateContainerBound(children);
 	adjustContainerBound(result);
@@ -520,25 +513,25 @@ function parseStateElement(element, preprocessResult, typeName, atomParser)
 	return result;
 }
 
-function verifyStateName(elementName, stateName)
+function verifyStateName(layerName, stateName)
 {
 	var len = stateNameList.length;
 	for(var i = 0; i < len; i++)
 	{
 		if(stateName.match(stateNameRegExpList[i]) != null)
 		{
-			logError(elementName + " 状态名错误:‘" + stateName + "’应为‘" + stateNameList[i] + "'");
+			logError(layerName + " 状态名错误:‘" + stateName + "’应为‘" + stateNameList[i] + "'");
 		}
 	}
 }
 
-function parseSimpleImageElement(element)
+function parseImageLayer(layer)
 {
 	var result = new Object();
-	var obj = parseImageElementName(element);
+	var obj = parseImageLayerName(layer);
 	result.name = obj.name;
 	result.type = "Image";
-	result.normal = atomParseImageElement(element);
+	result.normal = atomParseImageLayer(layer);
 	result.bound = unionRectangle([result.normal]);
 	adjustContainerBound(result);
 	result.normal.x = result.normal.x - result.bound.x;
@@ -546,12 +539,12 @@ function parseSimpleImageElement(element)
 	return result;
 }
 
-function parseSimpleTextElement(element)
+function parseTextLayer(layer)
 {
 	var result = new Object();
-	result.name = eliminateElementDummyToken(element);
+	result.name = eliminateDummyTokenOfLayerName(layer);
 	result.type = "Label";
-	result.normal = atomParseTextElement(element)
+	result.normal = atomParseTextLayer(layer)
 	result.bound = unionRectangle([result.normal]);
 	adjustContainerBound(result);
 	result.normal.x = result.normal.x - result.bound.x;
@@ -676,23 +669,23 @@ function validateComponentNameFirstToken(obj)
 
 function getComponentRegExp(type)
 {
-	return regExpList[findTypeIndex(type)];
+	return regExpList[findLayerTypeIndex(type)];
 }
 
 function getComponentValidator(type)
 {
-	return validatorList[findTypeIndex(type)];
+	return validatorList[findLayerTypeIndex(type)];
 }
 
 //--------------------------------------------------------------------------
 //generate skin output string
 //--------------------------------------------------------------------------
-function getTypeGenerator(type)
+function getLayerTypeGenerator(type)
 {
-	return generatorList[findTypeIndex(type)];
+	return generatorList[findLayerTypeIndex(type)];
 }
 
-function generateChildrenStr(children, indent)
+function generateChildrenSkin(children, indent)
 {
 	var result = indent + "[" + "\n";
 	children.reverse();
@@ -700,7 +693,7 @@ function generateChildrenStr(children, indent)
 	for (var i = 0; i < len; i++)
 	{
 		var obj = children[i];
-		var generator = getTypeGenerator(obj.type);
+		var generator = getLayerTypeGenerator(obj.type);
 		result += generator(obj, indent + "\t");
 		if (i < (len - 1))
 		{
@@ -717,7 +710,7 @@ function generateContainerSkin(obj, indent)
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
 	result += "\n";
 	result += indent + "\t" + "children:\n";
-	result += generateChildrenStr(obj.children, indent + "\t");
+	result += generateChildrenSkin(obj.children, indent + "\t");
 	result += indent + "}";
 	return result;
 }
@@ -728,11 +721,11 @@ function generateListSkin(obj, indent)
 	result += atomGeneratePropertyListStr(obj, ["name", "type", "x", "y", "width", "height"], [1, 1, 0, 0, 0, 0]) + ",";
 	result += "\n";
 	result += indent + "\t" + "item:\n";
-	var generator = getTypeGenerator(obj.item.type);
+	var generator = getLayerTypeGenerator(obj.item.type);
 	result += "\t" + generator(obj.item, indent + "\t") + ",";
 	result += "\n";
 	result += indent + "\t" + "children:\n";
-	result += generateChildrenStr(obj.children, indent + "\t");
+	result += generateChildrenSkin(obj.children, indent + "\t");
 	result += indent + "}";
 	return result;
 }
@@ -807,23 +800,23 @@ function generateLabelSkin(obj, indent)
 //---------------------------------------------------------------------------------
 //atom operation
 //---------------------------------------------------------------------------------
-function atomParseTextElement(element)
+function atomParseTextLayer(layer)
 {
-	if((element instanceof Text) == false)
+	if((layer instanceof Text) == false)
 	{
-		logError("【" + element.name + "】为图像图层，在Label组件中应为文本图层！");
+		logError("【" + layer.name + "】为图像图层，在Label组件中应为文本图层！");
 		return;
 	}
 	var result = new Object();
-	result.name = eliminateElementDummyToken(element);
-	result.x = element.left;
-	result.y = element.top + 1;
-	result.width = element.width;
-	result.height = element.height;
+	result.name = eliminateDummyTokenOfLayerName(layer);
+	result.x = layer.left;
+	result.y = layer.top + 1;
+	result.width = layer.width;
+	result.height = layer.height;
 	result.content = "";
 	result.rawContent = "";
-	var textRunsArr = element.textRuns.textRuns;
-	result.format = parseTextDefaultTextFormat(element.textRuns.initialAttrs);
+	var textRunsArr = layer.textRuns.textRuns;
+	result.format = parseTextDefaultTextFormat(layer.textRuns.initialAttrs);
 	var len = textRunsArr.length;
 	for (var i = 0; i < len; i++)
 	{
@@ -853,12 +846,12 @@ function atomParseTextElement(element)
 		content = "<font color='" + obj.fillColor + "'>" + content + "</font>";
 		result.content += content;
 	}
-	result.width = refineTextElementWidth(result, element.textRuns.initialAttrs);
-	result.bound = {x: element.left, y: element.top + 1, width: element.width, height: element.height + 1};
+	result.width = refineTextLayerWidth(result, layer.textRuns.initialAttrs);
+	result.bound = {x: layer.left, y: layer.top + 1, width: layer.width, height: layer.height + 1};
 	return result;
 }
 
-function refineTextElementWidth(textObj, textAttrs)
+function refineTextLayerWidth(textObj, textAttrs)
 {
 	var result = textObj.width;
 	var rawContent = textObj.rawContent;
@@ -911,15 +904,15 @@ function parseFontSize(sizeStr)
 	return Math.round(parseFloat(result));
 }
 
-function atomParseImageElement(element)
+function atomParseImageLayer(layer)
 {	
-	if((element instanceof Text) == true)
+	if((layer instanceof Text) == true)
 	{
-		logError("【" + element.name + "】为文本图层，在Image组件中应为图像图层！");
+		logError("【" + layer.name + "】为文本图层，在Image组件中应为图像图层！");
 		return;
 	}
 	var result = new Object();
-	var obj = parseImageElementName(element);
+	var obj = parseImageLayerName(layer);
 	if(assetMap[obj.name] == undefined || obj.quality > parseInt(assetMap[obj.name]))
 	{
 		assetMap[obj.name] = obj.quality;
@@ -930,12 +923,12 @@ function atomParseImageElement(element)
 		prefix = SHARED;
 	}
 	result.link = prefix + "." + obj.name;
-	var rect = element.pixelRect;
+	var rect = layer.pixelRect;
 	result.x = rect.left;
 	result.y = rect.top;
 	result.width = rect.right - rect.left;
 	result.height = rect.bottom - rect.top;
-	result.bound = {x: element.left, y: element.top, width: element.width, height: element.height};
+	result.bound = {x: layer.left, y: layer.top, width: layer.width, height: layer.height};
 	return result;
 }
 
@@ -992,13 +985,13 @@ function atomGenerateObjPropertyStr(obj, property, type)
 //----------------------------------------------------------------
 //Tools
 //----------------------------------------------------------------
-function parseImageElementName(element)
+function parseImageLayerName(layer)
 {
-	var str = eliminateElementDummyToken(element);
+	var str = eliminateDummyTokenOfLayerName(layer);
 	var obj = new Object();
-	var arr = str.split("_");
-	obj.name = arr[0];
-	obj.quality = arr[1] == undefined ? DEFAULT_IMAGE_QUALITY : arr[1];
+	var paramList = str.split("_");
+	obj.name = paramList[0];
+	obj.quality = paramList[1] == undefined ? DEFAULT_IMAGE_QUALITY : paramList[1];
 	if(isNaN(Number(obj.quality)) == true)
 	{
 		logError("组件【 " + str + " 】的图片质量不是数字！下划线后面必须是数字!");
@@ -1006,22 +999,22 @@ function parseImageElementName(element)
 	return obj;
 }
 
-function parseLayerElementName(element)
+function parseGroupLayerIdentifier(layer)
 {
-	var str = eliminateElementDummyToken(element);
+	var str = eliminateDummyTokenOfLayerName(layer);
 	var obj = new Object();
-	var arr = str.split("_");
-	obj.name = extractElementName(arr);
-	obj.type = extractElementType(arr);
-	obj.param = extractElementParam(arr);
+	var paramList = str.split("_");
+	obj.name = extractLayerName(paramList);
+	obj.type = extractLayerType(paramList);
+	obj.param = extractLayerParam(paramList);
 	return obj;
 }
 
-function getLayerElementParser(element)
+function getGroupLayerParser(layer)
 {
-	var obj = parseLayerElementName(element);
+	var obj = parseGroupLayerIdentifier(layer);
 	var type = obj.type;
-	var index = findTypeIndex(type);
+	var index = findLayerTypeIndex(type);
 	if (index > -1)
 	{
 		return parserList[index];
@@ -1030,10 +1023,10 @@ function getLayerElementParser(element)
 }
 
 //example:Button_myBtn;
-function extractElementType(arr)
+function extractLayerType(paramList)
 {
-	var type = arr[0];
-	var index = findTypeIndex(type);
+	var type = paramList[0];
+	var index = findLayerTypeIndex(type);
 	if (index > -1)
 	{
 		return type;
@@ -1041,7 +1034,7 @@ function extractElementType(arr)
 	return "Container";
 }
 
-function findTypeIndex(type)
+function findLayerTypeIndex(type)
 {
 	var len = typeList.length;
 	for (var i = 0; i < len; i++)
@@ -1055,28 +1048,28 @@ function findTypeIndex(type)
 }
 
 //example:Button_myBtn return myBtn, Button return myButton
-function extractElementName(arr)
+function extractLayerName(paramList)
 {
-	if (arr[1] == undefined)
+	if (paramList[1] == undefined)
 	{
-		return arr[0];
+		return paramList[0];
 	}
-	return arr[1];
+	return paramList[1];
 }
 
 //example:ScaleImage_myImage_4,4,4,4
-function extractElementParam(arr)
+function extractLayerParam(paramList)
 {
-	if (arr[2] == undefined)
+	if (paramList[2] == undefined)
 	{
 		return "4,4,4,4"; //default value
 	}
-	return arr[2];
+	return paramList[2];
 }
 
-function eliminateElementDummyToken(element)
+function eliminateDummyTokenOfLayerName(layer)
 {
-	var name = element.name;
+	var name = layer.name;
 	var len = dummyTokenList.length;
 	for (var i = 0; i < len; i++)
 	{
@@ -1091,9 +1084,9 @@ function eliminateElementDummyToken(element)
 	return name;
 }
 
-function unionRectangle(rectArr)
+function unionRectangle(rectList)
 {
-	if(rectArr.length == 0)
+	if(rectList.length == 0)
 	{
 		return {x:0, y:0, width:0, height:0};
 	}
@@ -1102,10 +1095,10 @@ function unionRectangle(rectArr)
 	var top = 1048576;
 	var right = -1048576;
 	var bottom = -1048576;
-	var len = rectArr.length;
+	var len = rectList.length;
 	for (var i = 0; i < len; i++)
 	{
-		var rect = rectArr[i];
+		var rect = rectList[i];
 		if (left > rect.x)
 		{
 			left = rect.x;
@@ -1132,13 +1125,13 @@ function unionRectangle(rectArr)
 
 function calculateContainerBound(children)
 {
-	var rectArr = new Array();
+	var rectList = new Array();
 	var len = children.length;
 	for (var i = 0; i < len; i++)
 	{
-		rectArr.push(children[i].bound);
+		rectList.push(children[i].bound);
 	}
-	return unionRectangle(rectArr);
+	return unionRectangle(rectList);
 }
 
 function adjustContainerBound(obj)
@@ -1181,7 +1174,7 @@ function dumpSimpleObj(obj)
 //----------------------
 //http://www.xlobby.com/forum/viewtopic.php?f=7&t=5606
 //----------------------
-function exportAllElementsToPNG()
+function exportAllLayerToPNG()
 {
 	var dom = fw.getDocumentDOM();
 	var elems = new Array().concat(fw.selection);
@@ -1231,7 +1224,7 @@ function exportAllElementsToPNG()
 			if (elem instanceof Text) continue; //ignore text elements
 			rect = elem.pixelRect;
 			elem.visible = true;
-			name = parseImageElementName(elem).name;
+			name = parseImageLayerName(elem).name;
 			var folderPath = psdFolder + "/" + psdName;
 			createInexistentFolder(folderPath);
 			filename = folderPath + "/" + name + ".png";

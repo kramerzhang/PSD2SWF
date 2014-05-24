@@ -359,7 +359,7 @@ function parseLayerList(layerList)
 	{
 		var obj;
 		var layer = layerList[i];
-		if(layer.frames && layer.frames[0].visible == false)
+		if(layer.visible == false || (layer.frames && layer.frames[0].visible == false))
 		{
 			return null;
 		}
@@ -569,9 +569,15 @@ function validateContainer(obj)
 	validateComponentNameFirstToken(obj);
 	validateChildrenName(obj);
 	var len = obj.children != null ? obj.children.length : 0;
+	var childNameMap = {};
 	for (var i = 0; i < len; i++)
 	{
 		var child = obj.children[i];
+		if(childNameMap[child.name] != null)
+		{
+			logError("容器【" + obj.name + "】中存在重名的子元素 " + child.name);
+		}
+		childNameMap[child.name] = true;
 		var validator = getComponentValidator(child.type);
 		if(validator != null)
 		{
@@ -1022,7 +1028,6 @@ function getGroupLayerParser(layer)
 	return null;
 }
 
-//example:Button_myBtn;
 function extractLayerType(paramList)
 {
 	var type = paramList[0];
@@ -1047,7 +1052,6 @@ function findLayerTypeIndex(type)
 	return -1;
 }
 
-//example:Button_myBtn return myBtn, Button return myButton
 function extractLayerName(paramList)
 {
 	if (paramList[1] == undefined)
@@ -1057,7 +1061,6 @@ function extractLayerName(paramList)
 	return paramList[1];
 }
 
-//example:ScaleImage_myImage_4,4,4,4
 function extractLayerParam(paramList)
 {
 	if (paramList[2] == undefined)
